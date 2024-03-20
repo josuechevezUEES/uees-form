@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class TiposEvaluacione extends Model
 {
-	use HasFactory;
-	
+    use HasFactory;
+
+    protected $connection = 'sqlsrv';
+
+    protected $table = 'tipos_evaluaciones';
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'estado'
+    ];
+
     public $timestamps = true;
-
-    protected $table = 'tiposEvaluaciones';
-
-    protected $fillable = ['nombre','descripcion','estado'];
-	
 }

@@ -336,7 +336,7 @@ return [
         ['header' => 'ADMINISTRACION EVALUACION'],
         [
             'text' => 'Tipos Evaluaciones',
-            'url' => '#',
+            'route' => 'evaluaciones.tipos',
             'icon' => 'fas fa-fw fa-cogs',
         ],
         [
