@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Tipos')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    {{ Breadcrumbs::render('evaluaciones.tipos') }}
 @stop
 
 @section('content')
