@@ -337,12 +337,12 @@ return [
         [
             'text' => 'Tipos Evaluaciones',
             'url' => '#',
-            'icon' => 'fas fa-fw fa-th-list',
+            'icon' => 'fas fa-fw fa-cogs',
         ],
         [
             'text' => 'Cuestionarios',
             'url' => '#',
-            'icon' => 'fas fa-fw fa-question-circle',
+            'icon' => 'fas fa-fw fa-newspaper',
         ],
         [
             'text' => 'multilevel',
