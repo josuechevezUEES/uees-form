@@ -6,8 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "diglactic/laravel-breadcrumbs": "^9.0",
         "flightsadmin/livewire-crud": "*",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^3.0",
         "jeroennoten/laravel-adminlte": "^3.11",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
