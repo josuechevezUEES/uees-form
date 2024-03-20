@@ -5,10 +5,12 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TiposEvaluacione;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TiposEvaluaciones extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $nombre, $descripcion, $estado;
@@ -19,9 +21,11 @@ class TiposEvaluaciones extends Component
         $keyWord = '%' . $this->keyWord . '%';
         return view('livewire.tipos-evaluaciones.view', [
             'tiposEvaluaciones' => TiposEvaluacione::latest()
-                ->orWhere('nombre', 'LIKE', $keyWord)
-                ->orWhere('descripcion', 'LIKE', $keyWord)
-                ->orWhere('estado', 'LIKE', $keyWord)
+                ->where(function ($query) use ($keyWord) {
+                    $query->orWhere('nombre', 'LIKE', $keyWord)
+                        ->orWhere('descripcion', 'LIKE', $keyWord);
+                })
+                ->where('estado', 1)
                 ->cursorPaginate(15),
         ]);
     }
@@ -54,7 +58,7 @@ class TiposEvaluaciones extends Component
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
-        session()->flash('message', 'TiposEvaluacione Successfully created.');
+        $this->alert('success', 'Evaluacion Creada');
     }
 
     public function edit($id)
@@ -84,7 +88,7 @@ class TiposEvaluaciones extends Component
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-            session()->flash('message', 'TiposEvaluacione Successfully updated.');
+            $this->alert('success', 'Evaluacion Actualizada');
         }
     }
 
@@ -97,6 +101,8 @@ class TiposEvaluaciones extends Component
                 ->update([
                     'estado' => 0
                 ]);
+
+            $this->alert('success', 'Evaluacion Eliminada');
 
             $this->deleted_selected_id = null;
         }
