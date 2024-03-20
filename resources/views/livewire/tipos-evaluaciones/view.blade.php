@@ -63,6 +63,12 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a class="dropdown-item" href="#{{ $row->id }}">
+                                                            <i class="fa fa-wrench"></i>
+                                                            Configurar
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item"
                                                             onclick="confirm('Confirma la eliminacion de {{ $row->nombre }}?')||event.stopImmediatePropagation()"
                                                             wire:click="destroy({{ $row->id }})">
