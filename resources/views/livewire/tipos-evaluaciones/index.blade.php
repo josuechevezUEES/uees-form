@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Tipos')
+@section('title', 'Tipos Evaluaciones')
 
 @section('content_header')
     {{ Breadcrumbs::render('evaluaciones.tipos') }}
