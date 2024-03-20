@@ -12,6 +12,7 @@ class TiposEvaluaciones extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $nombre, $descripcion, $estado;
+    public $deleted_selected_id;
 
     public function render()
     {
@@ -21,7 +22,7 @@ class TiposEvaluaciones extends Component
                 ->orWhere('nombre', 'LIKE', $keyWord)
                 ->orWhere('descripcion', 'LIKE', $keyWord)
                 ->orWhere('estado', 'LIKE', $keyWord)
-                ->paginate(10),
+                ->cursorPaginate(15),
         ]);
     }
 
@@ -90,7 +91,14 @@ class TiposEvaluaciones extends Component
     public function destroy($id)
     {
         if ($id) {
-            TiposEvaluacione::where('id', $id)->delete();
+            $this->deleted_selected_id = $id;
+
+            TiposEvaluacione::where('id', $id)
+                ->update([
+                    'estado' => 0
+                ]);
+
+            $this->deleted_selected_id = null;
         }
     }
 }

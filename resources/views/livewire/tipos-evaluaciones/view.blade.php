@@ -42,11 +42,11 @@
                             </thead>
                             <tbody>
                                 @forelse($tiposEvaluaciones as $row)
-                                    <tr>
+                                    <tr class="{{ $deleted_selected_id == $row->id ? 'table-danger' : '' }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $row->nombre }}</td>
                                         <td>{{ $row->descripcion }}</td>
-                                        <td>{{ $row->estado }}</td>
+                                        <td>{{ $row->estado ? 'Activo' : 'Desactivado' }}</td>
                                         <td width="90">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-secondary dropdown-toggle" href="#"
@@ -64,7 +64,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item"
-                                                            onclick="confirm('Confirm Delete Tipos Evaluacione id {{ $row->id }}? \nDeleted Tipos Evaluaciones cannot be recovered!')||event.stopImmediatePropagation()"
+                                                            onclick="confirm('Confirma la eliminacion de {{ $row->nombre }}?')||event.stopImmediatePropagation()"
                                                             wire:click="destroy({{ $row->id }})">
                                                             <i class="fa fa-trash"></i>
                                                             Eliminar
