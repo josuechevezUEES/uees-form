@@ -4,19 +4,20 @@
     {{ Breadcrumbs::render('evaluaciones.tipos.configuraciones', $tipo_evaluacion_id) }}
 @stop
 
-<div class="row" wire:poll>
+<div class="row">
     <div class="col-sm-12 mb-3">
         <div class="row">
             <div class="col-sm-6">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="evaluador_seleccionado">¿Quienes seran los evaluadores?</label>
-                            <select class="form-control" id="evaluador_seleccionado">
+                            <label for="evaluador_id">¿Quienes seran los evaluadores?</label>
+                            <select id="evaluador_id" wire:model='evaluador_id' class="form-control">
                                 <option>--seleccionar--</option>
-                                <option>Docente</option>
-                                <option>Estudiantes</option>
-                                <option value="">Coordinadores</option>
+                                @forelse ($evaluadores as $evaluador)
+                                    <option value="{{ $evaluador->id }}">{{ $evaluador->nombre }}</option>
+                                @empty
+                                @endforelse
                             </select>
                         </div>
                     </div>
@@ -26,12 +27,14 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="evaluado_seleccionado">¿Quienes seran los evaluados?</label>
-                            <select class="form-control" id="evaluado_seleccionado">
+                            <label for="evaluado_id">¿Quienes seran los evaluados?</label>
+                            <select id="evaluado_id" wire:model='evaluado_id' class="form-control"
+                                wire:target="evaluador_id" wire:loading.attr="disabled">
                                 <option>--seleccionar--</option>
-                                <option>Docentes</option>
-                                <option>Estudiantes</option>
-                                <option>Servicios</option>
+                                @forelse ($evaluados as $evaluado)
+                                    <option value="{{ $evaluado->id }}">{{ $evaluado->nombre }}</option>
+                                @empty
+                                @endforelse
                             </select>
                         </div>
                     </div>
