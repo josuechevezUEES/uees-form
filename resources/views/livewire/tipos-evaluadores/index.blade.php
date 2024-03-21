@@ -3,7 +3,7 @@
 @section('title', 'Evaluadores')
 
 @section('content_header')
-    {{ Breadcrumbs::render('evaluaciones.tipos') }}
+    {{ Breadcrumbs::render('configuraciones.evaluaciones.tipos_evaluadores') }}
 @stop
 
 @section('content')
