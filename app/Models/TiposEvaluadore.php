@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class TiposEvaluadore extends Model
 {
-	use HasFactory;
+    use HasFactory;
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv';
 
     public $timestamps = true;
 
     protected $table = 'tipos_evaluadores';
 
-    protected $fillable = ['nombre','descripcion','estado'];
-
+    protected $fillable = ['nombre', 'descripcion', 'estado'];
 }
