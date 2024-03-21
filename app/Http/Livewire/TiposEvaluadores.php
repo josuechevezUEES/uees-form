@@ -39,7 +39,7 @@ class TiposEvaluadores extends Component
     {
         $this->nombre = null;
         $this->descripcion = null;
-        // $this->estado = null;
+        $this->estado = null;
     }
 
     public function store()

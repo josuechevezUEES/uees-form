@@ -9,6 +9,7 @@ class TiposEvaluacione extends Model
 {
     use HasFactory;
 
+
     protected $connection = 'sqlsrv';
 
     protected $table = 'tipos_evaluaciones';
