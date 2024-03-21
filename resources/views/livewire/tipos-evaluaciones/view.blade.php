@@ -63,7 +63,8 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#{{ $row->id }}">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('evaluaciones.tipos.configuraciones', ['tipo_evaluacion_id' => $row->id]) }}">
                                                             <i class="fa fa-wrench"></i>
                                                             Configurar
                                                         </a>
