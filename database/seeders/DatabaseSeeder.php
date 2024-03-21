@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             TiposEvaluadoresSeeder::class,
-            TiposEvaluadosSeeder::class
+            TiposEvaluadosSeeder::class,
+            TiposEvaluacionSeeder::class
         ]);
 
     }
