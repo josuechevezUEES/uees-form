@@ -1,10 +1,10 @@
-@section('title', 'Tipos Evaluaciones')
+@section('title', $tipo_evaluacion->nombre)
 
 @section('content_header')
     {{ Breadcrumbs::render('evaluaciones.tipos.configuraciones', $tipo_evaluacion_id) }}
 @stop
 
-<div class="row">
+<div class="row" wire:poll>
     <div class="col-sm-12 mb-3">
         <div class="row">
             <div class="col-sm-6">
@@ -56,72 +56,7 @@
                 </div>
             </div>
             <div class="card-body bg-light">
-                <div class="row mb-3">
-                    <div class="col-sm-2">
-                        <button class="btn btn-block btn-sm btn-warning">
-                            Agregar
-                        </button>
-                    </div>
-                </div>
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Facultades</th>
-                            <th scope="col">Carreras</th>
-                            <th scope="col">Materias</th>
-                            <th scope="col">Docentes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Posgrado</td>
-                            <td>Maestria En Derecho...</td>
-                            <td>
-                                Materia 1
-                                <br>
-                                Materia 2
-                            </td>
-                            <td>
-                                Docente 1
-                                <br>
-                                Docente 2
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Posgrado</td>
-                            <td>Maestria En Derecho...</td>
-                            <td>
-                                Materia 1
-                                <br>
-                                Materia 2
-                            </td>
-                            <td>
-                                Docente 1
-                                <br>
-                                Docente 2
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Posgrado</td>
-                            <td>Maestria En Derecho...</td>
-                            <td>
-                                Materia 1
-                                <br>
-                                Materia 2
-                            </td>
-                            <td>
-                                Docente 1
-                                <br>
-                                Docente 2
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
