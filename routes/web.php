@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 
 //Route Hooks - Do not delete//
+	Route::view('tipos_evaluados', 'livewire.tipos_evaluados.index')->middleware('auth');
 	Route::view('users', 'livewire.users.index')->middleware('auth');
 
 Auth::routes();
