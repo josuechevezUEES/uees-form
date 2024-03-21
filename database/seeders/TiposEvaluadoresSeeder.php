@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\TiposEvaluadore;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TiposEvaluadoresSeeder extends Seeder
 {
@@ -37,6 +38,8 @@ class TiposEvaluadoresSeeder extends Seeder
             ],
         ];
 
-        TiposEvaluadore::insert($tipos);
+        DB::connection('sqlsrv')
+            ->table('tipos_evaluadores')
+            ->insert($tipos);
     }
 }
