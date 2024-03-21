@@ -5,22 +5,27 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TiposEvaluadore;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TiposEvaluadores extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $nombre, $descripcion, $estado;
+    public $selected_delete_id;
 
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
         return view('livewire.tipos-evaluadores.view', [
             'tiposEvaluadores' => TiposEvaluadore::latest()
-                ->orWhere('nombre', 'LIKE', $keyWord)
-                ->orWhere('descripcion', 'LIKE', $keyWord)
-                ->orWhere('estado', 'LIKE', $keyWord)
+                ->where(function ($query) use ($keyWord) {
+                    $query->orWhere('nombre', 'LIKE', $keyWord)
+                        ->orWhere('descripcion', 'LIKE', $keyWord);
+                })
+                ->where('estado', 1)
                 ->paginate(10),
         ]);
     }
@@ -34,7 +39,7 @@ class TiposEvaluadores extends Component
     {
         $this->nombre = null;
         $this->descripcion = null;
-        $this->estado = null;
+        // $this->estado = null;
     }
 
     public function store()
@@ -53,7 +58,7 @@ class TiposEvaluadores extends Component
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
-        session()->flash('message', 'TiposEvaluadore Successfully created.');
+        $this->alert('success', 'Evaluador Creado');
     }
 
     public function edit($id)
@@ -83,14 +88,17 @@ class TiposEvaluadores extends Component
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-            session()->flash('message', 'TiposEvaluadore Successfully updated.');
+            $this->alert('success', 'Evaluador Actualizado');
         }
     }
 
     public function destroy($id)
     {
         if ($id) {
-            TiposEvaluadore::where('id', $id)->delete();
+            TiposEvaluadore::where('id', $id)
+                ->update(['estado' => 0]);
+
+            $this->alert('success', 'Evaluador Eliminado');
         }
     }
 }
