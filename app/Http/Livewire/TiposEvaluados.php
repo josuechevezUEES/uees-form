@@ -4,10 +4,10 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\TiposEvaluadore;
+use App\Models\TiposEvaluado;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class TiposEvaluadores extends Component
+class TiposEvaluados extends Component
 {
     use WithPagination;
     use LivewireAlert;
@@ -19,8 +19,8 @@ class TiposEvaluadores extends Component
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
-        return view('livewire.tipos-evaluadores.view', [
-            'tiposEvaluadores' => TiposEvaluadore::latest()
+        return view('livewire.tipos-evaluados.view', [
+            'tiposEvaluados' => TiposEvaluado::latest()
                 ->where(function ($query) use ($keyWord) {
                     $query->orWhere('nombre', 'LIKE', $keyWord)
                         ->orWhere('descripcion', 'LIKE', $keyWord);
@@ -50,7 +50,7 @@ class TiposEvaluadores extends Component
             'estado' => 'required',
         ]);
 
-        TiposEvaluadore::create([
+        TiposEvaluado::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'estado' => $this->estado
@@ -58,12 +58,12 @@ class TiposEvaluadores extends Component
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
-        $this->alert('success', 'Evaluador Creado');
+        $this->alert('success', 'Evaluado Creado');
     }
 
     public function edit($id)
     {
-        $record = TiposEvaluadore::findOrFail($id);
+        $record = TiposEvaluado::findOrFail($id);
         $this->selected_id = $id;
         $this->nombre = $record->nombre;
         $this->descripcion = $record->descripcion;
@@ -79,7 +79,7 @@ class TiposEvaluadores extends Component
         ]);
 
         if ($this->selected_id) {
-            $record = TiposEvaluadore::find($this->selected_id);
+            $record = TiposEvaluado::find($this->selected_id);
             $record->update([
                 'nombre' => $this->nombre,
                 'descripcion' => $this->descripcion,
@@ -88,17 +88,19 @@ class TiposEvaluadores extends Component
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-            $this->alert('success', 'Evaluador Actualizado');
+            $this->alert('success', 'Evaluado Actualizado');
         }
     }
 
     public function destroy($id)
     {
         if ($id) {
-            TiposEvaluadore::where('id', $id)
-                ->update(['estado' => 0]);
+            TiposEvaluado::where('id', $id)
+                ->update([
+                    'estado' => 0
+                ]);
 
-            $this->alert('success', 'Evaluador Eliminado');
+            $this->alert('success', 'Evaluado Eliminado');
         }
     }
 }

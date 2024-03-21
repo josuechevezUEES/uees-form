@@ -353,6 +353,10 @@ return [
                     'route' => 'configuraciones.evaluaciones.tipos_evaluadores',
                 ],
                 [
+                    'text' => 'Evaluados',
+                    'route' => 'configuraciones.evaluaciones.tipos_evaluados'
+                ],
+                [
                     'text' => 'level_one',
                     'url' => '#',
                     'submenu' => [
