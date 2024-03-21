@@ -1,4 +1,11 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Evaluadores')
+
+@section('content_header')
+    {{ Breadcrumbs::render('evaluaciones.tipos') }}
+@stop
+
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -7,4 +14,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer')
+    Universidad Evangelica de El Salvador | {{ date('Y') }}
 @endsection
