@@ -33,6 +33,9 @@
 					@auth()
                     <ul class="navbar-nav mr-auto">
 						<!--Nav Bar Hooks - Do not delete!!-->
+						<li class="nav-item">
+                            <a href="{{ url('/tipos_evaluadores') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Tipos_evaluadores</a> 
+                        </li>
                     </ul>
 					@endauth()
 
