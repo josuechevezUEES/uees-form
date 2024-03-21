@@ -154,9 +154,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -345,12 +345,12 @@ return [
             'icon' => 'fas fa-fw fa-newspaper',
         ],
         [
-            'text' => 'multilevel',
+            'text' => 'Configuraciones',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Evaluadores',
+                    'route' => 'configuraciones.evaluaciones.tipos_evaluadores',
                 ],
                 [
                     'text' => 'level_one',
