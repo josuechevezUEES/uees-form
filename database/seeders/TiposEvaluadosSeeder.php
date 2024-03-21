@@ -16,7 +16,7 @@ class TiposEvaluadosSeeder extends Seeder
     {
         $tipos = [
             [
-                'nombre' => 'Docente',
+                'nombre' => 'Docentes',
                 'descripcion' => 'Como Evaluado',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),

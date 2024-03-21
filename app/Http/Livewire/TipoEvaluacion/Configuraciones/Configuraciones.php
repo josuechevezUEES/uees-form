@@ -14,7 +14,7 @@ class Configuraciones extends Component
     public $tipo_evaluacion_id;
     public $tipo_evaluacion = [];
 
-    public int $evaluador_id, $evaluado_id;
+    public string $evaluador_id, $evaluado_id;
 
     public $evaluadores = [], $evaluados = [];
 
@@ -25,10 +25,33 @@ class Configuraciones extends Component
      * @param integer $evaluador_id
      * @return void
      */
-    public function updatedEvaluadorId(int $evaluador_id): void
+    public function updatedEvaluadorId(string $evaluador_id): void
     {
-        $this->evaluados = TiposEvaluado::where('estado', 1)
-            ->get();
+        $this->evaluado_id = '';
+
+        switch ($evaluador_id) {
+            case '1': # Docentes
+                $this->evaluados = TiposEvaluado::where('estado', 1)
+                    ->whereIn('id', [2, 3])
+                    ->get();
+                break;
+
+            case '2': # Coordinadores
+                $this->evaluados = TiposEvaluado::where('estado', 1)
+                    ->whereIn('id', [1, 3])
+                    ->get();
+                break;
+
+            case '3': # Estudiantes
+                $this->evaluados = TiposEvaluado::where('estado', 1)
+                    ->whereIn('id', [1, 3])
+                    ->get();
+                break;
+
+            default:
+                $this->evaluados = [];
+                break;
+        }
     }
 
     /**
@@ -43,9 +66,6 @@ class Configuraciones extends Component
         $this->tipo_evaluacion = TiposEvaluacione::find($this->tipo_evaluacion_id);
 
         $this->evaluadores = TiposEvaluadore::where('estado', 1)
-            ->get();
-
-        $this->evaluados = TiposEvaluado::where('estado', 1)
             ->get();
     }
 

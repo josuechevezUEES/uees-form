@@ -17,10 +17,24 @@ class FacultadClass extends Model
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'CARRERA';
+
+    /**
+     * Primary from model
+     *
+     * @var string
+     */
+    public $primaryKey = 'CARCOD';
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * @var array
@@ -29,7 +43,7 @@ class FacultadClass extends Model
 
     /**
      * The connection name for the model.
-     * 
+     *
      * @var string
      */
     protected $connection = 'sqlsrv_class';
