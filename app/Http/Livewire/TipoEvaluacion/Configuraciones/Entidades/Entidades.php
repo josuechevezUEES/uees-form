@@ -117,6 +117,11 @@ class Entidades extends Component
         $this->verficar_configuracion_entidades_guardada();
     }
 
+    /**
+     * Registrar entidad
+     *
+     * @return void
+     */
     public function guardar_entidades()
     {
         TpeConfiguracionEntidad::create([
@@ -124,16 +129,30 @@ class Entidades extends Component
             'evaluador_id' => $this->evaluador_id,
             'evaluados_id' => $this->evaluado_id
         ]);
+
+        $this->alert('success','Entidades Creadas');
     }
 
+    /**
+     * Actualizar entidad
+     *
+     * @return void
+     */
     public function actualizar_entidades()
     {
         TpeConfiguracionEntidad::updateOrCreate(
             ['tpe_configuracion_id' => $this->configuracion_id],
             ['evaluador_id' => $this->evaluador_id, 'evaluados_id' => $this->evaluado_id]
         );
+
+        $this->alert('success','Entidades Actualizadas');
     }
 
+    /**
+     * Verficar si existe configuracion de entidades
+     *
+     * @return void
+     */
     public function verficar_configuracion_entidades_guardada()
     {
         $verificar = TpeConfiguracionEntidad::where([
