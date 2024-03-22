@@ -5,36 +5,24 @@ namespace App\Http\Livewire\TipoEvaluacion\Configuraciones\Entidades;
 use App\Models\TiposEvaluado;
 use App\Models\TiposEvaluadore;
 use App\Models\TpeConfiguracionEntidad;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Entidades extends Component
 {
+    use LivewireAlert;
+
+    protected $listeners = [
+        'enviar_evaluado' => 'enviar_evaluado',
+    ];
 
     public string $configuracion_id;
     public string $evaluador_id;
     public string $evaluado_id;
 
+    public TpeConfiguracionEntidad $configuracion_entidades;
+
     public $evaluadores = [], $evaluados = [];
-
-    public function servir_configuracion_entidades(TpeConfiguracionEntidad $configuracion_entidades)
-    {
-        $this->evaluador_id = $configuracion_entidades->evaluador_id;
-        $this->updatedEvaluadorId($this->evaluador_id);
-
-        $this->evaluado_id = $configuracion_entidades->evaluados_id;
-    }
-
-    public function cargar_configuracion_entidades()
-    {
-        $verificar = TpeConfiguracionEntidad::where('tpe_configuracion_id', $this->configuracion_id)
-            ->get();
-
-        if ($verificar->count() > 0) :
-            $configuracion_entidades = $verificar->first();
-            $this->servir_configuracion_entidades($configuracion_entidades);
-            $this->emitUp('obtener_evaluado', $this->evaluado_id);
-        endif;
-    }
 
     public function mount(string $configuracionId)
     {
@@ -45,6 +33,30 @@ class Entidades extends Component
 
         if ($this->configuracion_id) :
             $this->cargar_configuracion_entidades();
+            $this->updatedEvaluadorId($this->evaluador_id);
+        endif;
+    }
+
+    public function enviar_evaluado()
+    {
+        $this->emitUp('obtener_evaluado', $this->evaluado_id);
+    }
+
+    public function servir_configuracion_entidades(TpeConfiguracionEntidad $configuracion_entidades)
+    {
+        $this->configuracion_entidades = $configuracion_entidades;
+        $this->evaluador_id = $this->configuracion_entidades->evaluador_id;
+        $this->evaluado_id  = $this->configuracion_entidades->evaluados_id;
+    }
+
+    public function cargar_configuracion_entidades()
+    {
+        $verificar = TpeConfiguracionEntidad::where('tpe_configuracion_id', $this->configuracion_id)
+            ->get();
+
+        if ($verificar->count() > 0) :
+            $configuracion_entidades = $verificar->first();
+            $this->servir_configuracion_entidades($configuracion_entidades);
         endif;
     }
 
@@ -55,7 +67,7 @@ class Entidades extends Component
      * @param integer $evaluado_id
      * @return void
      */
-    public function updatedEvaluadoId($evaluado_id): void
+    public function updatedEvaluadoId(string $evaluado_id): void
     {
         $this->emitUp('obtener_evaluado', $evaluado_id);
     }
@@ -116,11 +128,10 @@ class Entidades extends Component
 
     public function actualizar_entidades()
     {
-        TpeConfiguracionEntidad::where('tpe_configuracion_id', $this->configuracion_id)
-            ->update([
-                'evaluador_id' => $this->evaluador_id,
-                'evaluados_id' => $this->evaluado_id
-            ]);
+        TpeConfiguracionEntidad::updateOrCreate(
+            ['tpe_configuracion_id' => $this->configuracion_id],
+            ['evaluador_id' => $this->evaluador_id, 'evaluados_id' => $this->evaluado_id]
+        );
     }
 
     public function verficar_configuracion_entidades_guardada()
