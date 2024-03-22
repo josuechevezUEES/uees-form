@@ -17,8 +17,8 @@ class Entidades extends Component
     ];
 
     public string $configuracion_id;
-    public string $evaluador_id;
-    public string $evaluado_id;
+    public string $evaluador_id = '';
+    public string $evaluado_id = '';
 
     public TpeConfiguracionEntidad $configuracion_entidades;
 
@@ -33,7 +33,10 @@ class Entidades extends Component
 
         if ($this->configuracion_id) :
             $this->cargar_configuracion_entidades();
-            $this->updatedEvaluadorId($this->evaluador_id);
+            if ($this->evaluador_id != '') :
+                $this->updatedEvaluadorId($this->evaluador_id);
+
+            endif;
         endif;
     }
 
@@ -107,6 +110,11 @@ class Entidades extends Component
         }
     }
 
+    /**
+     * Evento click para iniciar el registro de la entidad
+     *
+     * @return void
+     */
     public function guardar_configuracion()
     {
         $this->validate([
@@ -130,7 +138,7 @@ class Entidades extends Component
             'evaluados_id' => $this->evaluado_id
         ]);
 
-        $this->alert('success','Entidades Creadas');
+        $this->alert('success', 'Entidades Creadas');
     }
 
     /**
@@ -145,7 +153,7 @@ class Entidades extends Component
             ['evaluador_id' => $this->evaluador_id, 'evaluados_id' => $this->evaluado_id]
         );
 
-        $this->alert('success','Entidades Actualizadas');
+        $this->alert('success', 'Entidades Actualizadas');
     }
 
     /**

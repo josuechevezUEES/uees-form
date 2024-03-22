@@ -63,11 +63,13 @@ class Configuraciones extends Component
         $verificar = TpeConfiguracion::where('tipo_evaluacion_id', $this->tipo_evaluacion_id)
             ->get();
 
-        if ($verificar->count() == 0) : # creacr configuracion
+        if ($verificar->count() == 0) : # crear configuracion
             $configuracion = $this->crear_configuracion();
             $this->configuracion = $configuracion;
             $this->configuracion_id = $configuracion->id;
-        else : # obtener configuracion
+        endif;
+
+        if ($verificar->count() > 0) : # obtener configuracion
             $configuracion_encontrada = $verificar->first();
             $this->obtener_configuracion($configuracion_encontrada);
             $this->obtener_configuracion_entidades($this->configuracion);
@@ -96,9 +98,11 @@ class Configuraciones extends Component
      */
     public function obtener_configuracion_entidades(TpeConfiguracion $configuracion)
     {
-        $this->configuracion_entidades = $configuracion->configuracionEntidades;
-        $this->evaluado_id = $this->configuracion_entidades->evaluados_id;
-        $this->evaluador_id = $this->configuracion_entidades->evaluador_id;
+        if(isset($configuracion->configuracionEntidades)):
+            $this->configuracion_entidades = $configuracion->configuracionEntidades;
+            $this->evaluado_id = $this->configuracion_entidades->evaluados_id;
+            $this->evaluador_id = $this->configuracion_entidades->evaluador_id;
+        endif;
     }
 
     public function obtener_evaluado(string $evaluado_id): void

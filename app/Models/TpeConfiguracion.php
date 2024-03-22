@@ -49,9 +49,6 @@ class TpeConfiguracion extends Model
         return $this->belongsTo('App\Models\TiposEvaluacione', 'tipo_evaluacion_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function configuracionEntidades()
     {
         return $this->hasOne(TpeConfiguracionEntidad::class, 'tpe_configuracion_id', 'id');
