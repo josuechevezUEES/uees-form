@@ -1,7 +1,9 @@
 <div class="card" wire:ignore.self>
     <div class="card-header bg-navy">
         <h3 class="card-title">
-            Facultades
+            Facultades,
+            (De {{ $contador_facultades }} Facultades / {{ count($facultades_seleccionadas) }}
+            Seleccionadas)
         </h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -14,26 +16,38 @@
 
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item disabled">
-                        Facultades,
-                        (De {{ $facultades->count() }} Facultades / {{  count($facultades_seleccionadas) }} Seleccionadas)
-                    </li>
-                    @forelse ($facultades as $facultad)
-                        <li class="list-group-item">
-                            <input wire:model="facultades_seleccionadas" value="{{ $facultad->CARCOD }}"
-                                id="checkbox{{ $facultad->CARDSC }}" type="checkbox" class="form-check-input">
-                            <label for="checkbox{{ $facultad->CARDSC }}">
-                                {{ $facultad->CARDSC }}
-                            </label>
-                        </li>
-                    @empty
-                    @endforelse
-                </ul>
-            </div>
-            <div class="col-sm-6"></div>
+        <div class="row p-3">
+            @forelse ($facultades as $facultad)
+                <div class="col-sm-4 mb-3 ">
+                    <input wire:model="facultades_seleccionadas" value="{{ $facultad->CARCOD }}"
+                        id="checkbox{{ $facultad->CARDSC }}" type="checkbox" class="form-check-input"
+                        wire:target='facultades_seleccionadas,agregrar_facultad, eliminar_facultad'
+                        wire:loading.attr="disabled">
+                    <label for="checkbox{{ $facultad->CARDSC }}">
+                        {{ $facultad->CARDSC }}
+                    </label>
+                </div>
+            @empty
+            @endforelse
         </div>
+        <div class="float-end">{{ $facultades->links() }}</div>
     </div>
 </div>
+
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(e) {
+                    if (checkbox.checked) {
+                        Livewire.emit('agregrar_facultad', e.target.value)
+                    } else {
+                        Livewire.emit('eliminar_facultad', e.target.value)
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
