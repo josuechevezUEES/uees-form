@@ -6,11 +6,12 @@
 
 <div class="row">
     <div class="col-sm-12 mb-3">
-        <livewire:tipo-evaluacion.configuraciones.entidades.entidades :configuracionId="$configuracion_id"/>
+        <livewire:tipo-evaluacion.configuraciones.entidades.entidades :configuracionId="$configuracion_id" />
     </div>
 
     <div class="col-sm-12 mb-3">
-        @if ($evaluado_id)
+        {{-- Evaluacion satisfaccion --}}
+        @if ($evaluado_id == '3' && $evaluador_id == '3')
             <livewire:tipo-evaluacion.configuraciones.eval-statisfaccion-facultad.facultad :configuracionId="$configuracion_id" />
         @endif
     </div>
