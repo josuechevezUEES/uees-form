@@ -32,6 +32,14 @@
         </div>
         <div class="float-end">{{ $facultades->links() }}</div>
     </div>
+    <div class="card-footer">
+        <p class="text-muted">
+            ¿Para que sirven las facultades?
+            <br>
+            Las facultades seleccionadas seran la que participaran
+            en la evaluacion, las que no esten seleccionada no podran participar.
+        </p>
+    </div>
 </div>
 
 @section('js')
