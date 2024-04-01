@@ -5,6 +5,7 @@ namespace App\Http\Livewire\TipoEvaluacion\Configuraciones\Entidades;
 use App\Models\TiposEvaluado;
 use App\Models\TiposEvaluadore;
 use App\Models\TpeConfiguracionEntidad;
+use App\Models\TpeConfiguracionModalidad;
 use Illuminate\Support\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -15,12 +16,15 @@ class Entidades extends Component
 
     protected $listeners = [
         'enviar_evaluado' => 'enviar_evaluado',
+        'agregrar_modalidad' => 'agregrar_modalidad',
+        'eliminar_modalidad' => 'eliminar_modalidad',
     ];
 
     public string $configuracion_id;
     public string $evaluador_id = '';
     public string $evaluado_id = '';
     public $lista_modalidades = [];
+    public $modalidades_seleccionadas;
 
     public TpeConfiguracionEntidad $configuracion_entidades;
 
@@ -35,6 +39,8 @@ class Entidades extends Component
         $this->evaluadores = TiposEvaluadore::where('estado', 1)
             ->get();
 
+        $this->obtener_modalidades();
+
         if ($this->configuracion_id) :
             $this->cargar_configuracion_entidades();
             if ($this->evaluador_id != '') :
@@ -42,6 +48,13 @@ class Entidades extends Component
 
             endif;
         endif;
+    }
+
+    public function obtener_modalidades()
+    {
+
+        $this->modalidades_seleccionadas = TpeConfiguracionModalidad::where('tpe_configuracion_id', $this->configuracion_id)
+            ->pluck('modalidad');
     }
 
     public function enviar_evaluado()
@@ -216,10 +229,16 @@ class Entidades extends Component
      * @param string $codigo_modalidad
      * @return void
      */
-    public function agregrar_facultad($codigo_modalidad): void
+    public function agregrar_modalidad($codigo_modalidad): void
     {
+        TpeConfiguracionModalidad::create([
+            'tpe_configuracion_id' => $this->configuracion_id,
+            'modalidad' => $codigo_modalidad
+        ]);
 
-        $this->alert('success', 'El registro se ha agregado correctamente.');
+        $this->obtener_modalidades();
+
+        $this->alert('success', 'Modalidad Vinculada.');
     }
 
     /**
@@ -228,10 +247,17 @@ class Entidades extends Component
      * @param string $codigo_modalidad
      * @return void
      */
-    public function eliminar_facultad($codigo_modalidad): void
+    public function eliminar_modalidad($codigo_modalidad): void
     {
+        TpeConfiguracionModalidad::where([
+            'tpe_configuracion_id' => $this->configuracion_id,
+            'modalidad' => $codigo_modalidad
+        ])
+            ->delete();
 
-        $this->alert('success', 'El registro se ha eliminado correctamente.');
+        $this->obtener_modalidades();
+
+        $this->alert('success', 'Modalidad desvinculada.');
     }
 
     public function render()

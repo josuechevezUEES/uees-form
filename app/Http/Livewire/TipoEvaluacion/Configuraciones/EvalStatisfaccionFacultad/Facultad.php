@@ -15,7 +15,7 @@ class Facultad extends Component
 
     protected $listeners  = [
         'agregrar_facultad' => 'agregrar_facultad',
-        'eliminar_facultad' => 'eliminar_facultad'
+        'eliminar_facultad' => 'eliminar_facultad',
     ];
 
     protected $paginationTheme = 'bootstrap';

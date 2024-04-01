@@ -50,7 +50,10 @@
                                             <div class="form-group form-check">
                                                 <input type="checkbox"
                                                     class="form-check-input form-check-input-modalidades"
-                                                    id="check{{ $modalidad['id'] }}" value="{{ $modalidad['id'] }}">
+                                                    wire:target='modalidades_seleccionadas,agregrar_modalidad, eliminar_modalidad'
+                                                    wire:loading.attr="disabled" id="check{{ $modalidad['id'] }}"
+                                                    wire:model='modalidades_seleccionadas'
+                                                    value="{{ $modalidad['id'] }}">
                                                 <label class="form-check-label" for="check{{ $modalidad['id'] }}">
                                                     {{ $modalidad['nombre'] }}
                                                 </label>
@@ -97,9 +100,9 @@
             checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('click', function(e) {
                     if (checkbox.checked) {
-                        Livewire.emit('agregrar_facultad', e.target.value)
+                        Livewire.emit('agregrar_modalidad', e.target.value)
                     } else {
-                        Livewire.emit('eliminar_facultad', e.target.value)
+                        Livewire.emit('eliminar_modalidad', e.target.value)
                     }
                 });
             });
