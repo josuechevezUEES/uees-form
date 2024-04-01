@@ -5,6 +5,7 @@ namespace App\Http\Livewire\TipoEvaluacion\Configuraciones\Entidades;
 use App\Models\TiposEvaluado;
 use App\Models\TiposEvaluadore;
 use App\Models\TpeConfiguracionEntidad;
+use Illuminate\Support\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -19,6 +20,7 @@ class Entidades extends Component
     public string $configuracion_id;
     public string $evaluador_id = '';
     public string $evaluado_id = '';
+    public $lista_modalidades = [];
 
     public TpeConfiguracionEntidad $configuracion_entidades;
 
@@ -27,6 +29,8 @@ class Entidades extends Component
     public function mount(string $configuracionId)
     {
         $this->configuracion_id = $configuracionId;
+
+        $this->crear_coleccion_modalidades();
 
         $this->evaluadores = TiposEvaluadore::where('estado', 1)
             ->get();
@@ -175,6 +179,59 @@ class Entidades extends Component
         else :
             $this->guardar_entidades();
         endif;
+    }
+
+    /**
+     * Coleccion de modalidades
+     *
+     * @return void
+     */
+    public function crear_coleccion_modalidades()
+    {
+        $lista = new Collection();
+
+        $lista->push([
+            'id' => '01',
+            'nombre' => 'Regular o Presencial'
+        ]);
+
+        $lista->push([
+            'id' => '0',
+            'nombre' => 'Semi Presencial'
+        ]);
+
+        $lista->push([
+            'id' => '05',
+            'nombre' => 'Modalidad Virtual'
+        ]);
+
+        $this->lista_modalidades = $lista;
+
+        return $this->lista_modalidades;
+    }
+
+    /**
+     * Agrega configuracion para las modadlidades seleccionadas
+     *
+     * @param string $codigo_modalidad
+     * @return void
+     */
+    public function agregrar_facultad($codigo_modalidad): void
+    {
+
+        $this->alert('success', 'El registro se ha agregado correctamente.');
+    }
+
+    /**
+     * Eliminar configuracion para las modadlidades seleccionadas
+     *
+     * @param string $codigo_modalidad
+     * @return void
+     */
+    public function eliminar_facultad($codigo_modalidad): void
+    {
+
+        $this->alert('success', 'El registro se ha eliminado correctamente.');
     }
 
     public function render()

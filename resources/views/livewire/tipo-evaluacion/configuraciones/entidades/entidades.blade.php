@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluador_id">¿Quienes seran los evaluadores?</label>
                             <select id="evaluador_id" wire:model='evaluador_id' class="form-control">
@@ -28,7 +28,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluado_id">¿Quienes seran los evaluados?</label>
                             <select id="evaluado_id" wire:model='evaluado_id' class="form-control">
@@ -38,6 +38,30 @@
                                 @empty
                                 @endforelse
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="modalidades">¿Que modalidades podran evaluar?</label>
+                            <div class="row">
+                                @forelse ($lista_modalidades as $modalidad)
+                                    <div class="col-sm-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input form-check-input-modalidades"
+                                                id="check{{ $modalidad['id'] }}" value="{{ $modalidad['id'] }}">
+                                            <label class="form-check-label" for="check{{ $modalidad['id'] }}">
+                                                {{ $modalidad['nombre'] }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-sm-12">
+                                        <p class="text-muted">
+                                            No se encontraron modalidades
+                                        </p>
+                                    </div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,3 +85,21 @@
         </div>
     </div>
 </div>
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.form-check-input-modalidades');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(e) {
+                    if (checkbox.checked) {
+                        Livewire.emit('agregrar_facultad', e.target.value)
+                    } else {
+                        Livewire.emit('eliminar_facultad', e.target.value)
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

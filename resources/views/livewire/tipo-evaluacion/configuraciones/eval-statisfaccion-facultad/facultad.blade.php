@@ -20,7 +20,7 @@
             @forelse ($facultades as $facultad)
                 <div class="col-sm-4 mb-3 ">
                     <input wire:model="facultades_seleccionadas" value="{{ $facultad->CARCOD }}"
-                        id="checkbox{{ $facultad->CARDSC }}" type="checkbox" class="form-check-input"
+                        id="checkbox{{ $facultad->CARDSC }}" type="checkbox" class="form-check-input form-check-input-facultades"
                         wire:target='facultades_seleccionadas,agregrar_facultad, eliminar_facultad'
                         wire:loading.attr="disabled">
                     <label for="checkbox{{ $facultad->CARDSC }}">
@@ -45,7 +45,7 @@
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('.form-check-input');
+            var checkboxes = document.querySelectorAll('.form-check-input-facultades');
 
             checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('click', function(e) {
