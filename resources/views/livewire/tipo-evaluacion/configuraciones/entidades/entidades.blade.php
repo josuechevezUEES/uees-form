@@ -19,7 +19,7 @@
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluador_id">¿Quienes seran los evaluadores?</label>
-                            <select id="evaluador_id" wire:model='evaluador_id' class="form-control">
+                            <select id="evaluador_id" {{ $configuracion_entidades ? 'disabled' : null }}  wire:model='evaluador_id' class="form-control">
                                 <option>--seleccionar--</option>
                                 @forelse ($evaluadores as $evaluador)
                                     <option value="{{ $evaluador->id }}">{{ $evaluador->nombre }}</option>
@@ -31,7 +31,7 @@
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluado_id">¿Quienes seran los evaluados?</label>
-                            <select id="evaluado_id" wire:model='evaluado_id' class="form-control">
+                            <select id="evaluado_id" {{ $configuracion_entidades ? 'disabled' : null }} wire:model='evaluado_id' class="form-control">
                                 <option>--seleccionar--</option>
                                 @forelse ($evaluados as $evaluado)
                                     <option value="{{ $evaluado->id }}">{{ $evaluado->nombre }}</option>
@@ -40,7 +40,7 @@
                             </select>
                         </div>
                     </div>
-                    @if ($evaluado_id == '3' && $evaluador_id == '3')
+                    @if ($configuracion_entidades != null && $evaluado_id == '3' && $evaluador_id == '3')
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="modalidades">¿Que modalidades podran evaluar?</label>

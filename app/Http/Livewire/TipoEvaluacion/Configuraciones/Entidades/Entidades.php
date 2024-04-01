@@ -155,6 +155,8 @@ class Entidades extends Component
             'evaluados_id' => $this->evaluado_id
         ]);
 
+        $this->mount($this->configuracion_id);
+
         $this->alert('success', 'Entidades Creadas');
     }
 
