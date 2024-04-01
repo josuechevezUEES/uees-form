@@ -157,7 +157,7 @@ class Entidades extends Component
 
         $this->mount($this->configuracion_id);
 
-        $this->alert('success', 'Entidades Creadas');
+        $this->flash('success', 'Entidades Configuradas', [], route('evaluaciones.tipos.configuraciones', ['tipo_evaluacion_id' => $this->configuracion_id]));
     }
 
     /**
