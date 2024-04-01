@@ -40,30 +40,33 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="modalidades">¿Que modalidades podran evaluar?</label>
-                            <div class="row">
-                                @forelse ($lista_modalidades as $modalidad)
-                                    <div class="col-sm-4">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input form-check-input-modalidades"
-                                                id="check{{ $modalidad['id'] }}" value="{{ $modalidad['id'] }}">
-                                            <label class="form-check-label" for="check{{ $modalidad['id'] }}">
-                                                {{ $modalidad['nombre'] }}
-                                            </label>
+                    @if ($evaluado_id == '3' && $evaluador_id == '3')
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="modalidades">¿Que modalidades podran evaluar?</label>
+                                <div class="row">
+                                    @forelse ($lista_modalidades as $modalidad)
+                                        <div class="col-sm-4">
+                                            <div class="form-group form-check">
+                                                <input type="checkbox"
+                                                    class="form-check-input form-check-input-modalidades"
+                                                    id="check{{ $modalidad['id'] }}" value="{{ $modalidad['id'] }}">
+                                                <label class="form-check-label" for="check{{ $modalidad['id'] }}">
+                                                    {{ $modalidad['nombre'] }}
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                @empty
-                                    <div class="col-sm-12">
-                                        <p class="text-muted">
-                                            No se encontraron modalidades
-                                        </p>
-                                    </div>
-                                @endforelse
+                                    @empty
+                                        <div class="col-sm-12">
+                                            <p class="text-muted">
+                                                No se encontraron modalidades
+                                            </p>
+                                        </div>
+                                    @endforelse
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
                 <div class="row mb-3">
