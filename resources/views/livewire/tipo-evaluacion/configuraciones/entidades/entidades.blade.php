@@ -14,7 +14,7 @@
                     </button>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <div class="row mb-3">
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
@@ -44,7 +44,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="modalidades">¿Que modalidades podran evaluar?</label>
-                                <div class="row">
+                                <div class="row p-2">
                                     @forelse ($lista_modalidades as $modalidad)
                                         <div class="col-sm-4">
                                             <div class="form-group form-check">
