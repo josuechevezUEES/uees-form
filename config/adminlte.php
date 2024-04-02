@@ -340,8 +340,8 @@ return [
             'icon' => 'fas fa-fw fa-cogs',
         ],
         [
-            'text' => 'Cuestionarios',
-            'url' => '#',
+            'text' => 'Instrumentos',
+            'route' => 'instrumentos_evaluaciones.index',
             'icon' => 'fas fa-fw fa-newspaper',
         ],
         [

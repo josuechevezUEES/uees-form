@@ -34,6 +34,9 @@
                     <ul class="navbar-nav mr-auto">
 						<!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
+                            <a href="{{ url('/ins_instrumentos_evaluaciones') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Ins_instrumentos_evaluaciones</a> 
+                        </li>
+						<li class="nav-item">
                             <a href="{{ url('/tpe_configuraciones_facultades') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Tpe_configuraciones_facultades</a> 
                         </li>
 						<li class="nav-item">
