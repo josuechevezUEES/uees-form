@@ -25,4 +25,9 @@ class TiposEvaluacione extends Model
     ];
 
     public $timestamps = true;
+
+    public function tpeConfiguracion()
+    {
+        return $this->hasOne(TpeConfiguracion::class, 'tipo_evaluacion_id', 'id');
+    }
 }

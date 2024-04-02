@@ -53,4 +53,14 @@ class TpeConfiguracion extends Model
     {
         return $this->hasOne(TpeConfiguracionEntidad::class, 'tpe_configuracion_id', 'id');
     }
+
+    public function configuracionFacultades()
+    {
+        return $this->hasMany(TpeConfiguracionesFacultade::class, 'tpe_configuracion_id', 'id');
+    }
+
+    public function configuracionModalidades()
+    {
+        return $this->hasMany(TpeConfiguracionModalidad::class, 'tpe_configuracion_id', 'id');
+    }
 }

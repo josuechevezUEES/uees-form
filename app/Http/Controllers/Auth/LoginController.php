@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\EvaEvaluacione;
 use App\Models\PleStudioClass;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -59,6 +61,7 @@ class LoginController extends Controller
             $buscar = $this->buscar_estudiante_class($request);
 
             if ($buscar) :
+
                 // name es equivalente a cif
                 $usuario = User::where('name', $buscar->CIF)
                     ->get();
@@ -165,18 +168,73 @@ class LoginController extends Controller
 
     public function buscar_estudiante_class($usuario)
     {
-        $buscar = PleStudioClass::select('PLECUN AS CIF', 'CLINAM AS NOMBRE', 'CLITE1 AS TELEFONO', 'CLIEM1 AS CORREO', 'NIVDSC AS CARRERA', 'CARDSC AS FACULTAD', 'PLETAB AS COD_PLAN_ESTUDIO', 'PLECAR AS CARRERA')
+        $buscar = PleStudioClass::select(
+            'PLECUN AS CIF',
+            'CLINAM AS NOMBRE',
+            'CLITE1 AS TELEFONO',
+            'CLIEM1 AS CORREO',
+            'NIVDSC AS CARRERA',
+            'CARDSC AS FACULTAD',
+            'PLETAB AS COD_PLAN_ESTUDIO',
+            'PLECAR AS CARRERA',
+            'CARCOD',
+            'PLEMOF AS MODALIDAD'
+        )
             ->join('CARRERA', 'PLECAR', '=', 'CARCOD')
             ->join('NIVELES', 'PLENIV', '=', 'NIVCOD')
             ->join('CLIENTES', 'PLEIDU', '=', 'CLIIDU')
             ->where('PLECUN', $usuario->email)
             ->where('CLIPIN', $usuario->password)
+            ->where('CLISTS', 'A')
             ->where('PLESTS', 'A')
             ->get();
 
         if ($buscar->count() > 0) :
+
             $estudiante = $buscar->first();
+
+            /**
+             * La modalidad es semipresencial
+             * se le asigna un 0 ya que viene como ""
+             */
+            if ($estudiante->MODALIDAD == "") :
+                $estudiante->MODALIDAD = 0;
+            endif;
+
+            $buscar_evaluacion = $this->buscar_evaluaciones_activas_estudiante($estudiante);
+
+            // agregar propiedad con el numero de evaluacion
+            $estudiante->evaluacions = $buscar_evaluacion->count() ? $buscar_evaluacion->count() : 0;
+
+            if($estudiante->evaluacions == 0):
+                Auth::logout();
+                return  abort(403, 'NO ENCONTRAMOS EVALUACION ACTIVAS');
+            endif;
+
             return $estudiante;
         endif;
+    }
+
+    /**
+     * buscar evaluaciones activas para el estudiante
+     *
+     * @param mix $estudiante
+     * @return object
+     */
+    protected function buscar_evaluaciones_activas_estudiante($estudiante)
+    {
+        $buscar_evaluaciones_activa = EvaEvaluacione::whereHas('tiposEvaluacione.tpeConfiguracion.configuracionEntidades', function ($query) {
+            $query->where('evaluador_id', 3);
+        })
+            ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionFacultades', function ($query) use ($estudiante) {
+                $query->where('codigo_facultad', $estudiante->CARCOD);
+            })
+            ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionModalidades', function ($query) use ($estudiante) {
+                $query->where('modalidad', $estudiante->MODALIDAD);
+            })
+            ->where('estado', 1)
+            ->get();
+
+        return $buscar_evaluaciones_activa;
     }
 }
