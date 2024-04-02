@@ -17,6 +17,16 @@ Route::middleware(['auth'])
     });
 
 Route::middleware(['auth'])
+    ->prefix('tipos')
+    ->group(function () {
+        Route::view('/', 'livewire.tipos-evaluaciones.index')
+            ->name('evaluaciones.tipos');
+
+        Route::view('/{tipo_evaluacion_id}/configuraciones', 'livewire.tipo-evaluacion.configuraciones.index')
+            ->name('evaluaciones.tipos.configuraciones');
+    });
+
+Route::middleware(['auth'])
     ->prefix('configuraciones')
     ->group(function () {
         Route::view('evaluaciones/tipos-evaluadores', 'livewire.tipos-evaluadores.index')

@@ -29,13 +29,13 @@
                         <table class="table table-bordered table-sm">
                             <thead class="thead">
                                 <tr>
-                                    <td>#</td>
-                                    <th>Tipo Evaluacion Id</th>
-                                    <th>Instrumento Id</th>
+                                    <th>#</th>
+                                    <th>Tipo Evaluacion</th>
+                                    <th>Instrumento</th>
                                     <th>Fecha Inicio Evaluacion</th>
                                     <th>Fecha Fin Evaluacion</th>
                                     <th>Estado</th>
-                                    <td>ACTIONS</td>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

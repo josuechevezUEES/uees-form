@@ -5,13 +5,29 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\EvaEvaluacione;
+use App\Models\InsInstrumentosEvaluacione;
+use App\Models\TiposEvaluacione;
 
 class EvaEvaluaciones extends Component
 {
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public $selected_id, $keyWord, $tipo_evaluacion_id, $instrumento_id, $fecha_inicio_evaluacion, $fecha_fin_evaluacion, $estado;
+    public $selected_id, $keyWord, $tipo_evaluacion_id, $instrumento_id;
+    public $fecha_inicio_evaluacion, $fecha_fin_evaluacion, $estado;
+
+    public $tipos_evaluaciones = [];
+    public $lista_instrumentos = [];
+
+    public function mount()
+    {
+        $this->tipos_evaluaciones = TiposEvaluacione::where('estado', 1)
+            ->get();
+
+
+        $this->lista_instrumentos = InsInstrumentosEvaluacione::where('estado', 1)
+            ->get();
+    }
 
     public function render()
     {
@@ -54,8 +70,8 @@ class EvaEvaluaciones extends Component
         EvaEvaluacione::create([
             'tipo_evaluacion_id' => $this->tipo_evaluacion_id,
             'instrumento_id' => $this->instrumento_id,
-            'fecha_inicio_evaluacion' => $this->fecha_inicio_evaluacion,
-            'fecha_fin_evaluacion' => $this->fecha_fin_evaluacion,
+            'fecha_inicio_evaluacion' => date('Y-m-d h:i', strtotime($this->fecha_inicio_evaluacion)),
+            'fecha_fin_evaluacion'    => date('Y-m-d h:i', strtotime($this->fecha_fin_evaluacion)),
             'estado' => $this->estado
         ]);
 
@@ -90,8 +106,8 @@ class EvaEvaluaciones extends Component
             $record->update([
                 'tipo_evaluacion_id' => $this->tipo_evaluacion_id,
                 'instrumento_id' => $this->instrumento_id,
-                'fecha_inicio_evaluacion' => $this->fecha_inicio_evaluacion,
-                'fecha_fin_evaluacion' => $this->fecha_fin_evaluacion,
+                'fecha_inicio_evaluacion' => date('Y-m-d h:i', strtotime($this->fecha_inicio_evaluacion)),
+                'fecha_fin_evaluacion'    => date('Y-m-d h:i', strtotime($this->fecha_fin_evaluacion)),
                 'estado' => $this->estado
             ]);
 
