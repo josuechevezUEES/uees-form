@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Evaluados')
+@section('title', 'Instrumentos')
 
 @section('content_header')
-    {{ Breadcrumbs::render('configuraciones.evaluaciones.tipos_evaluados') }}
+    {{ Breadcrumbs::render('instrumentos_evaluaciones.index') }}
 @stop
 
 @section('content')
