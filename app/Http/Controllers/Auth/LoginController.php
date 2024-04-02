@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PleStudioClass;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -35,5 +40,143 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        if (is_numeric($request->email) && ctype_digit($request->email)) :
+            // buscar estudiante
+            $buscar = $this->buscar_estudiante_class($request);
+
+            if ($buscar) :
+                // name es equivalente a cif
+                $usuario = User::where('name', $buscar->CIF)
+                    ->get();
+
+                if ($usuario->count() > 0) :
+                    $this->class_estudiante_loginUsingId($usuario->first());
+
+                    return redirect()
+                        ->route('home');
+                else :
+                    // Crear usuario
+                    $usuario = User::create([
+                        'name'            => $buscar->CIF,
+                        'email'           => $buscar->CORREO,
+                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
+                        'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->FACULTAD),
+                        'password'        => Hash::make('uees123')
+                    ]);
+
+                    if ($usuario) :
+                        // $usuario->assignRole('estudiante');
+                        $this->class_estudiante_loginUsingId($usuario);
+
+                        return redirect()
+                            ->route('home');
+                    else :
+                        return redirect()
+                            ->route('login');
+                    endif;
+                endif;
+            endif;
+
+        else :
+            // buscar empleado con usuario class
+
+            $buscar_usuario_class = $this->buscar_usuario_empleado($request);
+
+            if ($buscar_usuario_class) :
+                $usuario = User::where('name', $request->email)
+                    ->get();
+
+
+                if ($usuario->count() > 0) :
+                    $this->class_loginUsingId($usuario->first());
+                    return redirect()
+                        ->route('home');
+                else :
+                    return redirect()
+                        ->route('login');
+                endif;
+
+                return redirect()
+                    ->route('login');
+            else :
+
+            endif;
+
+        endif;
+    }
+
+    public function buscar_usuario_empleado($request)
+    {
+        $usuario = [
+            $request->email,
+            $request->password
+        ];
+
+        $usuario_class = DB::connection('sqlsrv_class')
+            ->select(
+                "SELECT
+                    USRUID as usuario_id,
+                    USRUID as name,
+                    USREML as email,
+                    USRDPT as departamento
+                FROM
+                    USUARIOS
+                WHERE
+                    USRUID = ? COLLATE SQL_Latin1_General_CP1_CI_AS
+                AND
+                    DBO.fnLeeClave(USRPWD) = ? COLLATE SQL_Latin1_General_CP1_CI_AS",
+                $usuario
+            );
+
+        return isset($usuario_class[0]) ? $usuario_class[0] : "";
+    }
+
+    /**
+     * Crear session de usuario
+     *
+     * @param object $usuario
+     * @return boolean
+     */
+    public function class_loginUsingId($usuario)
+    {
+        return auth()
+            ->loginUsingId($usuario->id);
+    }
+
+    public function class_estudiante_loginUsingId($usuario)
+    {
+        return auth()
+            ->loginUsingId($usuario->id);
+    }
+
+    public function buscar_estudiante_class($usuario)
+    {
+        $buscar = PleStudioClass::select('PLECUN AS CIF', 'CLINAM AS NOMBRE', 'CLITE1 AS TELEFONO', 'CLIEM1 AS CORREO', 'NIVDSC AS CARRERA', 'CARDSC AS FACULTAD', 'PLETAB AS COD_PLAN_ESTUDIO', 'PLECAR AS CARRERA')
+            ->join('CARRERA', 'PLECAR', '=', 'CARCOD')
+            ->join('NIVELES', 'PLENIV', '=', 'NIVCOD')
+            ->join('CLIENTES', 'PLEIDU', '=', 'CLIIDU')
+            ->where('PLECUN', $usuario->email)
+            ->where('CLIPIN', $usuario->password)
+            ->where('PLESTS', 'A')
+            ->get();
+
+        if ($buscar->count() > 0) :
+            $estudiante = $buscar->first();
+            return $estudiante;
+        endif;
     }
 }
