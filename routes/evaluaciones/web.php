@@ -11,6 +11,9 @@ Route::middleware(['auth'])
 
         Route::view('tipos/{tipo_evaluacion_id}/configuraciones', 'livewire.tipo-evaluacion.configuraciones.index')
             ->name('evaluaciones.tipos.configuraciones');
+
+        Route::view('/', 'livewire.eva-evaluaciones.index')
+            ->name('evaluaciones.index');
     });
 
 Route::middleware(['auth'])
