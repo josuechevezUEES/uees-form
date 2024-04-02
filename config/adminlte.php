@@ -341,7 +341,7 @@ return [
         ],
         [
             'text' => 'Instrumentos',
-            'url' => '#',
+            'route' => 'instrumentos_evaluaciones.index',
             'icon' => 'fas fa-fw fa-newspaper',
         ],
         [
