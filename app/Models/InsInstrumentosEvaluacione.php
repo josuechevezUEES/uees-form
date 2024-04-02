@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class InsInstrumentosEvaluacione extends Model
 {
 	use HasFactory;
-	
+
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv';
+
     public $timestamps = true;
 
-    protected $table = 'insInstrumentosEvaluaciones';
+    protected $table = 'ins_instrumentos_evaluaciones';
 
     protected $fillable = ['nombre','descripcion','estado'];
-	
+
 }
