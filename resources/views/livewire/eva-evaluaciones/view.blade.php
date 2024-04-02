@@ -30,10 +30,10 @@
                             <thead class="thead">
                                 <tr>
                                     <th>#</th>
-                                    <th>Tipo Evaluacion</th>
+                                    <th>Configuracion</th>
                                     <th>Instrumento</th>
-                                    <th>Fecha Inicio Evaluacion</th>
-                                    <th>Fecha Fin Evaluacion</th>
+                                    <th>Periodo Inicio</th>
+                                    <th>Periodo Fin</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -42,11 +42,11 @@
                                 @forelse($evaEvaluaciones as $row)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $row->tipo_evaluacion_id }}</td>
-                                        <td>{{ $row->instrumento_id }}</td>
-                                        <td>{{ $row->fecha_inicio_evaluacion }}</td>
-                                        <td>{{ $row->fecha_fin_evaluacion }}</td>
-                                        <td>{{ $row->estado }}</td>
+                                        <td>{{ $row->tiposEvaluacione->nombre }}</td>
+                                        <td>{{ $row->insInstrumentosEvaluacione->nombre }}</td>
+                                        <td>{{ $row->fecha_inicio_evaluacion ? date('d-m-Y h:i A', strtotime($row->fecha_inicio_evaluacion)) : null }}</td>
+                                        <td>{{ $row->fecha_fin_evaluacion ? date('d-m-Y h:i A', strtotime($row->fecha_fin_evaluacion)) : null }}</td>
+                                        <td>{{ $row->estado ? 'Activo' : 'Desactivado' }}</td>
                                         <td width="90">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-secondary dropdown-toggle" href="#"

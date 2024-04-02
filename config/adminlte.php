@@ -345,6 +345,11 @@ return [
             'icon' => 'fas fa-fw fa-newspaper',
         ],
         [
+            'text' => 'Evaluaciones',
+            'route'=> 'evaluaciones.index',
+            'icon' => 'fas fa-book-reader'
+        ],
+        [
             'text' => 'Configuraciones',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
