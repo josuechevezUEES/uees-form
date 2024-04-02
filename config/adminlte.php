@@ -340,7 +340,7 @@ return [
             'icon' => 'fas fa-fw fa-cogs',
         ],
         [
-            'text' => 'Cuestionarios',
+            'text' => 'Instrumentos',
             'url' => '#',
             'icon' => 'fas fa-fw fa-newspaper',
         ],
