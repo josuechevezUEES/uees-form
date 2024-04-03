@@ -63,7 +63,7 @@ class LoginController extends Controller
             if ($buscar) :
 
                 // name es equivalente a cif
-                $usuario = User::where('name', $buscar->CIF)
+                $usuario = User::where('cif', $buscar->CIF)
                     ->get();
 
                 if ($usuario->count() > 0) :
@@ -76,9 +76,13 @@ class LoginController extends Controller
                     $usuario = User::create([
                         'name'            => $buscar->CIF,
                         'email'           => $buscar->CORREO,
+                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
                         'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
                         'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->FACULTAD),
-                        'password'        => Hash::make('uees123')
+                        'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
+                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->FACULTAD),
+                        'cif'             => $buscar->CIF,
+                        'estado'          => 1,
                     ]);
 
                     if ($usuario) :
@@ -100,17 +104,27 @@ class LoginController extends Controller
             $buscar_usuario_class = $this->buscar_usuario_empleado($request);
 
             if ($buscar_usuario_class) :
+
                 $usuario = User::where('name', $request->email)
                     ->get();
 
-
                 if ($usuario->count() > 0) :
+
                     $this->class_loginUsingId($usuario->first());
+
                     return redirect()
                         ->route('home');
                 else :
-                    return redirect()
-                        ->route('login');
+
+                    // Crear usuario
+                    $usuario = User::create([
+                        'name'            => $buscar_usuario_class->name,
+                        'email'           => $buscar_usuario_class->email,
+                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar_usuario_class->departamento),
+                        'dui'             => $buscar_usuario_class->dui,
+                        'usuario_class'   => $buscar_usuario_class->usuario_id,
+                        'estado'          => 1,
+                    ]);
                 endif;
 
                 return redirect()
@@ -135,7 +149,8 @@ class LoginController extends Controller
                     USRUID as usuario_id,
                     USRUID as name,
                     USREML as email,
-                    USRDPT as departamento
+                    USRDPT as departamento,
+                    USRCIF AS dui
                 FROM
                     USUARIOS
                 WHERE
@@ -206,7 +221,7 @@ class LoginController extends Controller
             // agregar propiedad con el numero de evaluacion
             $estudiante->evaluacions = $buscar_evaluacion->count() ? $buscar_evaluacion->count() : 0;
 
-            if($estudiante->evaluacions == 0):
+            if ($estudiante->evaluacions == 0) :
                 Auth::logout();
                 return  abort(401, 'NO ENCONTRAMOS EVALUACION ACTIVAS');
             endif;

@@ -27,7 +27,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'departamento'
+        'departamento',
+        'departamento_nombre',
+        'facultad_id',
+        'facultad_nombre',
+        'carrera_id',
+        'carrera_nombre',
+        'cif',
+        'dui',
+        'estado'
     ];
 
     /**
