@@ -107,6 +107,20 @@ return [
             'encrypt' => 'NO',
             'trust_server_certificate' => false,
         ],
+        'sqlsrv_suees' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_SUEES_HOST', 'localhost'),
+            'port' => env('DB_SUEES_PORT', '1433'),
+            'database' => env('DB_SUEES_DATABASE', 'forge'),
+            'username' => env('DB_SUEES_USERNAME', 'forge'),
+            'password' => env('DB_SUEES_PASSWORD', ''),
+            'charset' => 'UTF-8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'encrypt' => 'NO',
+            'trust_server_certificate' => false,
+        ],
 
     ],
 
