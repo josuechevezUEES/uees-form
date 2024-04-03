@@ -208,7 +208,7 @@ class LoginController extends Controller
 
             if($estudiante->evaluacions == 0):
                 Auth::logout();
-                return  abort(403, 'NO ENCONTRAMOS EVALUACION ACTIVAS');
+                return  abort(401, 'NO ENCONTRAMOS EVALUACION ACTIVAS');
             endif;
 
             return $estudiante;
