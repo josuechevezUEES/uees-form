@@ -78,11 +78,11 @@ class LoginController extends Controller
                     $usuario = User::create([
                         'name'            => $estudiante->CIF,
                         'email'           => $estudiante->CORREO,
-                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
-                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD_ID),
                         'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA_ID),
                         'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
-                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                        'modalidad'       => $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0,
                         'cif'             => $estudiante->CIF,
                         'estado'          => 1,
                     ]);
@@ -226,11 +226,11 @@ class LoginController extends Controller
             'CLINAM AS NOMBRE',
             'CLITE1 AS TELEFONO',
             'CLIEM1 AS CORREO',
-            'NIVDSC AS CARRERA',
+            'NIVDSC AS CARRERA_ID',
             'CARDSC AS FACULTAD',
             'PLETAB AS COD_PLAN_ESTUDIO',
             'PLECAR AS CARRERA',
-            'CARCOD',
+            'CARCOD AS FACULTAD_ID',
             'PLEMOF AS MODALIDAD'
         )
             ->join('CARRERA', 'PLECAR', '=', 'CARCOD')
@@ -280,13 +280,15 @@ class LoginController extends Controller
             $query->where('evaluador_id', 3);
         })
             ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionFacultades', function ($query) use ($estudiante) {
-                $query->where('codigo_facultad', $estudiante->CARCOD);
+                $query->where('codigo_facultad', $estudiante->CARRERA);
             })
             ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionModalidades', function ($query) use ($estudiante) {
-                $query->where('modalidad', $estudiante->MODALIDAD);
+                $query->where('modalidad', $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0 );
             })
             ->where('estado', 1)
             ->get();
+
+        // dd($buscar_evaluaciones_activa);
 
         return $buscar_evaluaciones_activa;
     }
