@@ -36,7 +36,8 @@ class User extends Authenticatable
         'usuario_class',
         'cif',
         'dui',
-        'estado'
+        'estado',
+        'modalidad'
     ];
 
     /**

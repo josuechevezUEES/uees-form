@@ -149,7 +149,7 @@ class Entidades extends Component
      */
     public function guardar_entidades()
     {
-        TpeConfiguracionEntidad::create([
+        $nueva_registro = TpeConfiguracionEntidad::create([
             'tpe_configuracion_id' => $this->configuracion_id,
             'evaluador_id' => $this->evaluador_id,
             'evaluados_id' => $this->evaluado_id
@@ -157,7 +157,15 @@ class Entidades extends Component
 
         $this->mount($this->configuracion_id);
 
-        $this->flash('success', 'Entidades Configuradas', [], route('evaluaciones.tipos.configuraciones', ['tipo_evaluacion_id' => $this->configuracion_id]));
+        $this->flash(
+            'success',
+            'Entidades Configuradas',
+            [],
+            route(
+                'evaluaciones.tipos.configuraciones',
+                ['tipo_evaluacion_id' => $nueva_registro->tpeConfiguracion->tipo_evaluacion_id]
+            )
+        );
     }
 
     /**

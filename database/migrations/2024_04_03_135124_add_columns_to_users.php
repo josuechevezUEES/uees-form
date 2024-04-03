@@ -54,53 +54,61 @@ return new class extends Migration
                 $table->boolean('estado')
                     ->nullable()
                     ->default(null);
+
+                $table->string('modalidad')
+                    ->nullable()
+                    ->default(null);
             });
 
 
         Schema::connection('sqlsrv')
-        ->table('users', function (Blueprint $table) {
-            $table->string('facultad_id')
-                ->nullable()
-                ->default(null);
+            ->table('users', function (Blueprint $table) {
+                $table->string('facultad_id')
+                    ->nullable()
+                    ->default(null);
 
-            $table->string('facultad_nombre')
-                ->nullable()
-                ->default(null);
+                $table->string('facultad_nombre')
+                    ->nullable()
+                    ->default(null);
 
-            $table->string('carrera_id')
-                ->nullable()
-                ->default(null);
+                $table->string('carrera_id')
+                    ->nullable()
+                    ->default(null);
 
-            $table->string('carrera_nombre')
-                ->nullable()
-                ->default(null);
-
-
-            $table->string('departamento')
-                ->nullable()
-                ->default(null);
+                $table->string('carrera_nombre')
+                    ->nullable()
+                    ->default(null);
 
 
-            $table->string('departamento_nombre')
-                ->nullable()
-                ->default(null);
+                $table->string('departamento')
+                    ->nullable()
+                    ->default(null);
 
-            $table->string('dui')
-                ->nullable()
-                ->default(null);
 
-            $table->string('cif')
-                ->nullable()
-                ->default(null);
+                $table->string('departamento_nombre')
+                    ->nullable()
+                    ->default(null);
 
-            $table->string('usuario_class')
-                ->nullable()
-                ->default(null);
+                $table->string('dui')
+                    ->nullable()
+                    ->default(null);
 
-            $table->boolean('estado')
-                ->nullable()
-                ->default(null);
-        });
+                $table->string('cif')
+                    ->nullable()
+                    ->default(null);
+
+                $table->string('usuario_class')
+                    ->nullable()
+                    ->default(null);
+
+                $table->boolean('estado')
+                    ->nullable()
+                    ->default(null);
+
+                $table->string('modalidad')
+                    ->nullable()
+                    ->default(null);
+            });
     }
 
     /**
@@ -109,9 +117,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::connection('mysql')
-            ->dropColumns('users', ['facultad_id', 'facultad_nombre', 'carrera_id', 'carrera_nombre', 'dui', 'cif', 'usuario_class', 'estado']);
+            ->dropColumns('users', ['facultad_id', 'facultad_nombre', 'carrera_id', 'carrera_nombre', 'dui', 'cif', 'usuario_class', 'estado', 'modalidad']);
 
         Schema::connection('sqlsrv')
-            ->dropColumns('users', ['facultad_id', 'facultad_nombre', 'carrera_id', 'carrera_nombre', 'dui', 'cif', 'usuario_class', 'estado']);
+            ->dropColumns('users', ['facultad_id', 'facultad_nombre', 'carrera_id', 'carrera_nombre', 'dui', 'cif', 'usuario_class', 'estado', 'modalidad']);
     }
 };
