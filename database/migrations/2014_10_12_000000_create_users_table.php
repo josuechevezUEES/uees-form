@@ -19,7 +19,7 @@ return new class extends Migration
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password')
                 ->nullable()
-                ->default();
+                ->default(null);
                 $table->rememberToken();
                 $table->timestamps(3);
             });
@@ -34,7 +34,7 @@ return new class extends Migration
                 $table->string('password')
                 ->nullable()
                 ->default();
-                $table->rememberToken();
+                $table->rememberToken(null);
                 $table->timestamps(3);
             });
     }

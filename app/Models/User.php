@@ -33,6 +33,7 @@ class User extends Authenticatable
         'facultad_nombre',
         'carrera_id',
         'carrera_nombre',
+        'usuario_class',
         'cif',
         'dui',
         'estado'

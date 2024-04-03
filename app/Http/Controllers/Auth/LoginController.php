@@ -57,13 +57,15 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if (is_numeric($request->email) && ctype_digit($request->email)) :
-            // buscar estudiante
-            $buscar = $this->buscar_estudiante_class($request);
+            // buscar usuario class
+            $buscar_estudiante_class = $this->buscar_estudiante_class($request);
 
-            if ($buscar) :
+            if ($buscar_estudiante_class) :
+
+                $estudiante = $buscar_estudiante_class;
 
                 // name es equivalente a cif
-                $usuario = User::where('cif', $buscar->CIF)
+                $usuario = User::where('cif', $estudiante->CIF)
                     ->get();
 
                 if ($usuario->count() > 0) :
@@ -74,14 +76,14 @@ class LoginController extends Controller
                 else :
                     // Crear usuario
                     $usuario = User::create([
-                        'name'            => $buscar->CIF,
-                        'email'           => $buscar->CORREO,
-                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
-                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
-                        'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->FACULTAD),
-                        'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->CARRERA),
-                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar->FACULTAD),
-                        'cif'             => $buscar->CIF,
+                        'name'            => $estudiante->CIF,
+                        'email'           => $estudiante->CORREO,
+                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                        'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                        'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                        'cif'             => $estudiante->CIF,
                         'estado'          => 1,
                     ]);
 
@@ -99,8 +101,7 @@ class LoginController extends Controller
             endif;
 
         else :
-            // buscar empleado con usuario class
-
+            // buscar usuario class
             $buscar_usuario_class = $this->buscar_usuario_empleado($request);
 
             if ($buscar_usuario_class) :
@@ -120,22 +121,32 @@ class LoginController extends Controller
                     $usuario = User::create([
                         'name'            => $buscar_usuario_class->name,
                         'email'           => $buscar_usuario_class->email,
-                        'departamento'    => preg_replace('/[^\p{L}\p{N}]+/u', '', $buscar_usuario_class->departamento),
-                        'dui'             => $buscar_usuario_class->dui,
-                        'usuario_class'   => $buscar_usuario_class->usuario_id,
+                        'departamento'    => $buscar_usuario_class->departamento,
+                        'departamento_nombre' => $buscar_usuario_class->departamento_nombre,
+                        'dui'             => $buscar_usuario_class->dui ? $buscar_usuario_class->dui : '000000000',
+                        'usuario_class'   => $buscar_usuario_class->name,
                         'estado'          => 1,
+                        'password' => null,
                     ]);
-                endif;
 
+                    $this->class_loginUsingId($usuario);
+
+                    return redirect()
+                        ->route('home');
+                endif;
+            else :
                 return redirect()
                     ->route('login');
-            else :
-
             endif;
-
         endif;
     }
 
+    /**
+     * Buscar informacion de usuario class del empleado
+     *
+     * @param Request $request
+     * @return object $usuario_class
+     */
     public function buscar_usuario_empleado($request)
     {
         $usuario = [
@@ -160,6 +171,21 @@ class LoginController extends Controller
                 $usuario
             );
 
+        if ($usuario_class[0]) :
+            $usuario_class[0];
+
+            if ($usuario_class[0]->dui) :
+
+                $buscar_departamento = DB::connection('sqlsrv_suees')
+                    ->select("SRH_CONSULTA_EMPLEADO_JEFE '{$usuario_class[0]->dui}' ");
+
+                if ($buscar_departamento[0]) :
+                    $usuario_class[0]->departamento = $buscar_departamento[0]->IDUNIDAD;
+                    $usuario_class[0]->departamento_nombre = $buscar_departamento[0]->UNIDAD;
+                endif;
+            endif;
+        endif;
+
         return isset($usuario_class[0]) ? $usuario_class[0] : "";
     }
 
@@ -175,12 +201,24 @@ class LoginController extends Controller
             ->loginUsingId($usuario->id);
     }
 
+    /**
+     * Crear session de usuario estudiante
+     *
+     * @param object $usuario
+     * @return boolean
+     */
     public function class_estudiante_loginUsingId($usuario)
     {
         return auth()
             ->loginUsingId($usuario->id);
     }
 
+    /**
+     * Buscar el plan de estudio del estudiante
+     *
+     * @param mix $usuario
+     * @return mixed $estudiante
+     */
     public function buscar_estudiante_class($usuario)
     {
         $buscar = PleStudioClass::select(
