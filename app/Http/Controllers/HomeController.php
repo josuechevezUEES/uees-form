@@ -24,21 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home',[
+            'evaluaciones' => $this->buscar_evaluaciones_activas_estudiante(),
+        ]);
     }
 
-    public function obtener_evaluaciones($estudiante)
+    protected function buscar_evaluaciones_activas_estudiante()
     {
-        $buscar_evaluaciones_activa = EvaEvaluacione::whereHas('tiposEvaluacione.tpeConfiguracion.configuracionEntidades', function ($query) {
-            $query->where('evaluador_id', 3);
-        })
-            ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionFacultades', function ($query) use ($estudiante) {
-                $query->where('codigo_facultad', $estudiante->CARCOD);
-            })
-            ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionModalidades', function ($query) use ($estudiante) {
-                $query->where('modalidad', $estudiante->MODALIDAD);
-            })
-            ->where('estado', 1)
+        $buscar_evaluaciones_activa = EvaEvaluacione::where('estado', 1)
             ->get();
+
+        // dd($buscar_evaluaciones_activa);
+
+        return $buscar_evaluaciones_activa;
     }
 }
