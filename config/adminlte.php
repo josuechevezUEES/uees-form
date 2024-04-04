@@ -366,6 +366,10 @@ return [
                     'route' => 'roles.index'
                 ],
                 [
+                    'text' => 'Usuarios',
+                    'route' => 'users.index'
+                ],
+                [
                     'text' => 'level_one',
                     'url' => '#',
                     'submenu' => [

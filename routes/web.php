@@ -22,7 +22,6 @@ Route::get('/', function () {
 //Route Hooks - Do not delete//
 
 // Route::view('tpe_configuraciones_facultades', 'livewire.tpe_configuraciones_facultades.index')->middleware('auth');
-Route::view('users', 'livewire.users.index')->middleware('auth');
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])

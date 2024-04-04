@@ -8,3 +8,8 @@ Breadcrumbs::for('roles.index', function (BreadcrumbTrail $trail) {
     $trail->push('Roles', route('roles.index'));
 });
 
+Breadcrumbs::for('users.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home', route('home'));
+    $trail->push('Usuarios', route('users.index'));
+});
+
