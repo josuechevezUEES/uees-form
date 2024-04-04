@@ -362,6 +362,10 @@ return [
                     'route' => 'configuraciones.evaluaciones.tipos_evaluados'
                 ],
                 [
+                    'text' => 'Roles',
+                    'route' => 'roles.index'
+                ],
+                [
                     'text' => 'level_one',
                     'url' => '#',
                     'submenu' => [
