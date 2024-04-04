@@ -88,7 +88,7 @@ class LoginController extends Controller
                     ]);
 
                     if ($usuario) :
-                        // $usuario->assignRole('estudiante');
+                        $usuario->assignRole('estudiante');
                         $this->class_estudiante_loginUsingId($usuario);
 
                         return redirect()
