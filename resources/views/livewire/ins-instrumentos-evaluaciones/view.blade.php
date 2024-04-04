@@ -55,6 +55,13 @@
                                                 </a>
                                                 <ul class="dropdown-menu">
                                                     <li>
+                                                        <a href="{{ route('instrumentos_evaluaciones.secciones', ['instrumento_id' => $row->id]) }}"
+                                                            class="dropdown-item">
+                                                            <i class="fa fa-edit"></i>
+                                                            Instrumentos
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a data-bs-toggle="modal" data-bs-target="#updateDataModal"
                                                             class="dropdown-item"
                                                             wire:click="edit({{ $row->id }})">
