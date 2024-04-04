@@ -333,69 +333,52 @@ return [
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        ['header' => 'ADMINISTRACION EVALUACION'],
+        [
+            'header' => 'ADMINISTRACION EVALUACION',
+            'can' => ['desarrollador'],
+        ],
         [
             'text' => 'Tipos Evaluaciones',
             'route' => 'evaluaciones.tipos',
             'icon' => 'fas fa-fw fa-cogs',
+            'can' => ['desarrollador'],
         ],
         [
             'text' => 'Instrumentos',
             'route' => 'instrumentos_evaluaciones.index',
             'icon' => 'fas fa-fw fa-newspaper',
+            'can' => ['desarrollador'],
         ],
         [
             'text' => 'Evaluaciones',
-            'route'=> 'evaluaciones.index',
-            'icon' => 'fas fa-book-reader'
+            'route' => 'evaluaciones.index',
+            'icon' => 'fas fa-book-reader',
+            'can' => ['desarrollador'],
         ],
         [
             'text' => 'Configuraciones',
             'icon' => 'fas fa-fw fa-share',
+            'can' => ['desarrollador'],
             'submenu' => [
                 [
                     'text' => 'Evaluadores',
                     'route' => 'configuraciones.evaluaciones.tipos_evaluadores',
+                    'can' => ['desarrollador'],
                 ],
                 [
                     'text' => 'Evaluados',
-                    'route' => 'configuraciones.evaluaciones.tipos_evaluados'
+                    'route' => 'configuraciones.evaluaciones.tipos_evaluados',
+                    'can' => ['desarrollador'],
                 ],
                 [
                     'text' => 'Roles',
-                    'route' => 'roles.index'
+                    'route' => 'roles.index',
+                    'can' => ['desarrollador'],
                 ],
                 [
                     'text' => 'Usuarios',
-                    'route' => 'users.index'
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'route' => 'users.index',
+                    'can' => ['desarrollador'],
                 ],
             ],
         ],
