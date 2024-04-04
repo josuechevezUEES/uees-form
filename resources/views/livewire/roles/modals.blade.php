@@ -54,7 +54,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-navy">
-                <h5 class="modal-title" id="createDataModalLabel">Crear Nuevo Rol</h5>
+                <h5 class="modal-title" id="createDataModalLabel">Actualizar Rol</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
