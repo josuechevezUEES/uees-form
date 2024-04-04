@@ -2,15 +2,18 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ModelHasRole;
 use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\UsuarioClass;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Users extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $name, $email;
@@ -27,6 +30,45 @@ class Users extends Component
     public $dui;
     public $estado;
     public $modalidad;
+
+    protected $listeners = [
+        'agregar_rol' => 'agregar_rol',
+        'eliminar_rol' => 'eliminar_rol',
+    ];
+
+    public function agregar_rol($rol)
+    {
+        if ($rol) :
+            $buscar_relacion = ModelHasRole::where([
+                'role_id' => $rol,
+                'model_type' => 'App\Models\User',
+                'model_id' => $this->selected_id
+            ]);
+
+            if ($buscar_relacion->count() == 0) :
+                ModelHasRole::insert([
+                    'role_id' => $rol,
+                    'model_type' => 'App\Models\User',
+                    'model_id' => $this->selected_id
+                ]);
+            endif;
+        endif;
+        $this->alert('success','Rol Agregado');
+    }
+
+    public function eliminar_rol($rol)
+    {
+        if ($rol) :
+            ModelHasRole::where([
+                'role_id' => $rol,
+                'model_type' => 'App\Models\User',
+                'model_id' => $this->selected_id
+            ])
+                ->delete();
+        endif;
+
+        $this->alert('success','Rol Eliminado');
+    }
 
     public function mount()
     {
@@ -131,6 +173,7 @@ class Users extends Component
 
         if ($this->selected_id) {
             $record = User::find($this->selected_id);
+
             $record->update([
                 'name' => $this->name,
                 'email' => $this->email

@@ -34,6 +34,9 @@
                     <ul class="navbar-nav mr-auto">
 						<!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
+                            <a href="{{ url('/model_has_roles') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Model_has_roles</a> 
+                        </li>
+						<li class="nav-item">
                             <a href="{{ url('/Roles') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Roles</a> 
                         </li>
 						<li class="nav-item">

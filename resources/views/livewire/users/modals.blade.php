@@ -78,6 +78,7 @@
                             <span class="error text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="email"></label>
                         <input wire:model="email" type="text" class="form-control" id="email"
@@ -87,6 +88,28 @@
                         @enderror
                     </div>
 
+                    <div class="row p-3">
+                        @forelse ($roles as $role)
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    <input type="checkbox" wire:model="roles_seleccionados" class="form-check-input form-check-input-rol"
+                                        id="rol-{{ $role->id }}" value="{{ $role->id }}">
+                                    <label class="form-check-label text-capitalize" for="rol-{{ $role->id }}">
+                                        {{ $role->name }}
+                                    </label>
+                                </div>
+                            </div>
+
+                        @empty
+                        @endforelse
+                    </div>
+
+                    <div class="mt-2" wire:loading wire:target="edit,update,cancel,roles_seleccionados">
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Procesando, porfavor espere...
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
