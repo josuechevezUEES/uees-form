@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
