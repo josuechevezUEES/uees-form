@@ -14,7 +14,7 @@
             </button>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-5">
         <div class="col-sm-12">
             <div class="row">
                 @forelse($insInstrumentosSecciones as $row)
@@ -49,12 +49,20 @@
                                 </div>
                             </div>
                             <div class="position-relative shadow">
-                                <img src="{{ asset("img/$row->fondo_img") }}" class="img-fluid w-100 h-100" alt="logo-seccion">
+                                <img src="{{ asset("img/$row->fondo_img") }}" class="img-fluid w-100 h-100"
+                                    alt="logo-seccion">
 
                                 <div class="ribbon-wrapper">
-                                    <div class="ribbon bg-primary">
-                                        {{ $row->estado ? 'Activa' : 'Desactivada' }}
-                                    </div>
+                                    @if ($row->estado == 1)
+                                        <div class="ribbon bg-primary">
+                                            Activo
+                                        </div>
+                                    @else
+                                        <div class="ribbon bg-danger">
+                                            No Activo
+                                        </div>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

@@ -107,7 +107,7 @@ class InsInstrumentosSecciones extends Component
                 'instrumento_id' => $this->instrumento_id,
                 'nombre' => $this->nombre,
                 'literal' => $this->literal,
-                'fondo_img' => $this->fondo->hashName(),
+                'fondo_img'      => $this->fondo_img,
                 'estado' => $this->estado
             ]);
 
