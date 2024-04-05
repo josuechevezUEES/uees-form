@@ -8,15 +8,18 @@ use Livewire\WithPagination;
 use App\Models\InsInstrumentosSeccione;
 use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\WithFileUploads;
 
 class InsInstrumentosSecciones extends Component
 {
     use WithPagination;
     use LivewireAlert;
+    use WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $instrumento_id, $nombre, $literal, $fondo_img, $estado;
     public InsInstrumentosEvaluacione $instrumento;
+    public $fondo;
 
     public function mount(Request $request)
     {
@@ -61,6 +64,8 @@ class InsInstrumentosSecciones extends Component
             'estado' => 'required',
         ]);
 
+        $this->fondo_img->store('photos');
+
         InsInstrumentosSeccione::create([
             'instrumento_id' => $this->instrumento_id,
             'nombre'         => $this->nombre,
@@ -91,18 +96,22 @@ class InsInstrumentosSecciones extends Component
             'instrumento_id' => 'required',
             'nombre' => 'required',
             'literal' => 'required',
+            'fondo_img' => 'required', // 1MB Max
             'estado' => 'required',
         ]);
 
         if ($this->selected_id) {
             $record = InsInstrumentosSeccione::find($this->selected_id);
+
             $record->update([
                 'instrumento_id' => $this->instrumento_id,
                 'nombre' => $this->nombre,
                 'literal' => $this->literal,
-                'fondo_img' => $this->fondo_img,
+                'fondo_img' => $this->fondo->hashName(),
                 'estado' => $this->estado
             ]);
+
+            $this->fondo_img->storePublicly('fondo_img', 'public');
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
