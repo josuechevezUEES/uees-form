@@ -26,7 +26,7 @@ class InsInstrumentosSecciones extends Component
     {
         $keyWord = '%' . $this->keyWord . '%';
         return view('livewire.ins-instrumentos-secciones.view', [
-            'insInstrumentosSecciones' => InsInstrumentosSeccione::latest()
+            'insInstrumentosSecciones' => InsInstrumentosSeccione::orderBy('id','ASC')
                 ->orWhere('instrumento_id', 'LIKE', $keyWord)
                 ->orWhere('nombre', 'LIKE', $keyWord)
                 ->orWhere('literal', 'LIKE', $keyWord)
@@ -61,10 +61,10 @@ class InsInstrumentosSecciones extends Component
 
         InsInstrumentosSeccione::create([
             'instrumento_id' => $this->instrumento_id,
-            'nombre' => $this->nombre,
-            'literal' => $this->literal,
-            'fondo_img' => $this->fondo_img,
-            'estado' => $this->estado
+            'nombre'         => $this->nombre,
+            'literal'        => $this->literal,
+            'fondo_img'      => $this->fondo_img,
+            'estado'         => $this->estado
         ]);
 
         $this->resetInput();
