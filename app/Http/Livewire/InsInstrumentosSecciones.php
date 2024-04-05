@@ -96,7 +96,7 @@ class InsInstrumentosSecciones extends Component
             'instrumento_id' => 'required',
             'nombre' => 'required',
             'literal' => 'required',
-            'fondo_img' => 'required', // 1MB Max
+            // 'fondo_img' => 'required',
             'estado' => 'required',
         ]);
 
@@ -111,7 +111,7 @@ class InsInstrumentosSecciones extends Component
                 'estado' => $this->estado
             ]);
 
-            $this->fondo_img->storePublicly('fondo_img', 'public');
+            // $this->fondo_img->storePublicly('fondo_img', 'public');
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
