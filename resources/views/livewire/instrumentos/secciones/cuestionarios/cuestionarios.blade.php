@@ -1,11 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Roles')
+@section('title', "Cuestionario")
 
 @section('content_header')
-    {{ Breadcrumbs::render('instrumentos_evaluaciones.secciones.cuestionarios', 1, 1) }}
+    {{ Breadcrumbs::render('instrumentos_evaluaciones.secciones.cuestionarios', $instrumento_id, $seccion_id) }}
 @stop
-
 
 @section('content')
     <div class="container-fluid">

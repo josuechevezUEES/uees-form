@@ -20,7 +20,7 @@ Breadcrumbs::for('instrumentos_evaluaciones.secciones', function (BreadcrumbTrai
 });
 
 Breadcrumbs::for('instrumentos_evaluaciones.secciones.cuestionarios', function (BreadcrumbTrail $trail, $instrumento_id, $seccion_id) {
-    $trail->parent('instrumentos_evaluaciones.secciones', $seccion_id);
+    $trail->parent('instrumentos_evaluaciones.secciones', $instrumento_id);
     $seccion = InsInstrumentosSeccione::find($seccion_id);
     $trail->push($seccion->nombre);
     $trail->push('Cuestionario', route('instrumentos_evaluaciones.secciones.cuestionarios', ['seccion_id' => $seccion_id, 'instrumento_id' => $instrumento_id]));
