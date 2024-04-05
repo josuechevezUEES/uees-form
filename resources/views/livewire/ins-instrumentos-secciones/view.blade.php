@@ -30,8 +30,9 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="#" class="btn btn-xs" data-toggle="tooltip"
-                                                data-placement="left" title="Ver Preguntas">
+                                            <a href="{{ route('instrumentos_evaluaciones.secciones.cuestionarios', ['seccion_id' => $row->id, 'instrumento_id' => $instrumento_id]) }}"
+                                                class="btn btn-xs" data-toggle="tooltip" data-placement="left"
+                                                title="Ver Preguntas">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a href="#" class="btn btn-xs" data-bs-toggle="modal"

@@ -10,4 +10,7 @@ Route::middleware(['auth'])
 
         Route::view('/{instrumento_id}/secciones', 'livewire.ins-instrumentos-secciones.index')
             ->name('instrumentos_evaluaciones.secciones');
+
+        Route::view('/{instrumento_id}/secciones/{seccion_id}/cuestionarios', 'livewire.instrumentos.secciones.cuestionarios.cuestionarios')
+            ->name('instrumentos_evaluaciones.secciones.cuestionarios');
     });
