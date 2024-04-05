@@ -7,10 +7,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\InsInstrumentosSeccione;
 use Illuminate\Http\Request;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class InsInstrumentosSecciones extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $instrumento_id, $nombre, $literal, $fondo_img, $estado;
@@ -26,7 +28,7 @@ class InsInstrumentosSecciones extends Component
     {
         $keyWord = '%' . $this->keyWord . '%';
         return view('livewire.ins-instrumentos-secciones.view', [
-            'insInstrumentosSecciones' => InsInstrumentosSeccione::orderBy('id','ASC')
+            'insInstrumentosSecciones' => InsInstrumentosSeccione::orderBy('id', 'ASC')
                 ->orWhere('instrumento_id', 'LIKE', $keyWord)
                 ->orWhere('nombre', 'LIKE', $keyWord)
                 ->orWhere('literal', 'LIKE', $keyWord)
@@ -69,7 +71,7 @@ class InsInstrumentosSecciones extends Component
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
-        session()->flash('message', 'InsInstrumentosSeccione Successfully created.');
+        $this->alert('success', 'Seccion Registrada Correctamente');
     }
 
     public function edit($id)
@@ -104,14 +106,20 @@ class InsInstrumentosSecciones extends Component
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-            session()->flash('message', 'InsInstrumentosSeccione Successfully updated.');
+            $this->alert('success', "$record->nombre fue actualizado");
         }
     }
 
     public function destroy($id)
     {
         if ($id) {
-            InsInstrumentosSeccione::where('id', $id)->delete();
+            $seccion = InsInstrumentosSeccione::where('id', $id)->first();
+
+            $seccion_nombre = $seccion->nombre;
+
+            $seccion->delete();
+
+            $this->alert('success', "$seccion_nombre fue eliminado");
         }
     }
 }
