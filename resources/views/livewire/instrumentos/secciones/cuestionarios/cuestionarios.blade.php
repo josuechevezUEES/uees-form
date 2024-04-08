@@ -108,6 +108,40 @@
                                             @endif
                                         </div>
                                     @endif
+
+                                    @if ($pregunta->tipo_pregunta_id == 4)
+                                        <label for="">{{ $pregunta->sub_numeral }})
+                                            {{ $pregunta->nombre }}</label>
+                                        <div class="row pt-3">
+                                            @if (isset($pregunta->opciones))
+                                                @forelse ($pregunta->opciones as $opcion)
+                                                    @if ($loop->iteration == 1)
+                                                        <div class="col-sm-auto mb-3">
+                                                            <input type="{{ $opcion['entrada'] }}"
+                                                                class="form-radio-input">
+                                                            {{ $opcion['nombre'] }}
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="col-sm-auto ml-md-3 mb-3">
+                                                        <input type="{{ $opcion['entrada'] }}"
+                                                            class="form-radio-input">
+                                                        {{ $opcion['nombre'] }}
+                                                    </div>
+                                                @empty
+                                                @endforelse
+                                            @endif
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group pt-3">
+                                                    <strong>
+                                                        {{ $pregunta->comentario->comentario }}
+                                                    </strong>
+                                                    <input type="text" class="form-control form-control-border">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>

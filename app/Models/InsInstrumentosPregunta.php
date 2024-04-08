@@ -40,6 +40,11 @@ class InsInstrumentosPregunta extends Model
 
     public function opciones()
     {
-        return $this->hasMany(InsInstrumentosOpcione::class,'pregunta_id', 'id');
+        return $this->hasMany(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
+    }
+
+    public function comentario()
+    {
+        return $this->hasOne(InsInstrumentosComentario::class, 'pregunta_id', 'id');
     }
 }

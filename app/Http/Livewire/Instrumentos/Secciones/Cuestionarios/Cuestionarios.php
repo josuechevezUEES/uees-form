@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Instrumentos\Secciones\Cuestionarios;
 
+use App\Models\InsInstrumentosComentario;
 use App\Models\InsInstrumentosOpcione;
 use App\Models\InsInstrumentosPregunta;
 use App\Models\InsInstrumentosSeccione;
@@ -23,7 +24,7 @@ class Cuestionarios extends Component
     public $tipos_preguntas = [];
     public $opciones_creadas = [];
     public $preguntas_instrumento = [];
-    public $nombre_opcion;
+    public $nombre_opcion, $comentario;
 
     public function updatedTipoPreguntaId(string $value)
     {
@@ -75,6 +76,18 @@ class Cuestionarios extends Component
 
 
         if ($this->tipo_pregunta_id == '3') :
+            $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
+
+            array_push($this->opciones_creadas, [
+                'pregunta_id' => '',
+                'nombre'  => $this->nombre_opcion,
+                'entrada' => $buscar_tipo_pregunta->entrada,
+            ]);
+
+            $this->nombre_opcion = '';
+        endif;
+
+        if ($this->tipo_pregunta_id == '4') :
             $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
 
             array_push($this->opciones_creadas, [
@@ -188,6 +201,7 @@ class Cuestionarios extends Component
         $this->nombre = null;
         $this->opciones_creadas = [];
         $this->nombre_opcion = null;
+        $this->comentario = null;
     }
 
     public function store()
@@ -205,7 +219,8 @@ class Cuestionarios extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'tipo_pregunta_id' => $this->tipo_pregunta_id,
             'sub_numeral' => $this->sub_numeral,
-            'requerido' => $this->requerido
+            'requerido' => $this->requerido,
+            'comentario' => $this->comentario
         ]);
 
         foreach ($this->opciones_creadas as $opciones) :
@@ -215,6 +230,11 @@ class Cuestionarios extends Component
                 'entrada' => $opciones['entrada'],
             ]);
         endforeach;
+
+        InsInstrumentosComentario::create([
+            'pregunta_id' => $nueva_pregunta->id,
+            'comentario' => $this->comentario,
+        ]);
 
         $this->obtener_lista_preguntas();
         $this->dispatchBrowserEvent('closeModal');
@@ -250,7 +270,8 @@ class Cuestionarios extends Component
                 'cuestionario_id' => $this->cuestionario_id,
                 'tipo_pregunta_id' => $this->tipo_pregunta_id,
                 'sub_numeral' => $this->sub_numeral,
-                'requerido' => $this->requerido
+                'requerido' => $this->requerido,
+                'comentario' => $this->comentario
             ]);
 
             $this->resetInput();
