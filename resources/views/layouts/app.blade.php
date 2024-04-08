@@ -34,6 +34,9 @@
                     <ul class="navbar-nav mr-auto">
 						<!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
+                            <a href="{{ url('/ins_instrumentos_opciones') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Ins_instrumentos_opciones</a> 
+                        </li>
+						<li class="nav-item">
                             <a href="{{ url('/ins_instrumentos_preguntas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Ins_instrumentos_preguntas</a> 
                         </li>
 						<li class="nav-item">
