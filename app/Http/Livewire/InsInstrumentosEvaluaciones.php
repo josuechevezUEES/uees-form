@@ -23,7 +23,7 @@ class InsInstrumentosEvaluaciones extends Component
                 ->orWhere('nombre', 'LIKE', $keyWord)
                 ->orWhere('descripcion', 'LIKE', $keyWord)
                 ->orWhere('estado', 'LIKE', $keyWord)
-                ->paginate(10),
+                ->cursorPaginate(10),
         ]);
     }
 

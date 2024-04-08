@@ -37,7 +37,7 @@ class InsInstrumentosSecciones extends Component
                 ->orWhere('literal', 'LIKE', $keyWord)
                 ->orWhere('fondo_img', 'LIKE', $keyWord)
                 ->orWhere('estado', 'LIKE', $keyWord)
-                ->paginate(10),
+                ->cursorPaginate(10),
         ]);
     }
 
