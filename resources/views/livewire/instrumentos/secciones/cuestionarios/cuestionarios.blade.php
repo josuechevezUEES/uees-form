@@ -30,8 +30,10 @@
                             <div class="col-sm-10">
                                 <div class="px-3 w-100">
                                     @if ($pregunta->tipo_pregunta_id == 1)
-                                        <label for="">{{ $pregunta->sub_numeral }})
-                                            {{ $pregunta->nombre }}</label>
+                                        <label for="">
+                                            {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
+                                            {{ $pregunta->nombre }}
+                                        </label>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
                                                 @forelse ($pregunta->opciones as $opcion)
@@ -54,8 +56,10 @@
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 2)
-                                        <label for="">{{ $pregunta->sub_numeral }})
-                                            {{ $pregunta->nombre }}</label>
+                                        <label for="">
+                                            {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
+                                            {{ $pregunta->nombre }}
+                                        </label>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
                                                 @forelse ($pregunta->opciones as $opcion)
@@ -74,8 +78,10 @@
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 3)
-                                        <label for="">{{ $pregunta->sub_numeral }})
-                                            {{ $pregunta->nombre }}</label>
+                                        <label for="">
+                                            {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
+                                            {{ $pregunta->nombre }}
+                                        </label>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
                                                 @forelse ($pregunta->opciones as $opcion)
@@ -110,8 +116,10 @@
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 4)
-                                        <label for="">{{ $pregunta->sub_numeral }})
-                                            {{ $pregunta->nombre }}</label>
+                                        <label for="">
+                                            {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
+                                            {{ $pregunta->nombre }}
+                                        </label>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
                                                 @forelse ($pregunta->opciones as $opcion)

@@ -20,7 +20,9 @@ return new class extends Migration
                     ->on('ins_instrumentos_preguntas')
                     ->onDelete('CASCADE');
 
-                $table->string('comentario');
+                $table->string('comentario')
+                    ->nullable(true)
+                    ->default(null);
 
                 $table->string('entrada')
                     ->nullable(true)
@@ -38,7 +40,9 @@ return new class extends Migration
                     ->on('ins_instrumentos_preguntas')
                     ->onDelete('CASCADE');
 
-                $table->string('comentario');
+                $table->string('comentario')
+                    ->nullable(true)
+                    ->default(null);
 
                 $table->string('entrada')
                     ->nullable(true)

@@ -109,6 +109,7 @@ class Cuestionarios extends Component
     public function obtener_lista_preguntas()
     {
         $this->preguntas_instrumento = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
+            ->orderBy('sub_numeral', 'ASC')
             ->get();
     }
 
@@ -231,10 +232,12 @@ class Cuestionarios extends Component
             ]);
         endforeach;
 
-        InsInstrumentosComentario::create([
-            'pregunta_id' => $nueva_pregunta->id,
-            'comentario' => $this->comentario,
-        ]);
+        if ($this->tipo_pregunta_id) :
+            InsInstrumentosComentario::create([
+                'pregunta_id' => $nueva_pregunta->id,
+                'comentario' => $this->comentario,
+            ]);
+        endif;
 
         $this->obtener_lista_preguntas();
         $this->dispatchBrowserEvent('closeModal');
