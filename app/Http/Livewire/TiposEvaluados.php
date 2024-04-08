@@ -26,7 +26,7 @@ class TiposEvaluados extends Component
                         ->orWhere('descripcion', 'LIKE', $keyWord);
                 })
                 ->where('estado', 1)
-                ->paginate(10),
+                ->cursorPaginate(10),
         ]);
     }
 

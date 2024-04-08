@@ -14,3 +14,8 @@ Breadcrumbs::for('configuraciones.evaluaciones.tipos_evaluados', function (Bread
     $trail->push('Configuraciones');
     $trail->push('Evaluados', route('configuraciones.evaluaciones.tipos_evaluados'));
 });
+
+Breadcrumbs::for('configuraciones.tipos-preguntas', function (BreadcrumbTrail $trail) {
+    $trail->parent('home', route('home'));
+    $trail->push('Tipos Preguntas', route('configuraciones.tipos-preguntas'));
+});

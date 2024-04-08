@@ -4,29 +4,27 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\TiposEvaluadore;
+use App\Models\TipTiposPregunta;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class TiposEvaluadores extends Component
+class TipTiposPreguntas extends Component
 {
     use WithPagination;
     use LivewireAlert;
 
     protected $paginationTheme = 'bootstrap';
-    public $selected_id, $keyWord, $nombre, $descripcion, $estado;
-    public $selected_delete_id;
+    public $selected_id, $keyWord, $nombre, $entrada, $comentario, $estado;
 
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
-        return view('livewire.tipos-evaluadores.view', [
-            'tiposEvaluadores' => TiposEvaluadore::latest()
-                ->where(function ($query) use ($keyWord) {
-                    $query->orWhere('nombre', 'LIKE', $keyWord)
-                        ->orWhere('descripcion', 'LIKE', $keyWord);
-                })
-                ->where('estado', 1)
-                ->cursorPaginate(10),
+        return view('livewire.tip-tipos-preguntas.view', [
+            'tipTiposPreguntas' => TipTiposPregunta::latest()
+                ->orWhere('nombre', 'LIKE', $keyWord)
+                ->orWhere('entrada', 'LIKE', $keyWord)
+                ->orWhere('comentario', 'LIKE', $keyWord)
+                ->orWhere('estado', 'LIKE', $keyWord)
+                ->paginate(10),
         ]);
     }
 
@@ -38,7 +36,8 @@ class TiposEvaluadores extends Component
     private function resetInput()
     {
         $this->nombre = null;
-        $this->descripcion = null;
+        $this->entrada = null;
+        $this->comentario = null;
         $this->estado = null;
     }
 
@@ -46,27 +45,30 @@ class TiposEvaluadores extends Component
     {
         $this->validate([
             'nombre' => 'required',
-            'descripcion' => 'required',
+            'entrada' => 'required',
+            'comentario' => 'required',
             'estado' => 'required',
         ]);
 
-        TiposEvaluadore::create([
+        TipTiposPregunta::create([
             'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
+            'entrada' => $this->entrada,
+            'comentario' => $this->comentario,
             'estado' => $this->estado
         ]);
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
-        $this->alert('success', 'Evaluador Creado');
+        $this->alert('success','Tipo pregunta creada');
     }
 
     public function edit($id)
     {
-        $record = TiposEvaluadore::findOrFail($id);
+        $record = TipTiposPregunta::findOrFail($id);
         $this->selected_id = $id;
         $this->nombre = $record->nombre;
-        $this->descripcion = $record->descripcion;
+        $this->entrada = $record->entrada;
+        $this->comentario = $record->comentario;
         $this->estado = $record->estado;
     }
 
@@ -74,31 +76,31 @@ class TiposEvaluadores extends Component
     {
         $this->validate([
             'nombre' => 'required',
-            'descripcion' => 'required',
+            'entrada' => 'required',
+            'comentario' => 'required',
             'estado' => 'required',
         ]);
 
         if ($this->selected_id) {
-            $record = TiposEvaluadore::find($this->selected_id);
+            $record = TipTiposPregunta::find($this->selected_id);
             $record->update([
                 'nombre' => $this->nombre,
-                'descripcion' => $this->descripcion,
+                'entrada' => $this->entrada,
+                'comentario' => $this->comentario,
                 'estado' => $this->estado
             ]);
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-            $this->alert('success', 'Evaluador Actualizado');
+            $this->alert('success','Tipo pregunta actualizada');
         }
     }
 
     public function destroy($id)
     {
         if ($id) {
-            TiposEvaluadore::where('id', $id)
-                ->update(['estado' => 0]);
-
-            $this->alert('success', 'Evaluador Eliminado');
+            TipTiposPregunta::where('id', $id)->delete();
+            $this->alert('success','Tipo pregunta eliminada');
         }
     }
 }

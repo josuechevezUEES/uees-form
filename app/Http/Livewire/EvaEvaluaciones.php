@@ -39,7 +39,7 @@ class EvaEvaluaciones extends Component
                 ->orWhere('fecha_inicio_evaluacion', 'LIKE', $keyWord)
                 ->orWhere('fecha_fin_evaluacion', 'LIKE', $keyWord)
                 ->orWhere('estado', 'LIKE', $keyWord)
-                ->paginate(10),
+                ->cursorPaginate(10),
         ]);
     }
 
