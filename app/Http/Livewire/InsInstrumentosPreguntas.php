@@ -25,14 +25,14 @@ class InsInstrumentosPreguntas extends Component
 						->paginate(10),
         ]);
     }
-	
+
     public function cancel()
     {
         $this->resetInput();
     }
-	
+
     private function resetInput()
-    {		
+    {
 		$this->cuestionario_id = null;
 		$this->tipo_pregunta_id = null;
 		$this->sub_numeral = null;
@@ -48,13 +48,13 @@ class InsInstrumentosPreguntas extends Component
 		'requerido' => 'required',
         ]);
 
-        InsInstrumentosPregunta::create([ 
+        InsInstrumentosPregunta::create([
 			'cuestionario_id' => $this-> cuestionario_id,
 			'tipo_pregunta_id' => $this-> tipo_pregunta_id,
 			'sub_numeral' => $this-> sub_numeral,
 			'requerido' => $this-> requerido
         ]);
-        
+
         $this->resetInput();
 		$this->dispatchBrowserEvent('closeModal');
 		session()->flash('message', 'InsInstrumentosPregunta Successfully created.');
@@ -63,7 +63,7 @@ class InsInstrumentosPreguntas extends Component
     public function edit($id)
     {
         $record = InsInstrumentosPregunta::findOrFail($id);
-        $this->selected_id = $id; 
+        $this->selected_id = $id;
 		$this->cuestionario_id = $record-> cuestionario_id;
 		$this->tipo_pregunta_id = $record-> tipo_pregunta_id;
 		$this->sub_numeral = $record-> sub_numeral;
@@ -81,7 +81,7 @@ class InsInstrumentosPreguntas extends Component
 
         if ($this->selected_id) {
 			$record = InsInstrumentosPregunta::find($this->selected_id);
-            $record->update([ 
+            $record->update([
 			'cuestionario_id' => $this-> cuestionario_id,
 			'tipo_pregunta_id' => $this-> tipo_pregunta_id,
 			'sub_numeral' => $this-> sub_numeral,

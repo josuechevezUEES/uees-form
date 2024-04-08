@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 
 //Route Hooks - Do not delete//
-	Route::view('ins_instrumentos_preguntas', 'livewire.ins_instrumentos_preguntas.index')->middleware('auth');
 	// Route::view('model_has_roles', 'livewire.model_has_roles.index')->middleware('auth');
 
 // Route::view('tpe_configuraciones_facultades', 'livewire.tpe_configuraciones_facultades.index')->middleware('auth');

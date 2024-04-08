@@ -24,6 +24,8 @@ return new class extends Migration
                     ->references('id')
                     ->on('tip_tipos_preguntas');
 
+                $table->string('nombre');
+
                 $table->string('sub_numeral');
 
                 $table->boolean('requerido');
@@ -44,6 +46,8 @@ return new class extends Migration
                     ->references('id')
                     ->on('tip_tipos_preguntas');
 
+                $table->string('nombre');
+
                 $table->string('sub_numeral');
 
                 $table->boolean('requerido');
@@ -59,6 +63,5 @@ return new class extends Migration
     {
         Schema::connection('mysql')->dropIfExists('ins_instrumentos_preguntas');
         Schema::connection('sqlsrv')->dropIfExists('ins_instrumentos_preguntas');
-
     }
 };
