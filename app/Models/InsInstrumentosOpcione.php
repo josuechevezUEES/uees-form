@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -7,14 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class InsInstrumentosOpcione extends Model
 {
-	use HasFactory;
-	
+    use HasFactory;
+
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv';
+
     public $timestamps = true;
 
-    protected $table = 'insInstrumentosOpciones';
+    protected $table = 'ins_instrumentos_opciones';
 
-    protected $fillable = ['pregunta_id','nombre','entrada'];
-	
+    protected $fillable = ['pregunta_id', 'nombre', 'entrada'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -22,5 +29,4 @@ class InsInstrumentosOpcione extends Model
     {
         return $this->hasOne('App\Models\InsInstrumentosPregunta', 'id', 'pregunta_id');
     }
-    
 }

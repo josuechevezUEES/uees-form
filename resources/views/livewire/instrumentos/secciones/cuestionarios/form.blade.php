@@ -12,7 +12,7 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="sub_numeral">Sub.Numeral</label>
-            <input wire:model="sub_numeral" type="number" class="form-control form-control-border border-width-2" id="sub_numeral"
+            <input wire:model="sub_numeral" type="number" disabled class="form-control form-control-border border-width-2" id="sub_numeral"
                 placeholder="Sub Numeral">
             @error('sub_numeral')
                 <span class="error text-danger">{{ $message }}</span>

@@ -37,4 +37,9 @@ class InsInstrumentosPregunta extends Model
     {
         return $this->hasOne('App\Models\TipTiposPregunta', 'id', 'tipo_pregunta_id');
     }
+
+    public function opciones()
+    {
+        return $this->hasMany(InsInstrumentosOpcione::class,'pregunta_id', 'id');
+    }
 }

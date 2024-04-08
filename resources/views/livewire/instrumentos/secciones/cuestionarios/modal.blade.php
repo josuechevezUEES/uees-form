@@ -3,8 +3,8 @@
     aria-labelledby="createDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createDataModalLabel">Create New Ins Instrumentos Pregunta</h5>
+            <div class="modal-header bg-navy">
+                <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Pregunta</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -15,12 +15,9 @@
                             @include('livewire.instrumentos.secciones.cuestionarios.form')
                         </div>
                         @if ($tipo_pregunta_id)
-                            <div class="col-sm-6 px-5">
+                            <div class="col-sm-6">
                                 @include('livewire.instrumentos.secciones.cuestionarios.opciones')
-
-                                <div class="pt-3">
-                                    @include('livewire.instrumentos.secciones.cuestionarios.prevista')
-                                </div>
+                                @include('livewire.instrumentos.secciones.cuestionarios.prevista')
                             </div>
                         @else
                             <div class="col-sm-6 p-5">
