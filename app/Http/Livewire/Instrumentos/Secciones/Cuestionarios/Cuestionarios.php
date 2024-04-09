@@ -44,9 +44,14 @@ class Cuestionarios extends Component
 
     public function agregar_opcion()
     {
-        $this->validate([
-            'nombre_opcion' => 'required'
-        ]);
+        $this->validate(
+            [
+                'nombre_opcion' => 'required'
+            ],
+            [
+                'nombre_opcion.required' => 'Nombre opcion es requerido'
+            ]
+        );
 
         if ($this->tipo_pregunta_id == '2') :
             if (count($this->opciones_creadas) == 0) :
@@ -210,13 +215,19 @@ class Cuestionarios extends Component
 
     public function store()
     {
-        $this->validate([
-            'nombre' => 'required',
-            'cuestionario_id' => 'required',
-            'tipo_pregunta_id' => 'required',
-            'sub_numeral' => 'required',
-            'requerido' => 'required',
-        ]);
+        $this->validate(
+            [
+                'nombre' => 'required',
+                'cuestionario_id' => 'required',
+                'tipo_pregunta_id' => 'required',
+                'sub_numeral' => 'required',
+                'requerido' => 'required',
+            ],
+            [
+                'cuestionario_id.required' => 'El campo codigo cuestionario es obligatorio',
+                'tipo_pregunta_id.required' => 'El campo tipo pregunta es obligatorio',
+            ]
+        );
 
         $nueva_pregunta = InsInstrumentosPregunta::create([
             'nombre' => $this->nombre,
@@ -261,13 +272,19 @@ class Cuestionarios extends Component
 
     public function update()
     {
-        $this->validate([
-            'nombre' => 'required',
-            'cuestionario_id' => 'required',
-            'tipo_pregunta_id' => 'required',
-            'sub_numeral' => 'required',
-            'requerido' => 'required',
-        ]);
+        $this->validate(
+            [
+                'nombre' => 'required',
+                'cuestionario_id' => 'required',
+                'tipo_pregunta_id' => 'required',
+                'sub_numeral' => 'required',
+                'requerido' => 'required',
+            ],
+            [
+                'cuestionario_id.required' => 'El campo codigo cuestionario es obligatorio',
+                'tipo_pregunta_id.required' => 'El campo tipo pregunta es obligatorio',
+            ]
+        );
 
         if ($this->selected_id) {
             $record = InsInstrumentosPregunta::find($this->selected_id);
