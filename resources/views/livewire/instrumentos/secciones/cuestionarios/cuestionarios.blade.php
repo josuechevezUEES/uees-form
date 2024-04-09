@@ -43,12 +43,13 @@
                                                                 class="form-radio-input">
                                                             {{ $opcion['nombre'] }}
                                                         </div>
+                                                    @else
+                                                        <div class="col-sm-auto ml-md-3">
+                                                            <input type="{{ $opcion['entrada'] }}"
+                                                                class="form-radio-input">
+                                                            {{ $opcion['nombre'] }}
+                                                        </div>
                                                     @endif
-
-                                                    <div class="col-sm-auto ml-md-3">
-                                                        <input type="{{ $opcion['entrada'] }}" class="form-radio-input">
-                                                        {{ $opcion['nombre'] }}
-                                                    </div>
                                                 @empty
                                                 @endforelse
                                             @endif
@@ -69,8 +70,13 @@
                                                                 class="form-control form-control-border border-width-2"
                                                                 placeholder="{{ $opcion['nombre'] }}">
                                                         </div>
+                                                    @else
+                                                        <div class="col-sm-12">
+                                                            <input type="{{ $opcion['entrada'] }}"
+                                                                class="form-control form-control-border border-width-2"
+                                                                placeholder="{{ $opcion['nombre'] }}">
+                                                        </div>
                                                     @endif
-
                                                 @empty
                                                 @endforelse
                                             @endif
@@ -97,18 +103,19 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                    @endif
-                                                    <div class="col-sm-auto ml-md-3">
-                                                        <div class="form-group form-check">
-                                                            <input type="{{ $opcion['entrada'] }}"
-                                                                class="form-check-input"
-                                                                id="check{{ $opcion['nombre'] }}">
-                                                            <label class="form-check-label"
-                                                                for="check{{ $opcion['nombre'] }}">
-                                                                {{ $opcion['nombre'] }}
-                                                            </label>
+                                                    @else
+                                                        <div class="col-sm-auto ml-md-3">
+                                                            <div class="form-group form-check">
+                                                                <input type="{{ $opcion['entrada'] }}"
+                                                                    class="form-check-input"
+                                                                    id="check{{ $opcion['nombre'] }}">
+                                                                <label class="form-check-label"
+                                                                    for="check{{ $opcion['nombre'] }}">
+                                                                    {{ $opcion['nombre'] }}
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 @empty
                                                 @endforelse
                                             @endif
@@ -129,13 +136,13 @@
                                                                 class="form-radio-input">
                                                             {{ $opcion['nombre'] }}
                                                         </div>
+                                                    @else
+                                                        <div class="col-sm-auto ml-md-3 mb-3">
+                                                            <input type="{{ $opcion['entrada'] }}"
+                                                                class="form-radio-input">
+                                                            {{ $opcion['nombre'] }}
+                                                        </div>
                                                     @endif
-
-                                                    <div class="col-sm-auto ml-md-3 mb-3">
-                                                        <input type="{{ $opcion['entrada'] }}"
-                                                            class="form-radio-input">
-                                                        {{ $opcion['nombre'] }}
-                                                    </div>
                                                 @empty
                                                 @endforelse
                                             @endif

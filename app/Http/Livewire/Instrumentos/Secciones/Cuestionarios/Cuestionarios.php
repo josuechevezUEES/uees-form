@@ -232,7 +232,7 @@ class Cuestionarios extends Component
             ]);
         endforeach;
 
-        if ($this->tipo_pregunta_id) :
+        if ($this->tipo_pregunta_id == '4') :
             InsInstrumentosComentario::create([
                 'pregunta_id' => $nueva_pregunta->id,
                 'comentario' => $this->comentario,
