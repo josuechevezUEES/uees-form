@@ -22,6 +22,10 @@
 
         <input type="text" wire:model="nombre_opcion" id="nombre_opcion"
             class="form-control form-control-border border-width-2">
+
+        @error('nombre_opcion')
+            <span class="error text-danger">{{ $message }}</span>
+        @enderror
     </div>
 
     @if ($tipo_pregunta_id == '4')
@@ -30,6 +34,10 @@
             <input type="text" wire:model="comentario" id="comentario"
                 class="form-control form-control-border border-width-2"
                 placeholder="Este titulo se mostrara arriba de la entrada">
+
+            @error('comentario')
+                <span class="error text-danger">{{ $message }}</span>
+            @enderror
         </div>
     @endif
 

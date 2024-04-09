@@ -44,6 +44,9 @@ class Cuestionarios extends Component
 
     public function agregar_opcion()
     {
+        $this->validate([
+            'nombre_opcion' => 'required'
+        ]);
 
         if ($this->tipo_pregunta_id == '2') :
             if (count($this->opciones_creadas) == 0) :
