@@ -72,7 +72,7 @@ class LoginController extends Controller
                     $this->class_estudiante_loginUsingId($usuario->first());
 
                     return redirect()
-                        ->route('home');
+                        ->route('estudiantes.evaluaciones.index');
                 else :
                     // Crear usuario
                     $usuario = User::create([
@@ -92,7 +92,7 @@ class LoginController extends Controller
                         $this->class_estudiante_loginUsingId($usuario);
 
                         return redirect()
-                            ->route('home');
+                            ->route('estudiantes.evaluaciones.index');
                     else :
                         return redirect()
                             ->route('login');
@@ -283,7 +283,7 @@ class LoginController extends Controller
                 $query->where('codigo_facultad', $estudiante->CARRERA);
             })
             ->whereHas('tiposEvaluacione.tpeConfiguracion.configuracionModalidades', function ($query) use ($estudiante) {
-                $query->where('modalidad', $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0 );
+                $query->where('modalidad', $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0);
             })
             ->where('estado', 1)
             ->get();
