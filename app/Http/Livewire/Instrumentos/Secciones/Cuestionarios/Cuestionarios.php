@@ -49,7 +49,7 @@ class Cuestionarios extends Component
                 'nombre_opcion' => 'required'
             ],
             [
-                'nombre_opcion.required' => 'Nombre opcion es requerido'
+                'nombre_opcion.required' => 'El campo nombre opcion es obligatorio para agregar opciones'
             ]
         );
 
