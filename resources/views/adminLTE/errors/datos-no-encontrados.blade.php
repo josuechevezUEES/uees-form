@@ -7,7 +7,7 @@
         </h3>
         <p>
            No hemos encontrado ningun registro, puede crear nuevos
-           registro para este modulo.
+           registros para este modulo.
         </p>
     </div>
 </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Instrumentos\Secciones\Cuestionarios;
 
+use App\Models\InsInstrumentosComentario;
+use App\Models\InsInstrumentosOpcione;
 use App\Models\InsInstrumentosPregunta;
 use App\Models\InsInstrumentosSeccione;
 use App\Models\InstrumentoCuestionario;
@@ -16,12 +18,87 @@ class Cuestionarios extends Component
 
     public $instrumento_id, $seccion_id;
     public $seccion;
-    public $selected_id, $keyWord, $cuestionario_id, $tipo_pregunta_id;
+    public $selected_id, $keyWord, $cuestionario_id;
     public $sub_numeral, $requerido, $nombre;
+    public $tipo_pregunta_id;
     public $tipos_preguntas = [];
     public $opciones_creadas = [];
     public $preguntas_instrumento = [];
-    public $nombre_opcion;
+    public $nombre_opcion, $comentario;
+
+    public function updatedTipoPreguntaId(string $value)
+    {
+        $this->nombre = null;
+        $this->requerido = null;
+        $this->nombre_opcion = null;
+        $this->opciones_creadas = [];
+        $this->sub_numeral = $this->obtener_numero_total_preguntas() + 1;
+    }
+
+    public function obtener_numero_total_preguntas()
+    {
+        return InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
+            ->get()
+            ->count();
+    }
+
+    public function agregar_opcion()
+    {
+
+        if ($this->tipo_pregunta_id == '2') :
+            if (count($this->opciones_creadas) == 0) :
+                $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
+
+                array_push($this->opciones_creadas, [
+                    'pregunta_id' => '',
+                    'nombre'  => $this->nombre_opcion,
+                    'entrada' => $buscar_tipo_pregunta->entrada,
+                ]);
+
+                $this->nombre_opcion = '';
+            else :
+                $this->alert('info', 'Las preguntas abiertas solo permiten una entrada...');
+            endif;
+        endif;
+
+
+        if ($this->tipo_pregunta_id == '1') :
+            $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
+
+            array_push($this->opciones_creadas, [
+                'pregunta_id' => '',
+                'nombre'  => $this->nombre_opcion,
+                'entrada' => $buscar_tipo_pregunta->entrada,
+            ]);
+
+            $this->nombre_opcion = '';
+        endif;
+
+
+        if ($this->tipo_pregunta_id == '3') :
+            $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
+
+            array_push($this->opciones_creadas, [
+                'pregunta_id' => '',
+                'nombre'  => $this->nombre_opcion,
+                'entrada' => $buscar_tipo_pregunta->entrada,
+            ]);
+
+            $this->nombre_opcion = '';
+        endif;
+
+        if ($this->tipo_pregunta_id == '4') :
+            $buscar_tipo_pregunta = TipTiposPregunta::find($this->tipo_pregunta_id);
+
+            array_push($this->opciones_creadas, [
+                'pregunta_id' => '',
+                'nombre'  => $this->nombre_opcion,
+                'entrada' => $buscar_tipo_pregunta->entrada,
+            ]);
+
+            $this->nombre_opcion = '';
+        endif;
+    }
 
     public function obtener_lista_tipos_preguntas()
     {
@@ -32,6 +109,7 @@ class Cuestionarios extends Component
     public function obtener_lista_preguntas()
     {
         $this->preguntas_instrumento = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
+            ->orderBy('sub_numeral', 'ASC')
             ->get();
     }
 
@@ -103,6 +181,13 @@ class Cuestionarios extends Component
         }
     }
 
+    public function crear()
+    {
+        $this->resetInput();
+
+        $this->sub_numeral = $this->obtener_numero_total_preguntas() + 1;
+    }
+
     public function cancel()
     {
         $this->resetInput();
@@ -115,6 +200,9 @@ class Cuestionarios extends Component
         $this->sub_numeral = null;
         $this->requerido = null;
         $this->nombre = null;
+        $this->opciones_creadas = [];
+        $this->nombre_opcion = null;
+        $this->comentario = null;
     }
 
     public function store()
@@ -132,13 +220,29 @@ class Cuestionarios extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'tipo_pregunta_id' => $this->tipo_pregunta_id,
             'sub_numeral' => $this->sub_numeral,
-            'requerido' => $this->requerido
+            'requerido' => $this->requerido,
+            'comentario' => $this->comentario
         ]);
 
+        foreach ($this->opciones_creadas as $opciones) :
+            InsInstrumentosOpcione::create([
+                'pregunta_id' => $nueva_pregunta->id,
+                'nombre'  => $opciones['nombre'],
+                'entrada' => $opciones['entrada'],
+            ]);
+        endforeach;
+
+        if ($this->tipo_pregunta_id) :
+            InsInstrumentosComentario::create([
+                'pregunta_id' => $nueva_pregunta->id,
+                'comentario' => $this->comentario,
+            ]);
+        endif;
+
         $this->obtener_lista_preguntas();
-        $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
         $this->alert('success', 'Pregunta Creada');
+        $this->resetInput();
     }
 
     public function edit($id)
@@ -169,7 +273,8 @@ class Cuestionarios extends Component
                 'cuestionario_id' => $this->cuestionario_id,
                 'tipo_pregunta_id' => $this->tipo_pregunta_id,
                 'sub_numeral' => $this->sub_numeral,
-                'requerido' => $this->requerido
+                'requerido' => $this->requerido,
+                'comentario' => $this->comentario
             ]);
 
             $this->resetInput();
