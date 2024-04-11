@@ -70,8 +70,8 @@ class EvaEvaluaciones extends Component
         EvaEvaluacione::create([
             'tipo_evaluacion_id' => $this->tipo_evaluacion_id,
             'instrumento_id' => $this->instrumento_id,
-            'fecha_inicio_evaluacion' => date('Y-m-d h:i', strtotime($this->fecha_inicio_evaluacion)),
-            'fecha_fin_evaluacion'    => date('Y-m-d h:i', strtotime($this->fecha_fin_evaluacion)),
+            'fecha_inicio_evaluacion' => date('Y-m-d h:i A', strtotime($this->fecha_inicio_evaluacion)),
+            'fecha_fin_evaluacion'    => date('Y-m-d h:i A', strtotime($this->fecha_fin_evaluacion)),
             'estado' => $this->estado
         ]);
 
@@ -106,8 +106,8 @@ class EvaEvaluaciones extends Component
             $record->update([
                 'tipo_evaluacion_id' => $this->tipo_evaluacion_id,
                 'instrumento_id' => $this->instrumento_id,
-                'fecha_inicio_evaluacion' => date('Y-m-d h:i', strtotime($this->fecha_inicio_evaluacion)),
-                'fecha_fin_evaluacion'    => date('Y-m-d h:i', strtotime($this->fecha_fin_evaluacion)),
+                'fecha_inicio_evaluacion' => date('Y-m-d h:i A', strtotime($this->fecha_inicio_evaluacion)),
+                'fecha_fin_evaluacion'    => date('Y-m-d h:i A', strtotime($this->fecha_fin_evaluacion)),
                 'estado' => $this->estado
             ]);
 
