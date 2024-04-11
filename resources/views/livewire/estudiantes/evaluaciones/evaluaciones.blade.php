@@ -23,7 +23,10 @@
                         {{ $evaluacion->tiposEvaluacione->descripcion }}
                     </p>
                     @if ($evaluacion->disponible == true)
-                        <a href="#{{ $evaluacion->id }}">Completar Evaluacion</a>
+                        <a href="{{ route('estudiantes.evaluaciones.ver', ['evaluacion_id' => $evaluacion->id]) }}">
+                            Completar
+                            Evaluacion
+                        </a>
                     @else
                         <a href="#{{ $evaluacion->id }}" class="text-danger">
                             No disponible, periodo finalizado
