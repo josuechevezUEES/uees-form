@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InsInstrumentosEvaluacione extends Model
 {
-	use HasFactory;
+    use HasFactory;
 
     /**
      * The connection name for the model.
@@ -20,6 +20,10 @@ class InsInstrumentosEvaluacione extends Model
 
     protected $table = 'ins_instrumentos_evaluaciones';
 
-    protected $fillable = ['nombre','descripcion','estado'];
+    protected $fillable = ['nombre', 'descripcion', 'estado'];
 
+    public function secciones()
+    {
+        return $this->hasMany(InsInstrumentosSeccione::class, 'instrumento_id', 'id');
+    }
 }

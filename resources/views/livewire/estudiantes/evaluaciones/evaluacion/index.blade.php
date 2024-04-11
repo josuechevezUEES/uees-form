@@ -1,16 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Evaluaciones')
-
-@section('content_header')
-    {{ Breadcrumbs::render('estudiantes.evaluaciones.index') }}
-@stop
-
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <livewire:estudiantes.evaluaciones.evaluaciones />
+                <livewire:estudiantes.evaluaciones.evaluacion.evaluacion />
             </div>
         </div>
     </div>

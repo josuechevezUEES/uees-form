@@ -10,6 +10,6 @@ Route::middleware(['auth'])
         Route::view('/evaluaciones', 'livewire.estudiantes.evaluaciones.index')
             ->name('estudiantes.evaluaciones.index');
 
-        Route::view('/evaluaciones/{evaluacion_id}/secciones', 'livewire.estudiantes.evaluaciones.secciones.index')
-            ->name('estudiantes.evaluaciones.secciones');
+        Route::view('/evaluaciones/{evaluacion_id}/ver', 'livewire.estudiantes.evaluaciones.evaluacion.index')
+            ->name('estudiantes.evaluaciones.ver');
     });

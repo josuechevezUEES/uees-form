@@ -23,7 +23,7 @@
                         {{ $evaluacion->tiposEvaluacione->descripcion }}
                     </p>
                     @if ($evaluacion->disponible == true)
-                        <a href="{{ route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $evaluacion->id]) }}">
+                        <a href="{{ route('estudiantes.evaluaciones.ver', ['evaluacion_id' => $evaluacion->id]) }}">
                             Completar
                             Evaluacion
                         </a>
