@@ -30,7 +30,7 @@ return new class extends Migration
 
                 $table->boolean('requerido');
 
-                $table->timestamps();
+                $table->timestamps(3);
             });
 
         Schema::connection('sqlsrv')
@@ -52,7 +52,7 @@ return new class extends Migration
 
                 $table->boolean('requerido');
 
-                $table->timestamps();
+                $table->timestamps(3);
             });
     }
 

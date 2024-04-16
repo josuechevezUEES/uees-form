@@ -130,7 +130,7 @@ class Cuestionarios extends Component
             $this->seccion = InsInstrumentosSeccione::find($request->seccion_id);
             $this->verificar_existencia_cuestionario();
         } catch (\Throwable $th) {
-            abort(404, 'Cuestionario y seccion no encontrados');
+            abort(404, 'Cuestionario y seccion no encontrados' . $th);
         }
     }
 
@@ -185,7 +185,7 @@ class Cuestionarios extends Component
 
             $this->cuestionario_id = $crear_cuestionario->id;
         } catch (\Throwable $th) {
-            abort(503, 'No puedo crear nuevo cuestionario');
+            abort(503, 'No puedo crear nuevo cuestionario' . $th);
         }
     }
 

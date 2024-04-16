@@ -20,7 +20,7 @@ return new class extends Migration
                     ->on('ins_instrumentos_secciones')
                     ->comment('Relacion con ins_instrumentos_evaluaciones');
 
-                $table->timestamps();
+                $table->timestamps(3);
             });
 
         Schema::connection('sqlsrv')
@@ -32,7 +32,7 @@ return new class extends Migration
                     ->on('ins_instrumentos_secciones')
                     ->description('Relacion con ins_instrumentos_evaluaciones');
 
-                $table->timestamps();
+                $table->timestamps(3);
             });
     }
 
