@@ -56,89 +56,96 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if (is_numeric($request->email) && ctype_digit($request->email)) :
-            // buscar usuario class
-            $buscar_estudiante_class = $this->buscar_estudiante_class($request);
+        try {
+            if (is_numeric($request->email) && ctype_digit($request->email)) :
+                // buscar usuario class
+                $buscar_estudiante_class = $this->buscar_estudiante_class($request);
 
-            if ($buscar_estudiante_class) :
+                if ($buscar_estudiante_class) :
 
-                $estudiante = $buscar_estudiante_class;
+                    $estudiante = $buscar_estudiante_class;
 
-                // name es equivalente a cif
-                $usuario = User::where('cif', $estudiante->CIF)
-                    ->get();
+                    // name es equivalente a cif
+                    $usuario = User::where('cif', $estudiante->CIF)
+                        ->get();
 
-                if ($usuario->count() > 0) :
-                    $this->class_estudiante_loginUsingId($usuario->first());
-
-                    return redirect()
-                        ->route('estudiantes.evaluaciones.index');
-                else :
-                    // Crear usuario
-                    $usuario = User::create([
-                        'name'            => $estudiante->CIF,
-                        'email'           => $estudiante->CORREO,
-                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD_ID),
-                        'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
-                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA_ID),
-                        'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
-                        'modalidad'       => $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0,
-                        'cif'             => $estudiante->CIF,
-                        'estado'          => 1,
-                    ]);
-
-                    if ($usuario) :
-                        $usuario->assignRole('estudiante');
-                        $this->class_estudiante_loginUsingId($usuario);
+                    if ($usuario->count() > 0) :
+                        $this->class_estudiante_loginUsingId($usuario->first());
 
                         return redirect()
                             ->route('estudiantes.evaluaciones.index');
                     else :
-                        return redirect()
-                            ->route('login');
+                        // Crear usuario
+                        $usuario = User::create([
+                            'name'            => $estudiante->CIF,
+                            'email'           => $estudiante->CORREO,
+                            'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD_ID),
+                            'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                            'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA_ID),
+                            'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                            'modalidad'       => $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0,
+                            'cif'             => $estudiante->CIF,
+                            'estado'          => 1,
+                        ]);
+
+                        if ($usuario) :
+                            $usuario->assignRole('estudiante');
+                            $this->class_estudiante_loginUsingId($usuario);
+
+                            return redirect()
+                                ->route('estudiantes.evaluaciones.index');
+                        else :
+                            return redirect()
+                                ->route('login');
+                        endif;
                     endif;
+
+                else:
+                    return redirect()->route('login');
                 endif;
-            endif;
 
-        else :
-            // buscar usuario class
-            $buscar_usuario_class = $this->buscar_usuario_empleado($request);
-
-            if ($buscar_usuario_class) :
-
-                $usuario = User::where('name', $request->email)
-                    ->get();
-
-                if ($usuario->count() > 0) :
-
-                    $this->class_loginUsingId($usuario->first());
-
-                    return redirect()
-                        ->route('home');
-                else :
-
-                    // Crear usuario
-                    $usuario = User::create([
-                        'name'            => $buscar_usuario_class->name,
-                        'email'           => $buscar_usuario_class->email,
-                        'departamento'    => $buscar_usuario_class->departamento,
-                        'departamento_nombre' => $buscar_usuario_class->departamento_nombre,
-                        'dui'             => $buscar_usuario_class->dui ? $buscar_usuario_class->dui : '000000000',
-                        'usuario_class'   => $buscar_usuario_class->name,
-                        'estado'          => 1,
-                        'password' => null,
-                    ]);
-
-                    $this->class_loginUsingId($usuario);
-
-                    return redirect()
-                        ->route('home');
-                endif;
             else :
-                return redirect()
-                    ->route('login');
+                // buscar usuario class
+                $buscar_usuario_class = $this->buscar_usuario_empleado($request);
+
+                if ($buscar_usuario_class) :
+
+                    $usuario = User::where('name', $request->email)
+                        ->get();
+
+                    if ($usuario->count() > 0) :
+
+                        $this->class_loginUsingId($usuario->first());
+
+                        return redirect()
+                            ->route('home');
+                    else :
+
+                        // Crear usuario
+                        $usuario = User::create([
+                            'name'            => $buscar_usuario_class->name,
+                            'email'           => $buscar_usuario_class->email,
+                            'departamento'    => $buscar_usuario_class->departamento,
+                            'departamento_nombre' => $buscar_usuario_class->departamento_nombre,
+                            'dui'             => $buscar_usuario_class->dui ? $buscar_usuario_class->dui : '000000000',
+                            'usuario_class'   => $buscar_usuario_class->name,
+                            'estado'          => 1,
+                            'password' => null,
+                        ]);
+
+                        $this->class_loginUsingId($usuario);
+
+                        return redirect()
+                            ->route('home');
+                    endif;
+                else :
+                    return redirect()
+                        ->route('login');
+                endif;
             endif;
-        endif;
+        } catch (\Throwable $th) {
+            return redirect()->route('login');
+        }
     }
 
     /**
