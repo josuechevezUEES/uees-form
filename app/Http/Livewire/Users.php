@@ -142,9 +142,9 @@ class Users extends Component
             'email' => 'required|unique:users,email',
         ]);
 
-        User::create([
+        User::insert([
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
         ]);
 
         $this->resetInput();

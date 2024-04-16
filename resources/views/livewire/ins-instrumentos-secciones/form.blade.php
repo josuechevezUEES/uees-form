@@ -23,10 +23,6 @@
 </div>
 
 <div class="form-group" wire:ignore>
-    @if ($fondo)
-        Photo Preview:
-        <img src="{{ $fondo->temporaryUrl() }}">
-    @endif
     <label for="fondo">Fondo</label>
     <input type="file" wire:model="fondo" class="form-control">
     <div wire:loading wire:target="photo">Uploading...</div>

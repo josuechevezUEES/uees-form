@@ -64,15 +64,19 @@ class InsInstrumentosSecciones extends Component
             'estado' => 'required',
         ]);
 
-        $this->fondo_img->store('photos');
+        if ($this->fondo) {
+            $this->fondo->store('/public/photos');
+        }
 
         InsInstrumentosSeccione::create([
             'instrumento_id' => $this->instrumento_id,
             'nombre'         => $this->nombre,
             'literal'        => $this->literal,
-            'fondo_img'      => $this->fondo_img,
+            'fondo_img'      => $this->fondo ? $this->fondo->hashName() : null,
             'estado'         => $this->estado
         ]);
+
+        $this->fondo = null;
 
         $this->resetInput();
         $this->dispatchBrowserEvent('closeModal');
@@ -96,23 +100,38 @@ class InsInstrumentosSecciones extends Component
             'instrumento_id' => 'required',
             'nombre' => 'required',
             'literal' => 'required',
-            // 'fondo_img' => 'required',
             'estado' => 'required',
         ]);
 
         if ($this->selected_id) {
-            $record = InsInstrumentosSeccione::find($this->selected_id);
 
-            $record->update([
-                'instrumento_id' => $this->instrumento_id,
-                'nombre' => $this->nombre,
-                'literal' => $this->literal,
-                'fondo_img'      => $this->fondo_img,
-                'estado' => $this->estado
-            ]);
+            if ($this->fondo) {
+                
+                $this->fondo->store('/public/photos');
 
-            // $this->fondo_img->storePublicly('fondo_img', 'public');
+                $record = InsInstrumentosSeccione::find($this->selected_id);
 
+                $record->update([
+                    'instrumento_id' => $this->instrumento_id,
+                    'nombre' => $this->nombre,
+                    'literal' => $this->literal,
+                    'fondo_img' => $this->fondo->hashName(),
+                    'estado' => $this->estado
+                ]);
+            }
+
+            if ($this->fondo == null) {
+                
+                $record = InsInstrumentosSeccione::find($this->selected_id);
+
+                $record->update([
+                    'instrumento_id' => $this->instrumento_id,
+                    'nombre' => $this->nombre,
+                    'literal' => $this->literal,
+                    'estado' => $this->estado
+                ]);
+            }
+            $this->fondo = null;
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
             $this->alert('success', "$record->nombre fue actualizado");

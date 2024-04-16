@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="position-relative shadow">
-                                <img src="{{ asset("img/$row->fondo_img") }}" class="img-fluid w-100 h-100"
+                                <img src="{{ asset("storage/photos/$row->fondo_img") }}" class="img-fluid w-100 h-100"
                                     alt="logo-seccion">
 
                                 <div class="ribbon-wrapper">
