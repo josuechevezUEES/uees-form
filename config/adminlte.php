@@ -16,7 +16,7 @@ return [
 
     'title' => '',
     'title_prefix' => '',
-    'title_postfix' => '| UEES FORMS',
+    'title_postfix' => '| UEES FORM',
 
     /*
     |--------------------------------------------------------------------------
