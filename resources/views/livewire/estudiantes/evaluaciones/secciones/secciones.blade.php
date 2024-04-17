@@ -15,7 +15,7 @@
         <div class="card-body">
             <div class="row">
                 @forelse ($cuestionario->instrumentoPreguntas as  $pregunta)
-                    <div class="col-sm-10">
+                    <div class="col-sm-10 mb-3">
                         <div class="px-3 w-100">
                             @if ($pregunta->tipo_pregunta_id == 1)
                                 <label for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}">
@@ -163,6 +163,12 @@
                 @empty
 
                 @endforelse
+
+                <div class="col-sm-12 px-4">
+                    <button type="button" class="btn btn-sm bg-navy">
+                        Enviar Respuestas
+                    </button>
+                </div>
             </div>
         </div>
     </div>
