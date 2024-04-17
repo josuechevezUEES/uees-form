@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-sm-1">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('instrumentos_evaluaciones.secciones.cuestionarios', ['seccion_id' => $row->id, 'instrumento_id' => $this->evaluacion->instrumento_id]) }}"
+                                <a href="{{ route('estudiantes.evaluaciones.cuestionarios', ['seccion_id' => $row->id]) }}"
                                     class="btn btn-xs" data-toggle="tooltip" data-placement="left"
                                     title="Ver Preguntas">
                                     <i class="fa fa-eye"></i>
@@ -28,7 +28,8 @@
                     </div>
                 </div>
                 <div class="position-relative shadow">
-                    <img src="{{ asset("img/$row->fondo_img") }}" class="img-fluid w-100 h-100" alt="logo-seccion">
+                    <img src="{{ asset("storage/photos/$row->fondo_img") }}" class="img-fluid w-100 h-100"
+                        alt="logo-seccion">
 
                     <div class="ribbon-wrapper">
                         @if ($row->estado == 1)

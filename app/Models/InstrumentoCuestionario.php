@@ -48,4 +48,9 @@ class InstrumentoCuestionario extends Model
     {
         return $this->belongsTo('App\Models\InsInstrumentosSeccione', 'seccion_id');
     }
+
+    public function instrumentoPreguntas()
+    {
+        return $this->hasMany(InsInstrumentosPregunta::class, 'cuestionario_id', 'id');
+    }
 }
