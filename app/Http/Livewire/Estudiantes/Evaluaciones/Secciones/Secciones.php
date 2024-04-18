@@ -15,6 +15,8 @@ class Secciones extends Component
     public string $seccion_id;
     public string $cuestionario_id;
 
+    public $respuestas = [],  $validaciones = [];
+
     public InstrumentoSeccion $seccion;
     public EvaEvaluacione $evaluacion;
     public InstrumentoCuestionario $cuestionario;
@@ -31,5 +33,43 @@ class Secciones extends Component
     public function render()
     {
         return view('livewire.estudiantes.evaluaciones.secciones.secciones');
+    }
+
+
+    /**
+     * Generar validaciones de cada pregunta
+     *
+     * @return void
+     */
+    public function array_validaciones()
+    {
+        $validaciones = [];
+    
+        foreach ($this->cuestionario->instrumentoPreguntas as $pregunta) {
+            if ($pregunta->requerido == true) {
+                // Construye el nombre del campo como una cadena en lugar de un array asociativo
+                $campo = $this->seccion->literal . "." . $pregunta->sub_numeral;
+                // Agrega el campo y su validación directamente al array $validaciones
+                $validaciones[$campo] = 'required';
+            }
+        }
+    
+        $this->validaciones = $validaciones;
+    
+        return $validaciones;
+    }
+    
+    public function almacenar()
+    {
+        // Obtén el arreglo de validaciones
+        $validaciones = $this->array_validaciones();
+
+        // Usa el método validate() para validar los datos con las reglas generadas
+        // $this->validate($validaciones);
+
+        // verificar respuesta para evaluacion
+
+        // alamacenar informacion
+
     }
 }

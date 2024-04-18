@@ -165,7 +165,7 @@
                 @endforelse
 
                 <div class="col-sm-12 px-4">
-                    <button type="button" class="btn btn-sm bg-navy">
+                    <button type="button" wire:click='almacenar()' class="btn btn-sm bg-navy">
                         Enviar Respuestas
                     </button>
                 </div>
