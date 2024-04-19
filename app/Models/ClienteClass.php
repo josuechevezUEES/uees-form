@@ -86,4 +86,9 @@ class ClienteClass extends Model
      * @var string
      */
     protected $connection = 'sqlsrv_class';
+
+    public function busar_cif_estudiante(string $cif)
+    {
+        return $this->where('CLICUN', $cif)->get();
+    }
 }
