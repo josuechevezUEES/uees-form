@@ -13,11 +13,12 @@ class EvaEvaluacionesRespuestaFactory extends Factory
     public function definition()
     {
         return [
+			'usuario_id' => $this->faker->name,
 			'evaluacion_id' => $this->faker->name,
 			'seccion_id' => $this->faker->name,
 			'pregunta_id' => $this->faker->name,
-			'respuesta' => $this->faker->name,
-			'cif' => $this->faker->name,
+			'opcion_id' => $this->faker->name,
+			'comentario' => $this->faker->name,
         ];
     }
 }

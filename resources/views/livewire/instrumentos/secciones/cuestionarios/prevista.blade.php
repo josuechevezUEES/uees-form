@@ -1,6 +1,7 @@
 <div class="px-5 w-100">
     <div class="card">
         <div class="card-body bg-light">
+            {{-- Pregunta Cerrada --}}
             @if ($tipo_pregunta_id == 1)
                 <label for="">{{ $sub_numeral }}) {{ $nombre }}</label>
                 <div class="row">
@@ -16,6 +17,7 @@
                 </div>
             @endif
 
+            {{-- Pregunta Abierta --}}
             @if ($tipo_pregunta_id == 2)
                 <label for="">{{ $sub_numeral }}) {{ $nombre }}</label>
                 <div class="row">
@@ -32,6 +34,7 @@
                 </div>
             @endif
 
+            {{-- Pregunta Seleccion Multiple --}}
             @if ($tipo_pregunta_id == 3)
                 <label for="">{{ $sub_numeral }}) {{ $nombre }}</label>
                 <div class="row">
@@ -52,6 +55,7 @@
                 </div>
             @endif
 
+            {{-- Pregunta Cerrada Compleja --}}
             @if ($tipo_pregunta_id == 4)
                 <label for="">{{ $sub_numeral }}) {{ $nombre }}</label>
                 <div class="row">

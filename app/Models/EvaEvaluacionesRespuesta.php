@@ -9,13 +9,18 @@ class EvaEvaluacionesRespuesta extends Model
 {
     use HasFactory;
 
-    protected $connection = 'sqlsrv';
-
     public $timestamps = true;
 
     protected $table = 'eva_evaluaciones_respuestas';
 
-    protected $fillable = ['evaluacion_id', 'seccion_id', 'pregunta_id', 'respuesta', 'cif'];
+    protected $fillable = [
+        'usuario_id', 
+        'evaluacion_id', 
+        'seccion_id', 
+        'pregunta_id', 
+        'opcion_id', 
+        'comentario'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -23,6 +28,14 @@ class EvaEvaluacionesRespuesta extends Model
     public function evaEvaluacione()
     {
         return $this->hasOne('App\Models\EvaEvaluacione', 'id', 'evaluacion_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function insInstrumentosOpcione()
+    {
+        return $this->hasOne('App\Models\InsInstrumentosOpcione', 'id', 'opcion_id');
     }
 
     /**
@@ -39,5 +52,13 @@ class EvaEvaluacionesRespuesta extends Model
     public function insInstrumentosSeccione()
     {
         return $this->hasOne('App\Models\InsInstrumentosSeccione', 'id', 'seccion_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'usuario_id');
     }
 }

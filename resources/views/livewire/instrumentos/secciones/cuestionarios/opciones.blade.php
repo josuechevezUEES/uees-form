@@ -28,11 +28,6 @@
         @enderror
     </div>
 
-    <div class="col-sm-12 mb-3">
-        <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary">Agregrar </button>
-    </div>
-
-
     @if ($tipo_pregunta_id == '4')
         <div class="col-sm-12 pb-3">
             <label for="comentario">Titulo de comentario</label>
@@ -47,4 +42,8 @@
             @enderror
         </div>
     @endif
+
+    <div class="col-sm-12 mb-3">
+        <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary">Agregrar </button>
+    </div>
 </div>
