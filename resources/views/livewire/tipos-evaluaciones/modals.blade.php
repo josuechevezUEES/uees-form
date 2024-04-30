@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <form>
                     @include('livewire.tipos-evaluaciones.form')
-                    <div wire:loading.delay wire:target='store'>
+                    <div wire:loading.delay wire:target='guardar_entidades'>
                         <div class="mt-2">
                             <div class="spinner-border spinner-border-sm" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -25,8 +25,8 @@
                 <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" wire:click.prevent="store()" wire:target="store,descripcion,nombre,estado" wire:loading.attr="disabled"
-                    class="btn bg-navy">
+                <button type="button" wire:click.prevent="store()" wire:target="store,descripcion,nombre,estado"
+                    wire:loading.attr="disabled" class="btn bg-navy">
                     Guardar
                 </button>
             </div>
@@ -62,8 +62,8 @@
                 <button type="button" wire:click.prevent="cancel()" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" wire:click.prevent="update()" wire:target="update,descripcion,nombre,estado" wire:loading.attr="disabled"
-                    class="btn bg-navy">
+                <button type="button" wire:click.prevent="update()" wire:target="update,descripcion,nombre,estado"
+                    wire:loading.attr="disabled" class="btn bg-navy">
                     Guardar
                 </button>
             </div>

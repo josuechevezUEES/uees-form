@@ -47,38 +47,40 @@
                                         <td>{{ $row->nombre }}</td>
                                         <td>{{ $row->descripcion }}</td>
                                         <td>{{ $row->estado ? 'Activo' : 'Desactivado' }}</td>
-                                        <td width="90">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-secondary dropdown-toggle" href="#"
-                                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Acciones
+                                        <td width="200">
+                                            <div class="btn-group">
+                                                <div class="dropdown">
+                                                    <a class="btn btn-sm btn-warning dropdown-toggle" href="#"
+                                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Acciones
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a data-bs-toggle="modal" data-bs-target="#updateDataModal"
+                                                                class="dropdown-item"
+                                                                wire:click="edit({{ $row->id }})">
+                                                                <i class="fa fa-edit"></i>
+                                                                Editar
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                onclick="confirm('Confirma la eliminacion de {{ $row->nombre }}?')||event.stopImmediatePropagation()"
+                                                                wire:click="destroy({{ $row->id }})">
+                                                                <i class="fa fa-trash"></i>
+                                                                Eliminar
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <a href="{{ route('instrumentos_evaluaciones.secciones', ['instrumento_id' => $row->id]) }}"
+                                                    class="btn btn-sm bg-navy">
+                                                    <i class="fa fa-wrench"></i>
+                                                    Configurar
                                                 </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="{{ route('instrumentos_evaluaciones.secciones', ['instrumento_id' => $row->id]) }}"
-                                                            class="dropdown-item">
-                                                            <i class="fa fa-edit"></i>
-                                                            Instrumentos
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a data-bs-toggle="modal" data-bs-target="#updateDataModal"
-                                                            class="dropdown-item"
-                                                            wire:click="edit({{ $row->id }})">
-                                                            <i class="fa fa-edit"></i>
-                                                            Editar
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                            onclick="confirm('Confirma la eliminacion de {{ $row->nombre }}?')||event.stopImmediatePropagation()"
-                                                            wire:click="destroy({{ $row->id }})">
-                                                            <i class="fa fa-trash"></i>
-                                                            Eliminar
-                                                        </a>
-                                                    </li>
-                                                </ul>
                                             </div>
+
+
                                         </td>
                                     </tr>
                                 @empty

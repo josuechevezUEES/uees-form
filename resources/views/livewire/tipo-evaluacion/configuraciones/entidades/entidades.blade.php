@@ -19,7 +19,8 @@
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluador_id">¿Quienes seran los evaluadores?</label>
-                            <select id="evaluador_id" {{ $configuracion_entidades ? 'disabled' : null }}  wire:model='evaluador_id' class="form-control">
+                            <select id="evaluador_id" {{ $configuracion_entidades ? 'disabled' : null }}
+                                wire:model='evaluador_id' class="form-control">
                                 <option>--seleccionar--</option>
                                 @forelse ($evaluadores as $evaluador)
                                     <option value="{{ $evaluador->id }}">{{ $evaluador->nombre }}</option>
@@ -31,7 +32,8 @@
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="evaluado_id">¿Quienes seran los evaluados?</label>
-                            <select id="evaluado_id" {{ $configuracion_entidades ? 'disabled' : null }} wire:model='evaluado_id' class="form-control">
+                            <select id="evaluado_id" {{ $configuracion_entidades ? 'disabled' : null }}
+                                wire:model='evaluado_id' class="form-control">
                                 <option>--seleccionar--</option>
                                 @forelse ($evaluados as $evaluado)
                                     <option value="{{ $evaluado->id }}">{{ $evaluado->nombre }}</option>
@@ -74,9 +76,20 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-12">
-                        <button wire:click="guardar_configuracion()" type="button" class="btn btn-sm btn-warning">
+                        <button wire:click="guardar_configuracion()" type="button" class="btn btn-sm btn-warning"
+                            wire:target="modalidades_seleccionadas,evaluado_id,evaluador_id"
+                            wire:loading.attr="disabled">
                             Guardar Cambios
                         </button>
+
+                        <div wire:loading.delay wire:target='eliminar_modalidad,agregrar_modalidad'>
+                            <div class="mt-2">
+                                <div class="spinner-border spinner-border-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Procesando, porfavor espere...
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
