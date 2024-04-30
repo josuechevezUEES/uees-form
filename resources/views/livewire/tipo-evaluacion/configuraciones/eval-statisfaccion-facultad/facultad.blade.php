@@ -16,11 +16,18 @@
 
     </div>
     <div class="card-body">
+        <div wire:loading.delay wire:target='facultades_seleccionadas,agregrar_facultad,eliminar_facultad'>
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            Procesando, porfavor espere...
+        </div>
         <div class="row p-3">
             @forelse ($facultades as $facultad)
                 <div class="col-sm-4 mb-3 ">
                     <input wire:model="facultades_seleccionadas" value="{{ $facultad->CARCOD }}"
-                        id="checkbox{{ $facultad->CARDSC }}" type="checkbox" class="form-check-input form-check-input-facultades"
+                        id="checkbox{{ $facultad->CARDSC }}" type="checkbox"
+                        class="form-check-input form-check-input-facultades"
                         wire:target='facultades_seleccionadas,agregrar_facultad, eliminar_facultad'
                         wire:loading.attr="disabled">
                     <label for="checkbox{{ $facultad->CARDSC }}">

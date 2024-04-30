@@ -28,11 +28,12 @@
 						<thead class="thead">
 							<tr> 
 								<td>#</td> 
+								<th>Usuario Id</th>
 								<th>Evaluacion Id</th>
 								<th>Seccion Id</th>
 								<th>Pregunta Id</th>
-								<th>Respuesta</th>
-								<th>Cif</th>
+								<th>Opcion Id</th>
+								<th>Comentario</th>
 								<td>ACTIONS</td>
 							</tr>
 						</thead>
@@ -40,11 +41,12 @@
 							@forelse($evaEvaluacionesRespuestas as $row)
 							<tr>
 								<td>{{ $loop->iteration }}</td> 
+								<td>{{ $row->usuario_id }}</td>
 								<td>{{ $row->evaluacion_id }}</td>
 								<td>{{ $row->seccion_id }}</td>
 								<td>{{ $row->pregunta_id }}</td>
-								<td>{{ $row->respuesta }}</td>
-								<td>{{ $row->cif }}</td>
+								<td>{{ $row->opcion_id }}</td>
+								<td>{{ $row->comentario }}</td>
 								<td width="90">
 									<div class="dropdown">
 										<a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

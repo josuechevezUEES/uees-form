@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return 'remember_token';
     }
+
+    public function cuestionarion_respuestas()
+    {
+        return $this->hasMany(EvaEvaluacionesRespuesta::class, 'usuario_id', 'id');
+    }
 }

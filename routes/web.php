@@ -7,6 +7,7 @@ Route::get('/', function () {
 });
 
 //Route Hooks - Do not delete//
+	Route::view('eva_evaluaciones_respuestas', 'livewire.eva_evaluaciones_respuestas.index')->middleware('auth');
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])

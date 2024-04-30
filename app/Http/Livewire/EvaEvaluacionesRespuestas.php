@@ -11,18 +11,19 @@ class EvaEvaluacionesRespuestas extends Component
     use WithPagination;
 
 	protected $paginationTheme = 'bootstrap';
-    public $selected_id, $keyWord, $evaluacion_id, $seccion_id, $pregunta_id, $respuesta, $cif;
+    public $selected_id, $keyWord, $usuario_id, $evaluacion_id, $seccion_id, $pregunta_id, $opcion_id, $comentario;
 
     public function render()
     {
 		$keyWord = '%'.$this->keyWord .'%';
         return view('livewire.evaEvaluacionesRespuestas.view', [
             'evaEvaluacionesRespuestas' => EvaEvaluacionesRespuesta::latest()
+						->orWhere('usuario_id', 'LIKE', $keyWord)
 						->orWhere('evaluacion_id', 'LIKE', $keyWord)
 						->orWhere('seccion_id', 'LIKE', $keyWord)
 						->orWhere('pregunta_id', 'LIKE', $keyWord)
-						->orWhere('respuesta', 'LIKE', $keyWord)
-						->orWhere('cif', 'LIKE', $keyWord)
+						->orWhere('opcion_id', 'LIKE', $keyWord)
+						->orWhere('comentario', 'LIKE', $keyWord)
 						->paginate(10),
         ]);
     }
@@ -34,29 +35,31 @@ class EvaEvaluacionesRespuestas extends Component
 	
     private function resetInput()
     {		
+		$this->usuario_id = null;
 		$this->evaluacion_id = null;
 		$this->seccion_id = null;
 		$this->pregunta_id = null;
-		$this->respuesta = null;
-		$this->cif = null;
+		$this->opcion_id = null;
+		$this->comentario = null;
     }
 
     public function store()
     {
         $this->validate([
+		'usuario_id' => 'required',
 		'evaluacion_id' => 'required',
 		'seccion_id' => 'required',
 		'pregunta_id' => 'required',
-		'respuesta' => 'required',
-		'cif' => 'required',
+		'opcion_id' => 'required',
         ]);
 
         EvaEvaluacionesRespuesta::create([ 
+			'usuario_id' => $this-> usuario_id,
 			'evaluacion_id' => $this-> evaluacion_id,
 			'seccion_id' => $this-> seccion_id,
 			'pregunta_id' => $this-> pregunta_id,
-			'respuesta' => $this-> respuesta,
-			'cif' => $this-> cif
+			'opcion_id' => $this-> opcion_id,
+			'comentario' => $this-> comentario
         ]);
         
         $this->resetInput();
@@ -68,31 +71,33 @@ class EvaEvaluacionesRespuestas extends Component
     {
         $record = EvaEvaluacionesRespuesta::findOrFail($id);
         $this->selected_id = $id; 
+		$this->usuario_id = $record-> usuario_id;
 		$this->evaluacion_id = $record-> evaluacion_id;
 		$this->seccion_id = $record-> seccion_id;
 		$this->pregunta_id = $record-> pregunta_id;
-		$this->respuesta = $record-> respuesta;
-		$this->cif = $record-> cif;
+		$this->opcion_id = $record-> opcion_id;
+		$this->comentario = $record-> comentario;
     }
 
     public function update()
     {
         $this->validate([
+		'usuario_id' => 'required',
 		'evaluacion_id' => 'required',
 		'seccion_id' => 'required',
 		'pregunta_id' => 'required',
-		'respuesta' => 'required',
-		'cif' => 'required',
+		'opcion_id' => 'required',
         ]);
 
         if ($this->selected_id) {
 			$record = EvaEvaluacionesRespuesta::find($this->selected_id);
             $record->update([ 
+			'usuario_id' => $this-> usuario_id,
 			'evaluacion_id' => $this-> evaluacion_id,
 			'seccion_id' => $this-> seccion_id,
 			'pregunta_id' => $this-> pregunta_id,
-			'respuesta' => $this-> respuesta,
-			'cif' => $this-> cif
+			'opcion_id' => $this-> opcion_id,
+			'comentario' => $this-> comentario
             ]);
 
             $this->resetInput();

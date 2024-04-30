@@ -15,6 +15,10 @@ return new class extends Migration
             ->create('eva_evaluaciones_respuestas', function (Blueprint $table) {
                 $table->id();
 
+                $table->foreignId('usuario_id')
+                    ->references('id')
+                    ->on('users');
+
                 $table->foreignId('evaluacion_id')
                     ->references('id')
                     ->on('eva_evaluaciones');
@@ -27,9 +31,13 @@ return new class extends Migration
                     ->references('id')
                     ->on('ins_instrumentos_preguntas');
 
-                $table->longText('respuesta');
+                $table->foreignId('opcion_id')
+                    ->references('id')
+                    ->on('ins_instrumentos_opciones');
 
-                $table->string('cif');
+                $table->longText('comentario')
+                    ->nullable()
+                    ->default(null);
 
                 $table->timestamps(3);
             });
