@@ -213,7 +213,5 @@
                 </div>
             </div>
         </div>
-
-        <button type="submit" class="btn bg-navy">Guadar</button>
     </form>
 </div>

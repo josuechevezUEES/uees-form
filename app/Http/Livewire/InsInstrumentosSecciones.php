@@ -30,13 +30,10 @@ class InsInstrumentosSecciones extends Component
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
+
         return view('livewire.ins-instrumentos-secciones.view', [
             'insInstrumentosSecciones' => InsInstrumentosSeccione::orderBy('id', 'ASC')
-                ->orWhere('instrumento_id', 'LIKE', $keyWord)
-                ->orWhere('nombre', 'LIKE', $keyWord)
-                ->orWhere('literal', 'LIKE', $keyWord)
-                ->orWhere('fondo_img', 'LIKE', $keyWord)
-                ->orWhere('estado', 'LIKE', $keyWord)
+                ->where('instrumento_id', $this->instrumento_id)
                 ->cursorPaginate(10),
         ]);
     }
@@ -59,13 +56,13 @@ class InsInstrumentosSecciones extends Component
     {
         $this->validate([
             'instrumento_id' => 'required',
-            'nombre' => 'required',
+            'nombre'  => 'required',
             'literal' => 'required',
-            'estado' => 'required',
+            'estado'  => 'required',
         ]);
 
         if ($this->fondo) {
-            $this->fondo->store('/public/photos');
+            $this->fondo->store('public/photos');
         }
 
         InsInstrumentosSeccione::create([
@@ -98,37 +95,37 @@ class InsInstrumentosSecciones extends Component
     {
         $this->validate([
             'instrumento_id' => 'required',
-            'nombre' => 'required',
+            'nombre'  => 'required',
             'literal' => 'required',
-            'estado' => 'required',
+            'estado'  => 'required',
         ]);
 
         if ($this->selected_id) {
 
             if ($this->fondo) {
-                
+
                 $this->fondo->store('/public/photos');
 
                 $record = InsInstrumentosSeccione::find($this->selected_id);
 
                 $record->update([
                     'instrumento_id' => $this->instrumento_id,
-                    'nombre' => $this->nombre,
-                    'literal' => $this->literal,
-                    'fondo_img' => $this->fondo->hashName(),
-                    'estado' => $this->estado
+                    'nombre'     => $this->nombre,
+                    'literal'    => $this->literal,
+                    'fondo_img'  => $this->fondo->hashName(),
+                    'estado'     => $this->estado
                 ]);
             }
 
             if ($this->fondo == null) {
-                
+
                 $record = InsInstrumentosSeccione::find($this->selected_id);
 
                 $record->update([
                     'instrumento_id' => $this->instrumento_id,
-                    'nombre' => $this->nombre,
+                    'nombre'  => $this->nombre,
                     'literal' => $this->literal,
-                    'estado' => $this->estado
+                    'estado'  => $this->estado
                 ]);
             }
             $this->fondo = null;

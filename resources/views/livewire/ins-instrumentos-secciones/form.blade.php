@@ -25,7 +25,7 @@
 <div class="form-group" wire:ignore>
     <label for="fondo">Fondo</label>
     <input type="file" wire:model="fondo" class="form-control">
-    <div wire:loading wire:target="photo">Uploading...</div>
+    <div wire:loading wire:target="fondo">Uploading...</div>
     @error('fondo')
         <span class="error text-danger">{{ $message }}</span>
     @enderror
