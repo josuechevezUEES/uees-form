@@ -32,7 +32,7 @@
                                     <div class="px-3 w-100">
                                         @if ($pregunta->tipo_pregunta_id == 1)
                                             <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada
-                                                :pregunta="$pregunta" :seccion="$seccion" />
+                                                :pregunta="$pregunta" :seccion="$seccion" :wire:key="$loop->iteration"/>
                                         @endif
 
                                         @if ($pregunta->tipo_pregunta_id == 2)
@@ -70,12 +70,12 @@
 
                                         @if ($pregunta->tipo_pregunta_id == 3)
                                             <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple
-                                                :pregunta="$pregunta" :seccion="$seccion" />
+                                                :pregunta="$pregunta" :seccion="$seccion" :wire:key="$loop->iteration"/>
                                         @endif
 
                                         @if ($pregunta->tipo_pregunta_id == 4)
                                             <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja
-                                                :pregunta="$pregunta" :seccion="$seccion" />
+                                                :pregunta="$pregunta" :seccion="$seccion" :wire:key="$loop->iteration"/>
                                         @endif
                                     </div>
 

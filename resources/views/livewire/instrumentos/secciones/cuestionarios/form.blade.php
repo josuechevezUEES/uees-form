@@ -48,11 +48,11 @@
 
 
     <div class="form-group pb-3">
-        <label for="requerido">Requerido</label>
+        <label for="requerido">Obligatorio</label>
         <select wire:model="requerido" id="requerido" class="form-select form-control form-control-border border-width-2">
             <option value="">--seleccionar--</option>
-            <option value="1">Si</option>
-            <option value="0">No</option>
+            <option value="1">Si, Hacer Obigatorio</option>
+            <option value="0">No Hacer Obigatorio</option>
         </select>
         @error('requerido')
             <span class="error text-danger">{{ $message }}</span>
