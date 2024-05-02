@@ -1,8 +1,8 @@
 <div class="row px-5">
-    <div class="col-sm-12 pb-3">
+    <div class="col-sm-12 mb-5">
         @switch($tipo_pregunta_id)
             @case('1')
-                <label for="nombre_opcion">Nombre Pregunta</label>
+                <label for="nombre_opcion">Nombre Opcion</label>
             @break
 
             @case('2')
@@ -10,18 +10,24 @@
             @break
 
             @case('3')
-                <label for="nombre_opcion">Nombre Pregunta</label>
+                <label for="nombre_opcion">Nombre Opcion</label>
             @break
 
             @case('4')
-                <label for="nombre_opcion">Nombre Pregunta</label>
+                <label for="nombre_opcion">Nombre Opcion</label>
             @break
 
             @default
         @endswitch
 
-        <input type="text" wire:model="nombre_opcion" id="nombre_opcion"
-            class="form-control form-control-border border-width-2">
+        <div class="input-group">
+            <input type="text" wire:model="nombre_opcion" id="nombre_opcion"
+                placeholder="Ingresar nuevo nombre para la opcion"
+                class="form-control form-control-border border-width-2">
+            <div class="input-group-append">
+                <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary">Agregrar </button>
+            </div>
+        </div>
 
         @error('nombre_opcion')
             <span class="error text-danger">{{ $message }}</span>
@@ -42,8 +48,4 @@
             @enderror
         </div>
     @endif
-
-    <div class="col-sm-12 mb-3">
-        <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary">Agregrar </button>
-    </div>
 </div>

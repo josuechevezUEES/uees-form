@@ -23,23 +23,7 @@
     </div>
 
     <div class="form-group pb-3">
-        <label for="tipo_pregunta_id">Tipo Pregunta</label>
-        <select wire:model="tipo_pregunta_id" id="tipo_pregunta_id" class="form-control form-select form-control-border border-width-2">
-            <option value="">--seleccionar--</option>
-            @forelse ($tipos_preguntas as $row)
-                <option value="{{ $row->id }}">
-                    {{ $row->nombre }}
-                </option>
-            @empty
-            @endforelse
-        </select>
-        @error('tipo_pregunta_id')
-            <span class="error text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div class="form-group pb-3">
-        <label for="nombre">Nombre Pregunta</label>
+        <label for="nombre">Titulo Pregunta</label>
         <input wire:model="nombre" type="text" class="form-control form-control-border border-width-2" id="nombre" placeholder="Ingresa Nombre">
         @error('nombre')
             <span class="error text-danger">{{ $message }}</span>
@@ -55,6 +39,22 @@
             <option value="0">No Hacer Obigatorio</option>
         </select>
         @error('requerido')
+            <span class="error text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="form-group pb-3">
+        <label for="tipo_pregunta_id">Tipo Pregunta</label>
+        <select wire:model="tipo_pregunta_id" id="tipo_pregunta_id" class="form-control form-select form-control-border border-width-2">
+            <option value="">--seleccionar--</option>
+            @forelse ($tipos_preguntas as $row)
+                <option value="{{ $row->id }}">
+                    {{ $row->nombre }}
+                </option>
+            @empty
+            @endforelse
+        </select>
+        @error('tipo_pregunta_id')
             <span class="error text-danger">{{ $message }}</span>
         @enderror
     </div>

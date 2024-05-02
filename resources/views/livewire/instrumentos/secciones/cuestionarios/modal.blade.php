@@ -5,8 +5,10 @@
         <div class="modal-content">
             <div class="modal-header bg-navy">
                 <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Pregunta</h5>
-                <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <div class="card-tools">
+                    <button wire:click.prevent="cancel()" type="button" class="btn-close text-warning" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <form>

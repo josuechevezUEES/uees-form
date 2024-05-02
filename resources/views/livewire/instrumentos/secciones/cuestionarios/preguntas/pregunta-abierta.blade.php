@@ -30,8 +30,7 @@
                     </div>
                 </button>
             </h3>
-            <textarea name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}"
-                class="form-control form-control-border" placeholder="Ingresar tu comentario"></textarea>
+            <textarea name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}" class="form-control form-control-border" placeholder="Ingresar tu comentario"></textarea>
         @endif
     </div>
 </div>

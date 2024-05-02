@@ -28,11 +28,14 @@ class Cuestionarios extends Component
 
     public function updatedTipoPreguntaId(string $value)
     {
-        $this->nombre = null;
-        $this->requerido = null;
-        $this->nombre_opcion = null;
-        $this->opciones_creadas = [];
-        $this->sub_numeral = $this->obtener_numero_total_preguntas() + 1;
+        if ($value) :
+            $this->opciones_creadas = [];
+            $this->sub_numeral = $this->obtener_numero_total_preguntas() + 1;
+        else :
+            $this->nombre = null;
+            $this->requerido = null;
+            $this->nombre_opcion = null;
+        endif;
     }
 
     public function obtener_numero_total_preguntas()
