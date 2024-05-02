@@ -49,30 +49,29 @@
             @forelse ($pregunta->opciones as $opcion)
                 @if ($loop->iteration == 1)
                     <div class="col-sm-auto">
-                        <input type="{{ $opcion['entrada'] }}"
-                            name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                            id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
-                            wire:model="opcion" {{ $pregunta->requerido ? 'required' : null }}
-                            value="{{ $opcion['nombre'] }}" class="form-radio-input">
-                        <label for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
-                            {{ $opcion['nombre'] }}
-                        </label>
+                        <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
+                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
+                            :wire:key="$loop->iteration" />
                     </div>
                 @else
                     <div class="col-sm-auto">
-                        <input type="{{ $opcion['entrada'] }}"
-                            name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                            id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
-                            wire:model="opcion" {{ $pregunta->requerido ? 'required' : null }}
-                            value="{{ $opcion['nombre'] }}" class="form-radio-input">
-                        <label for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
-                            {{ $opcion['nombre'] }}
-                        </label>
+                        <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
+                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
+                            :wire:key="$loop->iteration" />
                     </div>
                 @endif
             @empty
             @endforelse
         </div>
+        @if ($mostrar_text_area_comentario == true)
+            <div class="row">
+                <div class="col-sm-12">
+                    <textarea id="comentario-{{ $loop }}" name="comentario-{{ $loop }}"
+                        placeholder="{{ $pregunta->preguntaComentario->comentario }}"
+                        class="form-control form-control-sm form-control-border"></textarea>
+                </div>
+            </div>
+        @endif
     @endif
 
     @if ($mostrar_formulario)

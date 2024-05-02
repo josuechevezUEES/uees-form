@@ -12,7 +12,10 @@ class PreguntaCerradaCompleja extends Component
 
     use LivewireAlert;
 
-    protected $listeners = ['render' => 'render'];
+    protected $listeners = [
+        'render' => 'render',
+        'mostrar_comentario' => 'mostrar_comentario'
+    ];
 
     public $mostrar_comentario = false;
     public $opcion = '', $comentario = '';
@@ -24,6 +27,7 @@ class PreguntaCerradaCompleja extends Component
     public string $nuevo_nombre_opcion;
 
     public $mostrar_formulario = false;
+    public $mostrar_text_area_comentario = false;
 
     public function updatedNombrePregunta($value)
     {
@@ -31,20 +35,14 @@ class PreguntaCerradaCompleja extends Component
         $this->pregunta->save();
     }
 
-    public function updatedOpcion($value)
-    {
-        $this->mostrar_comentario = false;
-        
-        if ($value != "") :
-            $this->mostrar_comentario = true;
-        else :
-            $this->mostrar_comentario = false;
-        endif;
-    }
-
     public function render()
     {
         return view('livewire.instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja');
+    }
+
+    public function mostrar_comentario()
+    {
+        $this->mostrar_text_area_comentario = true;
     }
 
     public function activar_edicion()

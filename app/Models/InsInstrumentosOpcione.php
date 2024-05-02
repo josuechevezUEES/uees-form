@@ -29,4 +29,11 @@ class InsInstrumentosOpcione extends Model
     {
         return $this->hasOne('App\Models\InsInstrumentosPregunta', 'id', 'pregunta_id');
     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function preguntaComentario()
+    {
+        return $this->hasOne('App\Models\InsInstrumentosComentario', 'id', 'pregunta_id');
+    }
 }
