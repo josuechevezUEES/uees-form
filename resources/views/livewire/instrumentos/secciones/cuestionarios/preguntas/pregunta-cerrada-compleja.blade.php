@@ -45,7 +45,7 @@
     </div>
 
     @if (isset($pregunta->opciones))
-        <div class="row pt-3" wire:ignore>
+        <div class="row pt-3 mb-3" wire:ignore>
             @forelse ($pregunta->opciones as $opcion)
                 @if ($loop->iteration == 1)
                     <div class="col-sm-auto">
@@ -63,6 +63,7 @@
             @empty
             @endforelse
         </div>
+
         @if ($mostrar_text_area_comentario == true)
             <div class="row">
                 <div class="col-sm-12">
