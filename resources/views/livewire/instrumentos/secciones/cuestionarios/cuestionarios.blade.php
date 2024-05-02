@@ -35,36 +35,8 @@
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 2)
-                                        <div class="mb-4">
-                                            <h3>
-                                                {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
-                                                {{ $pregunta->nombre }}
-                                            </h3>
-                                            <div class="row pt-3">
-                                                @if (isset($pregunta->opciones))
-                                                    @forelse ($pregunta->opciones as $opcion)
-                                                        @if ($loop->iteration == 1)
-                                                            <div class="col-sm-12">
-                                                                <input type="{{ $opcion['entrada'] }}"
-                                                                    name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                    {{ $pregunta->requerido ? 'required' : null }}
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    placeholder="{{ $opcion['nombre'] }}">
-                                                            </div>
-                                                        @else
-                                                            <div class="col-sm-12">
-                                                                <input type="{{ $opcion['entrada'] }}"
-                                                                    name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                    {{ $pregunta->requerido ? 'required' : null }}
-                                                                    class="form-control form-control-border border-width-2"
-                                                                    placeholder="{{ $opcion['nombre'] }}">
-                                                            </div>
-                                                        @endif
-                                                    @empty
-                                                    @endforelse
-                                                @endif
-                                            </div>
-                                        </div>
+                                        <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-abierta
+                                            :pregunta="$pregunta" :seccion="$seccion" wire:key="'pregunta-'.$pregunta->id" />
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 3)
