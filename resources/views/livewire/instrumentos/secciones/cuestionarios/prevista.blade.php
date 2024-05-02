@@ -67,13 +67,15 @@
                             </div>
                         @empty
                         @endforelse
-                    @endif
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="">{{ $comentario }}</label>
-                            <input type="text" class="form-control form-control-border border-width-2">
+                        <div class="col-sm-12">
+                            <strong>Vista previa comentario</strong>
+                            <br>
+                            <div class="form-group">
+                                <label for="">{{ $comentario }}</label>
+                                <input type="text" class="form-control form-control-border border-width-2">
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @endif
         </div>
