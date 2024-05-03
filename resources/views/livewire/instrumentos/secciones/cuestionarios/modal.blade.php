@@ -15,7 +15,8 @@
                     <div class="row p-2">
                         <div class="col-sm-6">
                             @include('livewire.instrumentos.secciones.cuestionarios.form')
-                            <div wire:loading.delay wire:target='crear,obtener_numero_total_preguntas,updatedTipoPreguntaId'>
+                            <div wire:loading.delay
+                                wire:target='crear,obtener_numero_total_preguntas,updatedTipoPreguntaId'>
                                 <div class="mt-2 px-5">
                                     <div class="spinner-border spinner-border-sm" role="status">
                                         <span class="sr-only">Loading...</span>
@@ -41,8 +42,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">Close</button>
-                <button type="button" wire:click.prevent="store()" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+                <button type="button" wire:click.prevent="store()"
+                    wire:target="store,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario"
+                    wire:loading.attr="disabled" class="btn bg-navy">
+                    Guardar
+                </button>
             </div>
         </div>
     </div>
@@ -68,7 +75,11 @@
             <div class="modal-footer">
                 <button type="button" wire:click.prevent="cancel()" class="btn btn-secondary"
                     data-bs-dismiss="modal">Close</button>
-                <button type="button" wire:click.prevent="update()" class="btn btn-primary">Save</button>
+                <button type="button" wire:click.prevent="update()"
+                    wire:target="update,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario"
+                    wire:loading.attr="disabled" class="btn bg-navy">
+                    Guardar
+                </button>
             </div>
         </div>
     </div>

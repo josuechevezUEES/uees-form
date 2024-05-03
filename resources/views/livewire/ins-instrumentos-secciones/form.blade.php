@@ -32,8 +32,12 @@
 </div>
 
 <div class="form-group">
-    <label for="estado"></label>
-    <input wire:model="estado" type="text" class="form-control" id="estado" placeholder="Estado">
+    <label for="estado">Estado</label>
+    <select wire:model='estado' class="form-select form-control">
+        <option value="">--Seleccionar</option>
+        <option value="1">Activo</option>
+        <option value="0">Desactivo</option>
+    </select>
     @error('estado')
         <span class="error text-danger">{{ $message }}</span>
     @enderror
