@@ -30,7 +30,6 @@
         @enderror
     </div>
 
-
     <div class="form-group pb-3">
         <label for="requerido">Obligatorio</label>
         <select wire:model="requerido" id="requerido" class="form-select form-control form-control-border border-width-2">
@@ -58,5 +57,4 @@
             <span class="error text-danger">{{ $message }}</span>
         @enderror
     </div>
-
 </div>

@@ -6,8 +6,8 @@
             <div class="modal-header bg-navy">
                 <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Pregunta</h5>
                 <div class="card-tools">
-                    <button wire:click.prevent="cancel()" type="button" class="btn-close text-warning" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button wire:click.prevent="cancel()" type="button" class="btn-close text-warning"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
             </div>
             <div class="modal-body">
@@ -15,6 +15,14 @@
                     <div class="row p-2">
                         <div class="col-sm-6">
                             @include('livewire.instrumentos.secciones.cuestionarios.form')
+                            <div wire:loading.delay wire:target='crear,obtener_numero_total_preguntas,updatedTipoPreguntaId'>
+                                <div class="mt-2 px-5">
+                                    <div class="spinner-border spinner-border-sm" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    Procesando, porfavor espere...
+                                </div>
+                            </div>
                         </div>
                         @if ($tipo_pregunta_id)
                             <div class="col-sm-6">
