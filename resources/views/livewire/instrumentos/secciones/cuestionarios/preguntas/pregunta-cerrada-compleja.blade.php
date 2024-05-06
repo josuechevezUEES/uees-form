@@ -19,7 +19,7 @@
 
                 </div>
             @else
-                <h3>
+                <h4>
                     {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
                     {{ $pregunta->nombre }}
                     <button type="button" class="btn btn-sm btn-outline-dark" wire:click='activar_edicion'>
@@ -39,7 +39,27 @@
                             </div>
                         </div>
                     </button>
-                </h3>
+
+                    @if ($mostrar_text_area_comentario == false)
+                        <button type="button" class="btn btn-sm btn-outline-dark" wire:click="mostrar_comentario">
+                            Mostrar Comentario
+                            <div wire:loading.delay wire:target='mostrar_comentario'>
+                                <div class="spinner-border spinner-border-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </button>
+                    @else
+                        <button type="button" class="btn btn-sm btn-outline-dark" wire:click="ocultar_comentario">
+                            Ocultar Comentario
+                            <div wire:loading.delay wire:target='ocultar_comentario'>
+                                <div class="spinner-border spinner-border-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </button>
+                    @endif
+                </h4>
             @endif
         </div>
     </div>
@@ -65,12 +85,50 @@
         </div>
 
         @if ($mostrar_text_area_comentario == true)
-            <div class="row">
-                <div class="col-sm-12">
-                    <textarea id="comentario-{{ $loop }}" name="comentario-{{ $loop }}"
-                        placeholder="{{ $pregunta->preguntaComentario->comentario }}"
-                        class="form-control form-control-sm form-control-border"></textarea>
-                </div>
+            <div class="border border-dark px-3 pt-3 pb-3 rounded">
+                @if ($editar_comentario == true)
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark btn-sm"
+                                        wire:click='desactivar_edicion_comentario'>
+                                        <i class="fas fa-save"></i>
+                                        <div wire:loading.delay wire:target='desactivar_edicion_comentario'>
+                                            <div class="spinner-border spinner-border-sm" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <input type="text" id="editar-comentario-{{ $loop }}"
+                                    name="editar-comentario-{{ $loop }}" wire:model="comentario"
+                                    class="form-control form-control-sm form-control-border">
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark btn-sm"
+                                        wire:click='activar_edicion_comentario'>
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <div wire:loading.delay wire:target='activar_edicion_comentario'>
+                                            <div class="spinner-border spinner-border-sm" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <textarea id="comentario-{{ $loop }}" name="comentario-{{ $loop }}"
+                                    placeholder="{{ $pregunta->preguntaComentario->comentario }}"
+                                    class="form-control form-control-sm form-control-border"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         @endif
     @endif
@@ -98,8 +156,8 @@
 
                     <div class="input-group-append">
                         <button type="button" class="btn btn-sm btn-outline-dark"
-                            wire:click='cancelar_almacenar_opcion()' wire:target="almacenar_opcion,nuevo_nombre_opcion"
-                            wire:loading.attr="almacenar_opcion">
+                            wire:click='cancelar_almacenar_opcion()'
+                            wire:target="almacenar_opcion,nuevo_nombre_opcion" wire:loading.attr="almacenar_opcion">
                             <i class="fas fa-times-circle"></i>
                             <div wire:loading.delay wire:target='cancelar_almacenar_opcion'>
                                 <div class="spinner-border spinner-border-sm" role="status">

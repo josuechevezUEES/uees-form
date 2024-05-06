@@ -52,12 +52,12 @@
                 @if ($loop->iteration == 1)
                     <div class="col-sm-auto">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple-opcion
-                            :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id.time() }}" />
+                            :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id . time() }}" />
                     </div>
                 @else
                     <div class="col-sm-auto">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple-opcion
-                            :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id.time() }}" />
+                            :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id . time() }}" />
                     </div>
                 @endif
             @empty

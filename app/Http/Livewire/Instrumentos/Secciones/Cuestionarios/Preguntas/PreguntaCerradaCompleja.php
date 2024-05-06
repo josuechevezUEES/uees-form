@@ -22,7 +22,8 @@ class PreguntaCerradaCompleja extends Component
     public InsInstrumentosPregunta $pregunta;
     public $seccion;
     public $activar_edicion = false;
-    
+    public $editar_comentario = false;
+
     public string $nombre_pregunta;
     public string $nuevo_nombre_opcion;
 
@@ -45,6 +46,11 @@ class PreguntaCerradaCompleja extends Component
         $this->mostrar_text_area_comentario = true;
     }
 
+    public function ocultar_comentario()
+    {
+        $this->mostrar_text_area_comentario = false;
+    }
+
     public function activar_edicion()
     {
         $this->nombre_pregunta = $this->pregunta->nombre;
@@ -54,6 +60,21 @@ class PreguntaCerradaCompleja extends Component
     public function desactivar_edicion()
     {
         $this->activar_edicion = false;
+    }
+
+    public function activar_edicion_comentario()
+    {
+        $this->comentario = $this->pregunta->preguntaComentario->comentario;
+        $this->editar_comentario = true;
+    }
+
+    public function desactivar_edicion_comentario()
+    {
+        $this->pregunta->preguntaComentario->comentario = $this->comentario;
+        $this->pregunta->preguntaComentario->save();
+        $this->comentario = '';
+
+        $this->editar_comentario = false;
     }
 
     public function mostrar_formulario_nueva_opcion()
