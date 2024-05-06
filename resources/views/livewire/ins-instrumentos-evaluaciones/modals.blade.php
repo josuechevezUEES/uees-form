@@ -51,7 +51,7 @@
                     <input type="hidden" wire:model="selected_id">
                     @include('livewire.ins-instrumentos-evaluaciones.form')
 
-                    <div wire:loading.delay wire:target='update'>
+                    <div wire:loading.delay wire:target='edit,update'>
                         <div class="mt-2">
                             <div class="spinner-border spinner-border-sm" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -65,7 +65,7 @@
                 <button type="button" wire:click.prevent="cancel()" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cerrar
                 </button>
-                <button type="button" wire:click.prevent="update()" wire:target="update,descripcion,nombre,estado"
+                <button type="button" wire:click.prevent="update()" wire:target="edit,update,descripcion,nombre,estado"
                     wire:loading.attr="disabled" class="btn bg-navy">
                     Guardar
                 </button>

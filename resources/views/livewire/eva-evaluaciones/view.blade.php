@@ -3,22 +3,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="float-left">
-                            <h4><i class="fab fa-laravel text-info"></i>
-                                Eva Evaluacione Listing </h4>
-                        </div>
-                        @if (session()->has('message'))
-                            <div wire:poll.4s class="btn btn-sm btn-success" style="margin-top:0px; margin-bottom:0px;">
-                                {{ session('message') }} </div>
-                        @endif
-                        <div>
+                <div class="card-header bg-navy">
+                    <div class="row">
+                        <div class="col-sm-10">
                             <input wire:model='keyWord' type="text" class="form-control" name="search"
-                                id="search" placeholder="Search Eva Evaluaciones">
+                                id="search" placeholder="Buscar registro">
                         </div>
-                        <div class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#createDataModal">
-                            <i class="fa fa-plus"></i> Add Eva Evaluaciones
+                        <div class="col-sm-2">
+                            <button class="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#createDataModal">
+                                <i class="fa fa-plus"></i> 
+                                Agregar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -49,19 +44,27 @@
                                         <td>{{ $row->estado ? 'Activo' : 'Desactivado' }}</td>
                                         <td width="90">
                                             <div class="dropdown">
-                                                <a class="btn btn-sm btn-secondary dropdown-toggle" href="#"
+                                                <a class="btn btn-sm btn-warning dropdown-toggle" href="#"
                                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Actions
+                                                    Acciones
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a data-bs-toggle="modal" data-bs-target="#updateDataModal"
+                                                    <li>
+                                                        <a data-bs-toggle="modal" data-bs-target="#updateDataModal"
                                                             class="dropdown-item"
-                                                            wire:click="edit({{ $row->id }})"><i
-                                                                class="fa fa-edit"></i> Edit </a></li>
-                                                    <li><a class="dropdown-item"
-                                                            onclick="confirm('Confirm Delete Eva Evaluacione id {{ $row->id }}? \nDeleted Eva Evaluaciones cannot be recovered!')||event.stopImmediatePropagation()"
-                                                            wire:click="destroy({{ $row->id }})"><i
-                                                                class="fa fa-trash"></i> Delete </a></li>
+                                                            wire:click="edit({{ $row->id }})">
+                                                            <i class="fa fa-edit"></i>
+                                                            Editar
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            onclick="confirm('Confirma la eliminacion de {{ $row->nombre }}?')||event.stopImmediatePropagation()"
+                                                            wire:click="destroy({{ $row->id }})">
+                                                            <i class="fa fa-trash"></i>
+                                                            Eliminar
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </td>
