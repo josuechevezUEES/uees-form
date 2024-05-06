@@ -37,7 +37,7 @@
                             <input type="text" name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}"
                                 class="form-control form-control-border" placeholder="{{ $nombre_mascara }}" wire:model='nombre_mascara'>
 
-                            <button type="button" class="btn btn-sm" wire:click='desactivar_edicion_mascara'>
+                            <button type="button" class="btn btn-sm btn-outline-dark" wire:click='desactivar_edicion_mascara'>
                                 <i class="fas fa-save"></i>
                                 <div wire:loading.delay wire:target='activar_edicion'>
                                     <div class="spinner-border spinner-border-sm" role="status">
@@ -53,7 +53,7 @@
                             <textarea name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}"
                                 class="form-control form-control-border" placeholder="{{ $nombre_mascara }}" wire:model='nombre_mascara'></textarea>
 
-                            <button type="button" class="btn btn-sm" wire:click='activar_edicion_mascara'>
+                            <button type="button" class="btn btn-sm btn-outline-dark" wire:click='activar_edicion_mascara'>
                                 <i class="fas fa-pencil-alt"></i>
                                 <div wire:loading.delay wire:target='activar_edicion'>
                                     <div class="spinner-border spinner-border-sm" role="status">
