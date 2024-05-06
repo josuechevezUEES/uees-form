@@ -50,8 +50,8 @@
                 @else
                     <div class="col-sm-12">
                         <div class="input-group">
-                            <textarea name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}"
-                                class="form-control form-control-border" placeholder="{{ $nombre_mascara }}" wire:model='nombre_mascara'></textarea>
+                            <textarea name="comentario-{{ $pregunta->id }}" id="comentario-{{ $pregunta->id }}" disabled
+                                class="form-control form-control-border" placeholder="Mascara: {{ $nombre_mascara }}"></textarea>
 
                             <button type="button" class="btn btn-sm btn-outline-dark" wire:click='activar_edicion_mascara'>
                                 <i class="fas fa-pencil-alt"></i>
