@@ -68,13 +68,13 @@
         <div class="row pt-3 mb-3" wire:ignore>
             @forelse ($pregunta->opciones as $opcion)
                 @if ($loop->iteration == 1)
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
                             :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
                             :wire:key="$loop->iteration" />
                     </div>
                 @else
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
                             :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
                             :wire:key="$loop->iteration" />

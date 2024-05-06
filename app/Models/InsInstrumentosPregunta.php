@@ -43,6 +43,11 @@ class InsInstrumentosPregunta extends Model
         return $this->hasMany(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
     }
 
+    public function opcionPreguntaAbierta()
+    {
+        return $this->hasOne(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
+    }
+
     public function preguntaComentario()
     {
         return $this->hasOne(InsInstrumentosComentario::class, 'pregunta_id', 'id');

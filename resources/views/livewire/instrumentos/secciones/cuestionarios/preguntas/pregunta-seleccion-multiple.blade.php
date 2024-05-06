@@ -50,12 +50,12 @@
         <div class="row">
             @forelse ($pregunta->opciones as $opcion)
                 @if ($loop->iteration == 1)
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple-opcion
                             :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id . time() }}" />
                     </div>
                 @else
-                    <div class="col-sm-auto">
+                    <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple-opcion
                             :seccion="$seccion" :pregunta="$pregunta" :opcion="$opcion" wire:key="{{ $opcion->id . time() }}" />
                     </div>

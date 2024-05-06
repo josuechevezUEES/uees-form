@@ -15,8 +15,10 @@ class PreguntaAbierta extends Component
     public InsInstrumentosPregunta $pregunta;
     public $seccion;
     public $activar_edicion = false;
+    public $activar_edicion_mascara = false;
     public string $nombre_pregunta;
     public string $nuevo_nombre_opcion;
+    public string $nombre_mascara;
     public $mostrar_formulario = false;
 
     public function updatedNombrePregunta($value)
@@ -25,6 +27,11 @@ class PreguntaAbierta extends Component
         $this->pregunta->save();
     }
     
+    public function mount()
+    {
+        $this->nombre_mascara = $this->pregunta->opcionPreguntaAbierta->nombre;
+    }
+
     public function render()
     {
         return view('livewire.instrumentos.secciones.cuestionarios.preguntas.pregunta-abierta');
@@ -39,5 +46,18 @@ class PreguntaAbierta extends Component
     public function desactivar_edicion()
     {
         $this->activar_edicion = false;
+    }
+
+    public function activar_edicion_mascara()
+    {
+        $this->nombre_mascara = $this->pregunta->opcionPreguntaAbierta->nombre;
+        $this->activar_edicion_mascara = true;
+    }
+
+    public function desactivar_edicion_mascara()
+    {
+        $this->activar_edicion_mascara = false;
+        $this->pregunta->opcionPreguntaAbierta->nombre = $this->nombre_mascara;
+        $this->pregunta->opcionPreguntaAbierta->save();
     }
 }
