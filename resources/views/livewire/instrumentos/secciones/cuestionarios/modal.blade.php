@@ -46,7 +46,7 @@
                     Cerrar
                 </button>
                 <button type="button" wire:click.prevent="store()"
-                    wire:target="store,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario"
+                    wire:target="store,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario,eliminar_opcion_vista_preva"
                     wire:loading.attr="disabled" class="btn bg-navy">
                     Guardar
                 </button>

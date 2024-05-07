@@ -306,6 +306,12 @@ class Cuestionarios extends Component
         }
     }
 
+    public function eliminar_opcion_vista_preva($index_opcion)
+    {
+        unset($this->opciones_creadas[$index_opcion]);
+        $this->alert('info','Opcion Eliminada');
+    }
+
     public function destroy($id)
     {
         if ($id) {

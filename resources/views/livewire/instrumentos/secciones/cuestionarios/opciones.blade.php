@@ -25,7 +25,17 @@
                 placeholder="Ingresar nuevo nombre para la opcion"
                 class="form-control form-control-border border-width-2">
             <div class="input-group-append">
-                <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary">Agregrar </button>
+                <button type="button" wire:click='agregar_opcion()' class="btn btn-sm btn-primary"
+                    wire:target="comentario,nombre_opcion,agregar_opcion,eliminar_opcion_vista_preva"
+                    wire:loading.attr="disabled">
+                    Agregrar
+
+                    <div wire:loading.delay wire:target='comentario,nombre_opcion,agregar_opcion'>
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </button>
             </div>
         </div>
 
@@ -48,4 +58,6 @@
             @enderror
         </div>
     @endif
+
+
 </div>
