@@ -6,11 +6,11 @@
 
 <div class="container-fluid">
     @include('livewire.ins-instrumentos-secciones.modals')
-    <div class="row justify-content-end mb-3">
-        <div class="col-sm-2">
-            <button type="button" class="btn bg-navy btn-block" data-bs-toggle="modal" data-bs-target="#createDataModal">
+    <div class="row justify-content-start mb-4">
+        <div class="col-sm-1 col-12 col-lg-1">
+            <button type="button" class="btn bg-warning btn-block" data-bs-toggle="modal" data-bs-target="#createDataModal">
                 <i class="fa fa-plus"></i>
-                Agregar Seccion
+                Agregar
             </button>
         </div>
     </div>
@@ -21,7 +21,7 @@
                     <div class="col-sm-4">
                         <div class="card" data-toggle="tooltip" data-placement="top"
                             title=" {{ $row->literal }}. {{ $row->nombre }}">
-                            <div class="card-header bg-warning">
+                            <div class="card-header bg-navy">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <strong class="d-inline-block text-truncate" style="max-width: 150px;">
