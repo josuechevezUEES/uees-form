@@ -338,10 +338,26 @@ return [
             'can' => ['desarrollador'],
         ],
         [
-            'text' => 'Tipos Evaluaciones',
-            'route' => 'evaluaciones.tipos',
-            'icon' => 'fas fa-fw fa-cogs',
+            'text' => 'Ajustes Evaluaciones',
+            'icon' => 'fas fa-cog',
             'can' => ['desarrollador'],
+            'submenu' => [
+                [
+                    'text' => 'Tipos Evaluaciones',
+                    'can' => ['desarrollador'],
+                    'route' => 'configuraciones.tipos-preguntas'
+                ],
+                [
+                    'text' => 'Evaluadores',
+                    'route' => 'configuraciones.evaluaciones.tipos_evaluadores',
+                    'can' => ['desarrollador'],
+                ],
+                [
+                    'text' => 'Evaluados',
+                    'route' => 'configuraciones.evaluaciones.tipos_evaluados',
+                    'can' => ['desarrollador'],
+                ],
+            ]
         ],
         [
             'text' => 'Instrumentos',
@@ -356,31 +372,20 @@ return [
             'can' => ['desarrollador'],
         ],
         [
-            'text' => 'Configuraciones',
-            'icon' => 'fas fa-fw fa-share',
+            'header' => 'AJUSTES DEL SISTEMA',
             'can' => ['desarrollador'],
-            'submenu' => [
-                [
-                    'text' => 'Evaluadores',
-                    'route' => 'configuraciones.evaluaciones.tipos_evaluadores',
-                    'can' => ['desarrollador'],
-                ],
-                [
-                    'text' => 'Evaluados',
-                    'route' => 'configuraciones.evaluaciones.tipos_evaluados',
-                    'can' => ['desarrollador'],
-                ],
-                [
-                    'text' => 'Roles',
-                    'route' => 'roles.index',
-                    'can' => ['desarrollador'],
-                ],
-                [
-                    'text' => 'Usuarios',
-                    'route' => 'users.index',
-                    'can' => ['desarrollador'],
-                ],
-            ],
+        ],
+        [
+            'text' => 'Usuarios',
+            'route' => 'users.index',
+            'can' => ['desarrollador'],
+            'icon' => 'fas fa-users'
+        ],
+        [
+            'text' => 'Roles',
+            'route' => 'roles.index',
+            'can' => ['desarrollador'],
+            'icon' => 'fas fa-user-tag'
         ],
         ['header' => 'labels'],
         [
