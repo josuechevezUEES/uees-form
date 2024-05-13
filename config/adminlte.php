@@ -338,6 +338,18 @@ return [
             'can' => ['desarrollador'],
         ],
         [
+            'text' => 'Instrumentos',
+            'route' => 'instrumentos_evaluaciones.index',
+            'icon' => 'fas fa-fw fa-newspaper',
+            'can' => ['desarrollador'],
+        ],
+        [
+            'text' => 'Evaluaciones',
+            'route' => 'evaluaciones.index',
+            'icon' => 'fas fa-book-reader',
+            'can' => ['desarrollador'],
+        ],
+        [
             'text' => 'Ajustes Evaluaciones',
             'icon' => 'fas fa-cog',
             'can' => ['desarrollador'],
@@ -358,18 +370,6 @@ return [
                     'can' => ['desarrollador'],
                 ],
             ]
-        ],
-        [
-            'text' => 'Instrumentos',
-            'route' => 'instrumentos_evaluaciones.index',
-            'icon' => 'fas fa-fw fa-newspaper',
-            'can' => ['desarrollador'],
-        ],
-        [
-            'text' => 'Evaluaciones',
-            'route' => 'evaluaciones.index',
-            'icon' => 'fas fa-book-reader',
-            'can' => ['desarrollador'],
         ],
         [
             'header' => 'AJUSTES DEL SISTEMA',
