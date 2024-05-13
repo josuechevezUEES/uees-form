@@ -11,48 +11,56 @@
             <div class="col-md-12">
                 <div class="row">
                     @foreach ($evaluaciones as $evaluacion)
-                        <div class="col-sm-12">
-                            <div class="card card-widget widget-user">
-                                <div class="widget-user-header text-white"
-                                    style="background: url('https://adminlte.io/themes/v3/dist/img/photo1.png') center center;">
-                                    <h3 class="widget-user-username text-right">
-                                        {{ $evaluacion->tiposEvaluacione->nombre }}
-                                    </h3>
-                                    <h5 class="widget-user-desc text-right">
-                                        {{ $evaluacion->tiposEvaluacione->descripcion }}
-                                    </h5>
-                                </div>
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg" alt="User Avatar">
-                                </div>
-                                <div class="card-footer">
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-header bg-navy p-3">
                                     <div class="row">
+                                        <div class="col-sm-2">
+                                            <img src="{{ asset('img/logo-uees.png') }}" alt="Logo-UEES"
+                                            class="w-100">
+                                        </div>
+                                        <div class="col-sm-10 pt-2">
+                                            <h3 class="widget-user-username text-left">
+                                                {{ $evaluacion->tiposEvaluacione->nombre }}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-4">
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">
-                                                <h5 class="description-header">3,200</h5>
-                                                <span class="description-text">SALES</span>
+                                                <h5 class="description-header">
+                                                    {{ $evaluacion->activo ? 'Activo' : 'Desactivado' }}
+                                                </h5>
+                                                <span class="description-text">Estado</span>
                                             </div>
 
                                         </div>
 
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">
-                                                <h5 class="description-header">13,000</h5>
-                                                <span class="description-text">FOLLOWERS</span>
+                                                <h5 class="description-header">4 Fac.</h5>
+                                                <span class="description-text">Facultades</span>
                                             </div>
 
                                         </div>
 
                                         <div class="col-sm-4">
                                             <div class="description-block">
-                                                <h5 class="description-header">35</h5>
-                                                <span class="description-text">PRODUCTS</span>
+                                                <h5 class="description-header">01-2024</h5>
+                                                <span class="description-text">Periodo/Año</span>
                                             </div>
-
                                         </div>
-
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button type="button" class="btn btn-sm btn-warning btn-block">
+                                                Ver Evaluacion
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
