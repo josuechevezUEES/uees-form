@@ -337,7 +337,12 @@ return [
             'can' => ['desarrollador'],
             'submenu' => [
                 [
-                    'text' => 'Tipos Evaluaciones',
+                    'text' => 'Tipos de Evaluaciones',
+                    'can' => ['desarrollador'],
+                    'route' => 'evaluaciones.tipos'
+                ],
+                [
+                    'text' => 'Tipos Preguntas',
                     'can' => ['desarrollador'],
                     'route' => 'configuraciones.tipos-preguntas'
                 ],
