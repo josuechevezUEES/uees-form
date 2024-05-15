@@ -4,10 +4,13 @@ namespace App\Http\Livewire\Instrumentos\Secciones\Cuestionarios\Preguntas;
 
 use App\Models\InsInstrumentosOpcione;
 use App\Models\InsInstrumentosPregunta;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class PreguntaSeleccionMultipleOpcion extends Component
 {
+    use LivewireAlert;
+    
     public $seccion;
     public InsInstrumentosPregunta $pregunta;
     public InsInstrumentosOpcione $opcion;
