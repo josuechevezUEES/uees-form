@@ -16,6 +16,11 @@ class Cuestionarios extends Component
 {
     use LivewireAlert;
 
+    protected $listeners = [
+        'agregar_opcion' => 'agregar_opcion',
+        'mount' => 'mount'
+    ];
+
     public $instrumento_id, $seccion_id;
     public $seccion;
     public $selected_id, $keyWord, $cuestionario_id;
@@ -25,6 +30,11 @@ class Cuestionarios extends Component
     public $opciones_creadas = [];
     public $preguntas_instrumento = [];
     public $nombre_opcion, $comentario;
+
+    public function actualizar_componentes_hijos($request)
+    {
+        $this->mount($request);
+    }
 
     public function updatedTipoPreguntaId(string $value)
     {
@@ -119,6 +129,8 @@ class Cuestionarios extends Component
 
     public function obtener_lista_preguntas()
     {
+        $this->preguntas_instrumento = [];
+
         $this->preguntas_instrumento = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
             ->orderBy('sub_numeral', 'ASC')
             ->get();
@@ -309,7 +321,7 @@ class Cuestionarios extends Component
     public function eliminar_opcion_vista_preva($index_opcion)
     {
         unset($this->opciones_creadas[$index_opcion]);
-        $this->alert('info','Opcion Eliminada');
+        $this->alert('info', 'Opcion Eliminada');
     }
 
     public function destroy($id)

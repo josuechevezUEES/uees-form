@@ -19,9 +19,10 @@
     <div class="border border-dark px-3 pt-3 rounded">
         <div class="form-group form-check">
             <input type="{{ $opcion['entrada'] }}" class="form-check-input" id="check{{ $opcion['nombre'] }}"
-                wire:model="nombre_opcion" {{ $pregunta->requerido ? 'required' : null }}>
+                wire:model="nombre_opcion" {{ $pregunta->requerido ? 'required' : null }}
+                value="{{ $opcion['nombre'] }}" wire:ignore>
 
-            <label class="form-check-label">
+            <label class="form-check-label" wire:ignore>
                 {{ $opcion['nombre'] }}
                 <button type="button" class="btn btn-sm" wire:click='activar_edicion'>
                     <i class="fas fa-pencil-alt"></i>

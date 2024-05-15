@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Instrumentos\Secciones\Cuestionarios\Preguntas;
 
 use App\Models\InsInstrumentosOpcione;
 use App\Models\InsInstrumentosPregunta;
+use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -14,13 +15,15 @@ class PreguntaCerradaCompleja extends Component
 
     protected $listeners = [
         'render' => 'render',
-        'mostrar_comentario' => 'mostrar_comentario'
+        'mostrar_comentario' => 'mostrar_comentario',
+        'lista_opciones' => 'lista_opciones'
     ];
 
     public $mostrar_comentario = false;
     public $opcion = '', $comentario = '';
-    public InsInstrumentosPregunta $pregunta;
+    public $pregunta;
     public $seccion;
+    public $instrumento_id;
     public $activar_edicion = false;
     public $editar_comentario = false;
 
@@ -30,14 +33,25 @@ class PreguntaCerradaCompleja extends Component
     public $mostrar_formulario = false;
     public $mostrar_text_area_comentario = false;
 
+    public $opciones = [];
+
     public function updatedNombrePregunta($value)
     {
         $this->pregunta->nombre = $value;
         $this->pregunta->save();
     }
 
+    public function lista_opciones()
+    {
+        $this->opciones = [];
+
+        $this->opciones = $this->pregunta->opciones;
+    }
+
     public function render()
     {
+        $this->lista_opciones();
+
         return view('livewire.instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja');
     }
 
@@ -84,11 +98,15 @@ class PreguntaCerradaCompleja extends Component
 
     public function almacenar_opcion()
     {
-        $this->validate([
-            'nuevo_nombre_opcion' => 'required'
-        ], [
-            'nuevo_nombre_opcion.required' => 'El nombre de la opcion es obligatorio'
-        ]);
+
+        $this->validate(
+            [
+                'nuevo_nombre_opcion' => 'required'
+            ],
+            [
+                'nuevo_nombre_opcion.required' => 'El nombre de la opcion es obligatorio'
+            ]
+        );
 
         InsInstrumentosOpcione::create([
             'pregunta_id' => $this->pregunta->id,
@@ -96,9 +114,9 @@ class PreguntaCerradaCompleja extends Component
             'entrada'     => $this->pregunta->tipTiposPregunta->entrada
         ]);
 
-        $this->mostrar_formulario = false;
-        $this->nuevo_nombre_opcion = '';
 
+        $this->cancelar_almacenar_opcion();
+       
         $this->emitSelf('render');
         $this->alert('success', 'Opcion Agregada');
     }

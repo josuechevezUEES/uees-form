@@ -17,8 +17,10 @@ class PreguntaSeleccionMultipleOpcion extends Component
 
     public function updatedNombreOpcion($value)
     {
-        $this->opcion->nombre = $value;
-        $this->opcion->save();
+        if ($value != 'on' || $value != 'off') :
+            $this->opcion->nombre = $value;
+            $this->opcion->save();
+        endif;
     }
 
     public function render()
@@ -41,6 +43,6 @@ class PreguntaSeleccionMultipleOpcion extends Component
     {
         $this->opcion->delete();
         $this->emitUp('render');
-        $this->alert('success','Opcion Eliminada');
+        $this->alert('success', 'Opcion Eliminada');
     }
 }

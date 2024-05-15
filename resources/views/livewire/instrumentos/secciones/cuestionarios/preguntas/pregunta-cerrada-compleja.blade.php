@@ -64,23 +64,25 @@
         </div>
     </div>
 
-    @if (isset($pregunta->opciones))
-        <div class="row pt-3 mb-3" wire:ignore>
-            @forelse ($pregunta->opciones as $opcion)
+    @if (isset($opciones))
+        <div class="row pt-3 mb-3">
+            @forelse ($opciones as $opcion)
                 @if ($loop->iteration == 1)
                     <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
-                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
+                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="'opcion'.$loop->iteration.now()"
                             :wire:key="$loop->iteration" />
                     </div>
                 @else
                     <div class="col-sm-auto mb-3">
                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja-opcion
-                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="$loop->iteration"
+                            :pregunta="$pregunta" :seccion="$seccion" :opcion="$opcion" :loop="'opcion'.$loop->iteration.now()"
                             :wire:key="$loop->iteration" />
                     </div>
                 @endif
             @empty
+
+            
             @endforelse
         </div>
 

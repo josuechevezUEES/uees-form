@@ -31,22 +31,27 @@
                                 <div class="px-3 w-100">
                                     @if ($pregunta->tipo_pregunta_id == 1)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada
-                                            :pregunta="$pregunta" :seccion="$seccion" wire:key="{{ 'pregunta-'.$pregunta->id }}" />
+                                            :pregunta="$pregunta" :seccion="$seccion"
+                                            wire:key="{{ 'pregunta-' . now() }}" />
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 2)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-abierta
-                                            :pregunta="$pregunta" :seccion="$seccion" wire:key="{{ 'pregunta-'.$pregunta->id }}" />
+                                            :pregunta="$pregunta" :seccion="$seccion"
+                                            wire:key="{{ 'pregunta-' . now() }}" />
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 3)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-seleccion-multiple
-                                            :pregunta="$pregunta" :seccion="$seccion" wire:key="{{ 'pregunta-'.$pregunta->id }}" />
+                                            :pregunta="$pregunta" :seccion="$seccion"
+                                            wire:key="{{ 'pregunta-' . now() }}" />
                                     @endif
 
                                     @if ($pregunta->tipo_pregunta_id == 4)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada-compleja
-                                            :pregunta="$pregunta" :seccion="$seccion" wire:key="{{ 'pregunta-'.$pregunta->id }}" />
+                                            :pregunta="$pregunta" :seccion="$seccion"
+                                            :instrumento_id="$instrumento_id"
+                                            wire:key="{{ 'pregunta-' . now() }}" />
                                     @endif
                                 </div>
 

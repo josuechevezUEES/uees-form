@@ -30,8 +30,10 @@ class PreguntaCerradaComplejaOpcion extends Component
 
     public function updatedNombreOpcion($value)
     {
-        $this->opcion->nombre = $value;
-        $this->opcion->save();
+        if ($value != 'on' || $value != 'off') :
+            $this->opcion->nombre = $value;
+            $this->opcion->save();
+        endif;
     }
 
     public function render()
