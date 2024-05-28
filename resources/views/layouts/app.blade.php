@@ -17,6 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/colores-uees.css') }}">
 
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
@@ -42,7 +43,7 @@
                         <ul class="navbar-nav mr-auto">
                             <!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
-                            <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a> 
+                            <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a>
                         </li>
 
                         </ul>

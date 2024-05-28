@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstudianteEvalucionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,7 @@ Route::middleware(['auth'])
 
         Route::view('/evaluaciones/secciones/{seccion_id}/evaluacion', 'livewire.estudiantes.evaluaciones.secciones.index')
             ->name('estudiantes.evaluaciones.cuestionarios');
+
+        Route::get('evaluaciones/{evaluacion_id}/form', [EstudianteEvalucionController::class, 'index'])
+            ->name('estudiantes.evaluaciones.form');
     });
