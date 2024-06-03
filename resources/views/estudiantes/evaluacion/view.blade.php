@@ -14,10 +14,10 @@
                         </strong>
                     </h1>
                     <h4 class="font-weight-normal text-dark-blue">
-                       <strong>
-                        {{ $evaluacion->tiposEvaluacione->nombre }}
-                        {{ $evaluacion->fecha_fin_evaluacion ? date('Y', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
-                       </strong>
+                        <strong>
+                            {{ $evaluacion->tiposEvaluacione->nombre }}
+                            {{ $evaluacion->fecha_fin_evaluacion ? date('Y', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
+                        </strong>
                     </h4>
                     <p class="font-italic text-dark">
                         Termina
@@ -53,7 +53,8 @@
                                         voluptates, veritatis ab blanditiis exercitationem minus?
                                         la evaluacion esta incompleta porfavor.
                                         <br> <br>
-                                        <a href="#evaluacion_id={{ $evaluacion->id }}&seccion_id={{ $seccion->id }}">
+                                        <a
+                                            href="{{ route('estudiantes.evaluaciones.seccion', ['evaluacion_id' => $evaluacion->id, 'seccion_id' => $seccion->id]) }}">
                                             Ingresar
                                         </a>
                                     </p>

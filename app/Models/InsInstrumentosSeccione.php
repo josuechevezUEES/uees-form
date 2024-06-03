@@ -29,4 +29,12 @@ class InsInstrumentosSeccione extends Model
     {
         return $this->hasOne('App\Models\InsInstrumentosEvaluacione', 'id', 'instrumento_id');
     }
+
+        /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function instrumentoCuestionario()
+    {
+        return $this->hasOne('App\Models\InstrumentoCuestionario', 'seccion_id', 'id');
+    }
 }

@@ -50,32 +50,32 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-    # Add repository ODBC and Install the Microsoft ODBC driver for SQL Server
+# Add repository ODBC and Install the Microsoft ODBC driver for SQL Server
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
     && curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
     && ACCEPT_EULA=Y apt-get install -y mssql-tools
 
-# Install the PHP drivers for Microsoft SQL Server \
+# Install the PHP drivers for Microsoft SQL Server
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN touch  ~/.bashrc
+RUN touch ~/.bashrc
 RUN apt-get install -y unixodbc-dev
 
-# Install the PHP drivers for Microsoft SQL Server \
+# Install the PHP drivers for Microsoft SQL Server
 RUN pecl config-set php_ini /etc/php/8.2/fpm/php.ini \
-    && pecl install sqlsrv  \
-    && pecl install pdo_sqlsrv  \
-    && su  \
-    && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.2/mods-available/sqlsrv.ini  \
-    && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini  \
-    && exit   \
+    && pecl install sqlsrv \
+    && pecl install pdo_sqlsrv \
+    && su \
+    && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.2/mods-available/sqlsrv.ini \
+    && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini \
+    && exit \
     && phpenmod -v 8.2 sqlsrv pdo_sqlsrv
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 
-RUN groupadd --force -g $WWWGROUP sail
-RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
+RUN if [ -n "$WWWGROUP" ] && [ "$WWWGROUP" -eq "$WWWGROUP" ] 2>/dev/null; then groupadd -g $WWWGROUP sail; else groupadd sail; fi
+RUN useradd -ms /bin/bash --no-user-group -g sail -u 1337 sail
 
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf

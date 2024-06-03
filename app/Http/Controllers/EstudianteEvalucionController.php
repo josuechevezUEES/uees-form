@@ -32,7 +32,7 @@ class EstudianteEvalucionController extends Controller
 
         $this->obtener_informacion_evaluacion($request);
 
-        return view('estudiantes.evaluacion.index',[
+        return view('estudiantes.evaluacion.index', [
             'estudiante' => $this->usuario,
             'evaluacion' => $this->evaluacion,
             'secciones'  => $this->secciones

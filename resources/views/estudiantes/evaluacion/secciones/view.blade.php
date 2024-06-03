@@ -1,22 +1,34 @@
-<div class="container">
-    <div class="card">
-        <div class="card-header bg-warning">
+@section('title', $evaluacion->tiposEvaluacione->nombre)
+
+<section class="d-flex justify-content-center">
+    <div class="card w-50">
+        <div class="card-header px-3 bg-warning">
             <div class="row">
-                <div class="col-sm-11 text-start d-flex align-items-center">
-                    <h3>
-                        {{ $seccion->literal }}.{{ $seccion->nombre }}
-                    </h3>
+                <div class="col-sm-2 pt-3">
+                    <img src="{{ asset('/img/logo-uees.png') }}" alt="logo-uees" class="w-75 img-fluid">
                 </div>
-                <div class="col-sm-1">
-                    <img src="{{ asset('img/logo-uees.png') }}" alt="" class="img-fluid" width="100">
+                <div class="col-sm-10 pt-4">
+                    <h1 class="font-weight-bolder text-dark-blue">
+                        <strong>
+                            Universidad Evangelica de El Salvador
+                        </strong>
+                    </h1>
+                    <h4 class="font-weight-normal text-dark-blue">
+                        <strong>
+                            {{ $evaluacion->tiposEvaluacione->nombre }}
+                            {{ $evaluacion->fecha_fin_evaluacion ? date('Y', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
+                        </strong>
+                    </h4>
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form wire:submit.prevent="almacenar">
+            <form
+                action="{{ route('estudiantes.evaluaciones.seccion.almacenar_respuestas', ['evaluacion_id' => $evaluacion->id, 'seccion_id' => $seccion->id]) }}"
+                method="POST">
                 @csrf
                 <div class="row p-4 gap-5">
-                    @forelse ($cuestionario->instrumentoPreguntas as $pregunta)
+                    @forelse ($preguntas as $pregunta)
                         <div class="col-sm-12">
                             <div class="px-3 w-100">
                                 @if ($pregunta->tipo_pregunta_id == 1)
@@ -24,6 +36,9 @@
                                         <h3>
                                             {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
                                             {{ $pregunta->nombre }}
+                                            @if ($pregunta->requerido)
+                                                <span class="text-danger">*</span>
+                                            @endif
                                         </h3>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
@@ -31,11 +46,10 @@
                                                     @if ($loop->iteration == 1)
                                                         <div class="col-sm-auto">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                wire:model="respuesta."
-                                                                class="form-radio-input">
+                                                                value="{{ $opcion['id'] }}" class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
                                                                 {{ $opcion['nombre'] }}
@@ -45,10 +59,10 @@
                                                     @else
                                                         <div class="col-sm-auto ml-md-3">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                class="form-radio-input">
+                                                                value="{{ $opcion['id'] }}" class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
                                                                 {{ $opcion['nombre'] }}
@@ -71,6 +85,9 @@
                                         <h3>
                                             {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
                                             {{ $pregunta->nombre }}
+                                            @if ($pregunta->requerido)
+                                                <span class="text-danger">*</span>
+                                            @endif
                                         </h3>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
@@ -78,18 +95,26 @@
                                                     @if ($loop->iteration == 1)
                                                         <div class="col-sm-12">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
                                                                 class="form-control form-control-border border-width-2"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                placeholder="{{ $opcion['nombre'] }}">
+                                                                value="" placeholder="{{ $opcion['nombre'] }}">
+                                                            <input type="number" name="opcion-{{ $opcion['id'] }}" id="opcion-{{ $opcion['id'] }}" class="d-none"
+                                                            value="{{ $opcion['id'] }}">
+
                                                         </div>
                                                     @else
                                                         <div class="col-sm-12">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
                                                                 class="form-control form-control-border border-width-2"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                placeholder="{{ $opcion['nombre'] }}">
+                                                                value="" placeholder="{{ $opcion['nombre'] }}">
+
+                                                            <input type="number" name="opcion-{{ $opcion['id'] }}" id="opcion-{{ $opcion['id'] }}" class="d-none"
+                                                            value="{{ $opcion['id'] }}">
                                                         </div>
                                                     @endif
                                                 @empty
@@ -104,6 +129,9 @@
                                         <h3>
                                             {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
                                             {{ $pregunta->nombre }}
+                                            @if ($pregunta->requerido)
+                                                <span class="text-danger">*</span>
+                                            @endif
                                         </h3>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
@@ -113,11 +141,12 @@
                                                             <div class="form-group form-check">
                                                                 <input type="{{ $opcion['entrada'] }}"
                                                                     class="form-check-input"
-                                                                    name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                    id="check{{ $opcion['nombre'] }}">
-                                                                <label class="form-check-label"
+                                                                    value="{{ $opcion['nombre'] }}"
+                                                                    name="pregunta-{{ $pregunta->id }}"
+                                                                    id="pregunta-{{ $pregunta->id }}" <label
+                                                                    class="form-check-label"
                                                                     for="check{{ $opcion['nombre'] }}">
-                                                                    {{ $opcion['nombre'] }}
+                                                                {{ $opcion['nombre'] }}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -126,11 +155,12 @@
                                                             <div class="form-group form-check">
                                                                 <input type="{{ $opcion['entrada'] }}"
                                                                     class="form-check-input"
-                                                                    name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                    id="check{{ $opcion['nombre'] }}">
-                                                                <label class="form-check-label"
+                                                                    value="{{ $opcion['nombre'] }}"
+                                                                    name="pregunta-{{ $pregunta->id }}"
+                                                                    id="pregunta-{{ $pregunta->id }}" <label
+                                                                    class="form-check-label"
                                                                     for="check{{ $opcion['nombre'] }}">
-                                                                    {{ $opcion['nombre'] }}
+                                                                {{ $opcion['nombre'] }}
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -147,6 +177,9 @@
                                         <h3>
                                             {{ $seccion->literal }}.{{ $pregunta->sub_numeral }})
                                             {{ $pregunta->nombre }}
+                                            @if ($pregunta->requerido)
+                                                <span class="text-danger">*</span>
+                                            @endif
                                         </h3>
                                         <div class="row pt-3">
                                             @if (isset($pregunta->opciones))
@@ -154,8 +187,10 @@
                                                     @if ($loop->iteration == 1)
                                                         <div class="col-sm-auto mb-3">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
+                                                                value="{{ $opcion['id'] }}"
+                                                                {{ $pregunta->requerido ? 'required' : null }}
                                                                 class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
@@ -165,8 +200,10 @@
                                                     @else
                                                         <div class="col-sm-auto ml-md-3 mb-3">
                                                             <input type="{{ $opcion['entrada'] }}"
-                                                                name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
-                                                                id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
+                                                                name="pregunta-{{ $pregunta->id }}"
+                                                                id="pregunta-{{ $pregunta->id }}"
+                                                                value="{{ $opcion['id'] }}"
+                                                                {{ $pregunta->requerido ? 'required' : null }}
                                                                 class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
@@ -177,16 +214,20 @@
                                                 @empty
                                                 @endforelse
                                             @endif
-
-                                            <div class="col-sm-12">
-                                                <div class="form-group pt-3">
-                                                    <strong>
-                                                        {{ $pregunta->comentario->comentario }}
-                                                    </strong>
-                                                    <input type="text" class="form-control form-control-border">
+                                        </div>
+                                        @if (isset($pregunta->comentario))
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group pt-3">
+                                                        <strong>
+                                                            {{ $pregunta->comentario->comentario }}
+                                                        </strong>
+                                                        <input type="text" class="form-control form-control-border"
+                                                            value="">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 @endif
                             </div>
@@ -198,7 +239,7 @@
                         </div>
                     @endforelse
                     <div class="col-sm-12 px-4">
-                        <button type="submit" class="btn btn-sm bg-navy">
+                        <button type="submit" class="btn bg-dark-blue text-white">
                             Enviar Respuestas
                         </button>
                     </div>
@@ -206,4 +247,4 @@
             </form>
         </div>
     </div>
-</div>
+</section>

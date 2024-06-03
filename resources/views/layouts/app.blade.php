@@ -43,6 +43,9 @@
                         <ul class="navbar-nav mr-auto">
                             <!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
+                            <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a> 
+                        </li>
+						<li class="nav-item">
                             <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a>
                         </li>
 

@@ -28,7 +28,7 @@
 						<thead class="thead">
 							<tr> 
 								<td>#</td> 
-								<th>Usuario Id</th>
+								<th>Usuario Encuestado</th>
 								<th>Evaluacion Id</th>
 								<th>Seccion Id</th>
 								<th>Pregunta Id</th>
@@ -41,7 +41,7 @@
 							@forelse($evaEvaluacionesRespuestas as $row)
 							<tr>
 								<td>{{ $loop->iteration }}</td> 
-								<td>{{ $row->usuario_id }}</td>
+								<td>{{ $row->usuario_encuestado }}</td>
 								<td>{{ $row->evaluacion_id }}</td>
 								<td>{{ $row->seccion_id }}</td>
 								<td>{{ $row->pregunta_id }}</td>

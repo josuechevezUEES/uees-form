@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                @include('estudiantes.evaluacion.view')
+                @include('estudiantes.evaluacion.secciones.view')
             </div>
         </div>
     </div>
