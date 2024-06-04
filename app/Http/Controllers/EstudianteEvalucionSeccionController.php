@@ -50,6 +50,8 @@ class EstudianteEvalucionSeccionController extends Controller
         // array original recibido del request
         $respuestas_request = $request->all();
 
+        return $respuestas_request;
+
         // return $respuestas_request;
 
         // Crear un nuevo array para almacenar las preguntas transformadas

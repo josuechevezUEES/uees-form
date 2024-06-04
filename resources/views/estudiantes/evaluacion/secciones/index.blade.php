@@ -1,7 +1,8 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid pt-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @include('estudiantes.evaluacion.secciones.view')

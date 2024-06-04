@@ -43,7 +43,7 @@
                         <ul class="navbar-nav mr-auto">
                             <!--Nav Bar Hooks - Do not delete!!-->
 						<li class="nav-item">
-                            <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a> 
+                            <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a>
                         </li>
 						<li class="nav-item">
                             <a href="{{ url('/eva_evaluaciones_respuestas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Eva_evaluaciones_respuestas</a>
@@ -97,14 +97,20 @@
         </main>
     </div>
     @livewireScripts
-    <script type="module">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+
+    <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
+    <x-livewire-alert::flash />
+    {{-- <script type="module">
         const addModal = new bootstrap.Modal('#createDataModal');
         const editModal = new bootstrap.Modal('#updateDataModal');
         window.addEventListener('closeModal', () => {
             addModal.hide();
             editModal.hide();
         })
-    </script>
+    </script> --}}
+    @yield('js')
 </body>
 
 </html>

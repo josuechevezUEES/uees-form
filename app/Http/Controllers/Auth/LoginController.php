@@ -93,7 +93,7 @@ class LoginController extends Controller
                             $this->class_estudiante_loginUsingId($usuario);
 
                             return redirect()
-                                ->route('estudiantes.evaluaciones.index');
+                                ->route('home');
                         else :
                             return redirect()
                                 ->route('login');
@@ -144,7 +144,8 @@ class LoginController extends Controller
                 endif;
             endif;
         } catch (\Throwable $th) {
-            return redirect()->route('login');
+            // return redirect()->route('login');
+            return $th;
         }
     }
 

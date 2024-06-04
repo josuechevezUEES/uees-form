@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EvaEvaluacionesRespuesta::class, 'usuario_id', 'id');
     }
+
+    public function nombre_estudiante($cif)
+    {
+        return ClienteClass::find($cif);
+    }
 }
