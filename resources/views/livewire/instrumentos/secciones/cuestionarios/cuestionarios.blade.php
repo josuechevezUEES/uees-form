@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row p-4 gap-5">
+                    <div class="row p-4 gap-5" wire:ignore>
                         @forelse ($preguntas_instrumento as $pregunta)
                             <div class="col-sm-12">
                                 <div class="px-3 w-100">
