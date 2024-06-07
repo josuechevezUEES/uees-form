@@ -16,7 +16,7 @@ class PreguntaCerradaComentario extends Component
     public InsInstrumentosPregunta $pregunta;
     public InsInstrumentosSeccione $seccion;
     public $opcion_seleccionada = [];
-    public $comentario = '';
+    public string $comentario = '';
     public $habilitar_comentario = false;
 
     /**
