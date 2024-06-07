@@ -95,30 +95,34 @@ class FormCuestionario extends Component
                 case '3':
                     if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
 
-                        // Si ya existe, actualiza el valor de opcion_id y required
-                        foreach ($existingRespuesta['opcion'] as $index => $opcion) :
-                            if ($opcion['opcion_id'] == $respuesta['opcion'][0]['opcion_id']) :
-                                unset($existingRespuesta['opcion'][$index]);
-                            else :
-                                array_push($existingRespuesta['opcion'], $respuesta['opcion'][0]);
-                            endif;
-                        endforeach;
+                        // Verifica si la clave 'opcion' está definida en ambas variables
+                        if (isset($existingRespuesta['opcion']) && isset($respuesta['opcion'])) {
+
+                            // Si ya existe, actualiza el valor de opcion_id y required
+                            foreach ($existingRespuesta['opcion'] as $index => $opcion) :
+                                if ($opcion['opcion_id'] == $respuesta['opcion'][0]['opcion_id']) :
+                                    unset($existingRespuesta['opcion'][$index]);
+                                else :
+                                    array_push($existingRespuesta['opcion'], $respuesta['opcion'][0]);
+                                endif;
+                            endforeach;
+                        } else {
+                            // Inicializa la clave 'opcion' si no está definida
+                            $existingRespuesta['opcion'] = $respuesta['opcion'];
+                        }
 
                         $existingRespuesta['required']  = $respuesta['required'];
 
                         $found = true;
                         break;
                     else :
-                        // Si ya existe, actualiza el valor de opcion_id y required
-                        foreach ($existingRespuesta['opcion'] as $index => $opcion) :
-                            array_push($existingRespuesta['opcion'], $respuesta['opcion'][0]);
-                        endforeach;
 
-                        $existingRespuesta['required']  = $respuesta['required'];
+                        array_push($this->repuestas, $respuesta);
 
                         $found = true;
                         break;
                     endif;
+
                     break;
                 default:
 
@@ -171,7 +175,6 @@ class FormCuestionario extends Component
                                 'opcion_id'          => $opcion['opcion_id'],
                                 'comentario'         => null
                             ]);
-                            $this->alert('success', 'Respuestas guardadas exitosamente. Opciones');
                         endforeach;
                     endif;
 
@@ -184,8 +187,6 @@ class FormCuestionario extends Component
                             'opcion_id'          => $repuesta['opcion_id'],
                             'comentario'         => isset($repuesta['comentario']) ? $repuesta['comentario'] : null
                         ]);
-
-                        $this->alert('success', 'Respuestas guardadas exitosamente. Opcion');
                     endif;
                 }
 
