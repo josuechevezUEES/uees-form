@@ -1,3 +1,9 @@
+@section('title', 'Secciones')
+
+@section('content_header')
+    {{ Breadcrumbs::render('estudiantes.evaluaciones.secciones', 1) }}
+@stop
+
 <div class="container">
     <div class="card">
         <div class="card-header bg-warning">
@@ -34,8 +40,7 @@
                                                                 name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
                                                                 id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                wire:model="respuesta."
-                                                                class="form-radio-input">
+                                                                wire:model="respuesta." class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
                                                                 {{ $opcion['nombre'] }}

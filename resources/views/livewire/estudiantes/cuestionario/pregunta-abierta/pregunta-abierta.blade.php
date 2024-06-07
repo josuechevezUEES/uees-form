@@ -10,25 +10,26 @@
         @if (isset($pregunta->opciones))
             @forelse ($pregunta->opciones as $opcion)
                 @if ($loop->iteration == 1)
-                    <div class="col-sm-auto">
-                        <div class="form-group form-check">
-                            <input type="{{ $opcion['entrada'] }}" class="form-check-input" value="{{ $opcion['nombre'] }}"
-                                name="pregunta-{{ $pregunta->id }}" id="pregunta-{{ $pregunta->id }}">
-                            <label class="form-check-label" for="check{{ $opcion['nombre'] }}">
-                                {{ $opcion['nombre'] }}
-                            </label>
-                        </div>
+                    <div class="col-sm-12">
+                        <input type="{{ $opcion['entrada'] }}" name="pregunta-{{ $pregunta->id }}"
+                            id="pregunta-{{ $pregunta->id }}" class="form-control form-control-border border-width-2"
+                            {{ $pregunta->requerido ? 'required' : null }} value=""
+                            wire:model="comentario"
+                            placeholder="{{ $opcion['nombre'] }}">
+                        <input type="number" name="opcion-{{ $opcion['id'] }}" id="opcion-{{ $opcion['id'] }}"
+                            class="d-none" value="{{ $opcion['id'] }}">
+
                     </div>
                 @else
-                    <div class="col-sm-auto ml-md-3">
-                        <div class="form-group form-check">
-                            <input type="{{ $opcion['entrada'] }}" class="form-check-input"
-                                value="{{ $opcion['nombre'] }}" name="pregunta-{{ $pregunta->id }}"
-                                id="pregunta-{{ $pregunta->id }}">
-                            <label class="form-check-label" for="check{{ $opcion['nombre'] }}">
-                                {{ $opcion['nombre'] }}
-                            </label>
-                        </div>
+                    <div class="col-sm-12">
+                        <input type="{{ $opcion['entrada'] }}" name="pregunta-{{ $pregunta->id }}"
+                            id="pregunta-{{ $pregunta->id }}" class="form-control form-control-border border-width-2"
+                            {{ $pregunta->requerido ? 'required' : null }} value=""
+                            wire:model="comentario"
+                            placeholder="{{ $opcion['nombre'] }}">
+
+                        <input type="number" name="opcion-{{ $opcion['id'] }}" id="opcion-{{ $opcion['id'] }}"
+                            class="d-none" value="{{ $opcion['id'] }}">
                     </div>
                 @endif
             @empty

@@ -1,5 +1,9 @@
 @section('title', $evaluacion->tiposEvaluacione->nombre)
 
+@section('content_header')
+    {{ Breadcrumbs::render('estudiantes.evaluaciones.seccion', $evaluacion_id, $seccion_id) }}
+@stop
+
 <section class="d-flex justify-content-center">
     <div class="card w-75">
         <div class="card-header px-3 bg-warning">

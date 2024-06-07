@@ -67,18 +67,71 @@ class FormCuestionario extends Component
 
         foreach ($this->repuestas as &$existingRespuesta) :
 
-            if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
-                // Si ya existe, actualiza el valor de opcion_id y required
-                $existingRespuesta['opcion_id'] = $respuesta['opcion_id'];
-                $existingRespuesta['required'] = $respuesta['required'];
-                $found = true;
-                break;
-            endif;
+            switch ($existingRespuesta['tipo_pregunta']):
+                case '1':
+                    if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
+                        // Si ya existe, actualiza el valor de opcion_id y required
+                        $existingRespuesta['opcion_id']  = $respuesta['opcion_id'];
+                        $existingRespuesta['required']   = $respuesta['required'];
+
+                        $found = true;
+                        break;
+                    endif;
+                    break;
+                case '2':
+                    if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
+                        // Si ya existe, actualiza el valor de opcion_id y required
+                        $existingRespuesta['opcion_id']  = $respuesta['opcion_id'];
+                        $existingRespuesta['required']   = $respuesta['required'];
+
+                        if (isset($respuesta['comentario'])) :
+                            $existingRespuesta['comentario'] = $respuesta['comentario'];
+                        endif;
+
+                        $found = true;
+                        break;
+                    endif;
+                    break;
+                case '3':
+                    if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
+
+                        // Si ya existe, actualiza el valor de opcion_id y required
+                        foreach ($existingRespuesta['opcion'] as $index => $opcion) :
+                            if ($opcion['opcion_id'] == $respuesta['opcion'][0]['opcion_id']) :
+                                unset($existingRespuesta['opcion'][$index]);
+                            else :
+                                array_push($existingRespuesta['opcion'], $respuesta['opcion'][0]);
+                            endif;
+                        endforeach;
+
+                        $existingRespuesta['required']  = $respuesta['required'];
+
+                        $found = true;
+                        break;
+                    else :
+                        // Si ya existe, actualiza el valor de opcion_id y required
+                        foreach ($existingRespuesta['opcion'] as $index => $opcion) :
+                            array_push($existingRespuesta['opcion'], $respuesta['opcion'][0]);
+                        endforeach;
+
+                        $existingRespuesta['required']  = $respuesta['required'];
+
+                        $found = true;
+                        break;
+                    endif;
+                    break;
+                default:
+
+                    break;
+            endswitch;
+
         endforeach;
 
         // Si no se encontró la pregunta_id, agregar la nueva respuesta
         if (!$found) :
             $this->repuestas[] = $respuesta;
+
+            $repuesta = [];
         endif;
     }
 
@@ -106,18 +159,38 @@ class FormCuestionario extends Component
             if (empty($faltantes)) {
                 // Todas las preguntas requeridas tienen respuesta
                 foreach ($this->repuestas as $repuesta) {
-                    EvaEvaluacionesRespuesta::create([
-                        'usuario_encuestado' => Auth::id(),
-                        'evaluacion_id' => $this->evaluacion_id,
-                        'seccion_id' => $this->seccion_id,
-                        'pregunta_id' => $repuesta['pregunta_id'],
-                        'opcion_id' => $repuesta['opcion_id'],
-                        'comentario' => null
-                    ]);
+
+                    if (array_key_exists('opcion', $repuesta)) :
+
+                        foreach ($repuesta['opcion'] as $opcion) :
+                            EvaEvaluacionesRespuesta::create([
+                                'usuario_encuestado' => Auth::id(),
+                                'evaluacion_id'      => $this->evaluacion_id,
+                                'seccion_id'         => $this->seccion_id,
+                                'pregunta_id'        => $opcion['pregunta_id'],
+                                'opcion_id'          => $opcion['opcion_id'],
+                                'comentario'         => null
+                            ]);
+                            $this->alert('success', 'Respuestas guardadas exitosamente. Opciones');
+                        endforeach;
+                    endif;
+
+                    if (array_key_exists('opcion_id', $repuesta)) :
+                        EvaEvaluacionesRespuesta::create([
+                            'usuario_encuestado' => Auth::id(),
+                            'evaluacion_id'      => $this->evaluacion_id,
+                            'seccion_id'         => $this->seccion_id,
+                            'pregunta_id'        => $repuesta['pregunta_id'],
+                            'opcion_id'          => $repuesta['opcion_id'],
+                            'comentario'         => isset($repuesta['comentario']) ? $repuesta['comentario'] : null
+                        ]);
+
+                        $this->alert('success', 'Respuestas guardadas exitosamente. Opcion');
+                    endif;
                 }
 
                 // enviar alerta de registro exitoso
-                $this->alert('success', 'Respuestas guardadas exitosamente.');
+                $this->flash('success', 'Respuestas guardadas exitosamente.', [], route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $this->evaluacion_id]));
             } else {
                 // Hay preguntas requeridas sin respuesta
                 $primer_faltante = reset($faltantes);

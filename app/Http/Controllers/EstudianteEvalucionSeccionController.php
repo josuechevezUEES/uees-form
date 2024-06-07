@@ -41,7 +41,9 @@ class EstudianteEvalucionSeccionController extends Controller
             'evaluacion'     => $this->evaluacion,
             'seccion'        => $this->seccion,
             'preguntas'      => $this->preguntas,
-            'instrumento_id' => $this->instrumento->id
+            'instrumento_id' => $this->instrumento->id,
+            'evaluacion_id'  => $this->evaluacion_id,
+            'seccion_id'     => $this->seccion['id']
         ]);
     }
 

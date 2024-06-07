@@ -16,8 +16,7 @@
                                 <div class="card-header bg-navy p-3">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <img src="{{ asset('img/logo-uees.png') }}" alt="Logo-UEES"
-                                            class="w-100">
+                                            <img src="{{ asset('img/logo-uees.png') }}" alt="Logo-UEES" class="w-100">
                                         </div>
                                         <div class="col-sm-10 pt-2">
                                             <h3 class="widget-user-username text-left">
@@ -54,11 +53,13 @@
                                         </div>
                                     </div>
 
+
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <button type="button" class="btn btn-sm btn-warning btn-block">
+                                            <a href="{{ route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $evaluacion->id]) }}"
+                                                class="btn btn-sm btn-warning btn-block">
                                                 Ver Evaluacion
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

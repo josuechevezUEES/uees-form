@@ -15,8 +15,27 @@ class PreguntaAbierta extends Component
 
     public InsInstrumentosPregunta $pregunta;
     public InsInstrumentosSeccione $seccion;
-    public string  $opcion_seleccionada;
+    public array  $opcion_seleccionada;
     public string $comentario;
+
+    public function updatedComentario($nuevo_valor)
+    {
+        $this->opcion_seleccionada = [];
+
+        if ($nuevo_valor) :
+            $this->opcion_seleccionada = [
+                'pregunta_id' => $this->pregunta->id,
+                'opcion_id' => $this->pregunta->opciones->first()->id,
+                'required'  => $this->pregunta->requerido,
+                'comentario' => $nuevo_valor,
+                'tipo_pregunta' => 2
+            ];
+
+            $this->emitUp('obtenerRespuesta', $this->opcion_seleccionada);
+        else :
+            $this->comentario = "";
+        endif;
+    }
 
     public function seleccionarOpcion($opcion_seleccionada)
     {
@@ -24,7 +43,8 @@ class PreguntaAbierta extends Component
             $this->opcion_seleccionada = [
                 'pregunta_id' => $this->pregunta->id,
                 'opcion_id' => $opcion_seleccionada,
-                'required' => $this->pregunta->requerido
+                'required' => $this->pregunta->requerido,
+                'comenario' => $this->comentario
             ];
 
             $this->emitUp('obtenerRespuesta', $this->opcion_seleccionada);
@@ -33,6 +53,15 @@ class PreguntaAbierta extends Component
         endif;
     }
 
+    public function enviar_opciones($opcion_seleccionada)
+    {
+        $this->opcion_seleccionada = [
+            'pregunta_id' => $this->pregunta->id,
+            'opcion_id' => $opcion_seleccionada,
+            'required' => $this->pregunta->requerido,
+            'comenario' => $this->comentario
+        ];
+    }
 
     public function render()
     {

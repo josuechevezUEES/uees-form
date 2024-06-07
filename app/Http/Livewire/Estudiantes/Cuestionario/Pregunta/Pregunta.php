@@ -24,7 +24,8 @@ class Pregunta extends Component
             $this->opcion_seleccionada = [
                 'pregunta_id' => $this->pregunta->id,
                 'opcion_id' => $opcion_seleccionada,
-                'required' => $this->pregunta->requerido
+                'required' => $this->pregunta->requerido,
+                'tipo_pregunta' => 1
             ];
 
             $this->emitUp('obtenerRespuesta', $this->opcion_seleccionada);

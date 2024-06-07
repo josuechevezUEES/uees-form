@@ -35,7 +35,8 @@ class EstudianteEvalucionController extends Controller
         return view('estudiantes.evaluacion.index', [
             'estudiante' => $this->usuario,
             'evaluacion' => $this->evaluacion,
-            'secciones'  => $this->secciones
+            'secciones'  => $this->secciones,
+            'evaluacion_id' => $this->evaluacion_id,
         ]);
     }
 }

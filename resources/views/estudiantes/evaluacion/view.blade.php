@@ -1,5 +1,12 @@
 @section('title', $evaluacion->tiposEvaluacione->nombre)
 
+@section('title', 'Evaluaciones')
+
+@section('content_header')
+    {{ Breadcrumbs::render('estudiantes.evaluaciones.secciones', $evaluacion_id) }}
+@stop
+
+
 <section class="d-flex justify-content-center">
     <div class="card w-75">
         <div class="card-header px-3 bg-warning">
@@ -53,10 +60,18 @@
                                         voluptates, veritatis ab blanditiis exercitationem minus?
                                         la evaluacion esta incompleta porfavor.
                                         <br> <br>
-                                        <a
-                                            href="{{ route('estudiantes.evaluaciones.seccion', ['evaluacion_id' => $evaluacion->id, 'seccion_id' => $seccion->id]) }}">
-                                            Ingresar
-                                        </a>
+
+                                        @if ($seccion->verificar_seccion_completada_por_usuario(Auth::user()->id, $seccion->id) == true)
+                                            <a href="#" class="disable">
+                                                Completada
+                                            </a>
+                                        @else
+                                            <a
+                                                href="{{ route('estudiantes.evaluaciones.seccion', ['evaluacion_id' => $evaluacion->id, 'seccion_id' => $seccion->id]) }}">
+                                                Ingresar
+                                            </a>
+                                        @endif
+
                                     </p>
                                 </div>
                             </div>
