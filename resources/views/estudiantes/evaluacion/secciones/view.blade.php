@@ -8,28 +8,21 @@
     <div class="card w-75">
         <div class="card-header px-3 bg-warning">
             <div class="row">
-                <div class="col-sm-2 pt-3">
-                    <img src="{{ asset('/img/logo-uees.png') }}" alt="logo-uees" class="w-75 img-fluid">
+                <div class="col-sm-2 text-center p-3">
+                    <img src="{{ asset('img/logo-uees.png') }}" class="img-fluid w-75" alt="Logo-UEES">
                 </div>
-                <div class="col-sm-10 pt-4">
-                    <h1 class="font-weight-bolder text-dark-blue">
-                        <strong>
-                            Universidad Evangelica de El Salvador
-                        </strong>
+                <div class="col-sm-10 text-start">
+                    <h1 class="widget-user-username font-weight-bold text-left pt-3 text-dark">
+                        {{ $evaluacion->tiposEvaluacione->nombre }}
                     </h1>
-                    <h4 class="font-weight-normal text-dark-blue">
-                        <strong>
-                            {{ $evaluacion->tiposEvaluacione->nombre }}
-                            {{ $evaluacion->fecha_fin_evaluacion ? date('Y', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
-                        </strong>
-                    </h4>
+                    <h5 class="text-dark">
+                        La evaluacion se encuentra {{ $evaluacion->estado ? 'Activa' : 'Desactivado' }}
+                    </h5>
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <form action="">
-                <livewire:estudiantes.cuestionario.form-cuestionario :evaluacion_id='$evaluacion->id' :seccion_id='$seccion->id' />
-            </form>
+            <livewire:estudiantes.cuestionario.form-cuestionario :evaluacion_id='$evaluacion->id' :seccion_id='$seccion->id' />
         </div>
     </div>
 </section>

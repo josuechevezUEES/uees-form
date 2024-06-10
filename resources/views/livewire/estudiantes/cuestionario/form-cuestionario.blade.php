@@ -1,65 +1,70 @@
-<div class="row p-4 gap-5" wire:ignore>
-    <div class="col-sm-12">
-        <div class="row">
-            <div class="col-sm-6">
-                <strong>Nombre</strong>
-                <p class="text-capitalize">
-                    {{ $usuario->nombre_estudiante($usuario->cif)->CLINAM }}
-                </p>
-            </div>
-            <div class="col-sm-6">
-                <strong>Carrera</strong>
-                <p class="text-capitalize">{{ $usuario->carrera_nombre }}</p>
-            </div>
-            <div class="col-sm-12">
-                <strong>Facultad</strong>
-                <p class="text-capitalize">{{ $usuario->facultad_nombre }}</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-    @forelse ($preguntas as $pregunta)
-        <div class="col-sm-12" wire:ignore>
-            <div class="px-3 w-100">
-                @if ($pregunta->tipo_pregunta_id == 1)
-                    <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
-                        <livewire:estudiantes.cuestionario.pregunta.pregunta :pregunta="$pregunta" :seccion="$seccion"
-                            wire:key="$pregunta->id" />
-                    </div>
-                @endif
-
-                @if ($pregunta->tipo_pregunta_id == 2)
-                    <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
-                        <livewire:estudiantes.cuestionario.pregunta-abierta.pregunta-abierta :pregunta="$pregunta"
-                            :seccion="$seccion" wire:key="$pregunta->id" />
-                    </div>
-                @endif
-
-                @if ($pregunta->tipo_pregunta_id == 3)
-                    <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
-                        <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple
-                            :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
-                    </div>
-                @endif
-
-                @if ($pregunta->tipo_pregunta_id == 4)
-                    <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
-                        <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario
-                            :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
-                    </div>
-                @endif
-            </div>
-        </div>
-    @empty
+<div>
+    <div class="row p-5">
         <div class="col-sm-12">
-            @include('adminLTE.errors.datos-no-encontrados')
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Nombre</strong>
+                    <p class="text-capitalize">
+                        {{ $usuario->nombre_estudiante($usuario->cif)->CLINAM }}
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Carrera</strong>
+                    <p class="text-capitalize">{{ $usuario->carrera_nombre }}</p>
+                </div>
+                <div class="col-sm-2">
+                    <strong>Facultad</strong>
+                    <p class="text-capitalize">{{ $usuario->facultad_nombre }}</p>
+                </div>
+            </div>
+            <hr>
         </div>
-    @endforelse
+    </div>
 
-    <div class="col-sm-3 px-3 w-100">
-        <button type="submit" class="btn btn-primary" wire:click.prevent="store()">
-            Enviar
-        </button>
+    <div class="row p-4 gap-4" wire:ignore>
+        @forelse ($preguntas as $pregunta)
+            <div class="col-sm-12" wire:ignore>
+                <div class="px-3 w-100">
+                    @if ($pregunta->tipo_pregunta_id == 1)
+                        <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
+                            <livewire:estudiantes.cuestionario.pregunta.pregunta :pregunta="$pregunta" :seccion="$seccion"
+                                wire:key="$pregunta->id" />
+                        </div>
+                    @endif
+
+                    @if ($pregunta->tipo_pregunta_id == 2)
+                        <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
+                            <livewire:estudiantes.cuestionario.pregunta-abierta.pregunta-abierta :pregunta="$pregunta"
+                                :seccion="$seccion" wire:key="$pregunta->id" />
+                        </div>
+                    @endif
+
+                    @if ($pregunta->tipo_pregunta_id == 3)
+                        <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
+                            <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple
+                                :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                        </div>
+                    @endif
+
+                    @if ($pregunta->tipo_pregunta_id == 4)
+                        <div id="contenedor-pregunta-{{ $pregunta->id }}" class="p-3">
+                            <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario
+                                :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <div class="col-sm-12">
+                @include('adminLTE.errors.datos-no-encontrados')
+            </div>
+        @endforelse
+
+        <div class="col-sm-3 px-3 w-100">
+            <button type="submit" class="btn btn-primary" wire:click.prevent="store()">
+                Enviar
+            </button>
+        </div>
     </div>
 </div>
 

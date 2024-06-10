@@ -13,26 +13,14 @@
                     <div class="card">
                         <div class="card-header bg-warning p-3">
                             <div class="row">
-                                <div class="col-sm-2 text-center">
-                                    <img src="{{ asset('img/logo-uees.png') }}"
-                                     class="img-fluid"
-                                    alt="Logo-UEES">
+                                <div class="col-sm-2 text-center p-3">
+                                    <img src="{{ asset('img/logo-uees.png') }}" class="img-fluid w-50" alt="Logo-UEES">
                                 </div>
                                 <div class="col-sm-10 text-start">
-                                    <h1 class="widget-user-username font-weight-bold text-left pt-3">
+                                    <h1 class="widget-user-username font-weight-bold text-left pt-3 text-dark">
                                         {{ $evaluacion->tiposEvaluacione->nombre }}
                                     </h1>
-                                    <h4 class="font-weight-bolder">
-                                        Termina el dia
-                                        <strong>
-                                            {{ $evaluacion->fecha_fin_evaluacion ? date('d-m', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
-                                        </strong>
-                                        <strong>
-                                            {{ $evaluacion->fecha_fin_evaluacion ? date('h:i A', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
-                                        </strong>
-                                    </h4>
-                                    <hr>
-                                    <h5 class="text-dark-blue">
+                                    <h5 class="text-dark">
                                         La evaluacion se encuentra {{ $evaluacion->estado ? 'Activa' : 'Desactivado' }}
                                     </h5>
                                 </div>
@@ -45,15 +33,31 @@
                                         alt="logo-seccion">
                                 </div>
                                 <div class="col-sm-6 pt-3">
-                                    <h3 class="font-weight-bold">Información Importante</h3>
+                                    <h3 class="font-weight-bold">
+                                        Información Importante
+                                    </h3>
                                     <hr>
-                                    <p>La Universidad Evangélica de El Salvador (UEES) es una institución reconocida por su
+                                    <p>
+                                        <strong>
+                                            La evaluación termina el dia
+                                            <strong>
+                                                {{ $evaluacion->fecha_fin_evaluacion ? date('d-m', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
+                                            </strong>
+                                            <strong>
+                                                {{ $evaluacion->fecha_fin_evaluacion ? date('h:i A', strtotime($evaluacion->fecha_fin_evaluacion)) : null }}
+                                            </strong>
+                                        </strong>
+
+                                        <br> <br>
+
+                                        La Universidad Evangélica de El Salvador (UEES) es una institución reconocida por su
                                         compromiso con la excelencia académica y el bienestar de sus estudiantes. Para
                                         mantener y mejorar la calidad de sus servicios, la UEES implementa regularmente
                                         evaluaciones que permiten a los estudiantes y personal académico expresar sus
                                         opiniones y sugerencias. En este evaluacion, exploraremos la importancia de estas
                                         evaluaciones y cómo impactan positivamente en la comunidad
                                         universitaria.<br><br>
+
                                         <strong>Importancia de las Evaluaciones</strong><br><br>Las evaluaciones de
                                         servicios son una herramienta esencial para cualquier institución educativa. En la
                                         UEES, estas evaluaciones se utilizan para:<br><br>

@@ -10,7 +10,7 @@
 
 /* Azul oscuro para el fondo */
 .bg-dark-blue {
-    background-color: #004B91 !important;
+    background-color: #1b4092  !important;
     color: white;
 }
 
@@ -21,5 +21,5 @@
 
 /* Azul oscuro para el texto en la parte inferior */
 .text-dark-blue {
-    color: #002D62;
+    color: #1b4092 ;
 }
