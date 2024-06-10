@@ -20,7 +20,7 @@
                         </label>
                     </div>
                 @else
-                    <div class="col-sm-auto ml-md-3">
+                    <div class="col-sm-auto">
                         <input type="{{ $opcion->entrada }}" name="pregunta-{{ $pregunta->id }}"
                             id="pregunta-{{ $pregunta->id }}" wire:click="seleccionarOpcion({{ $opcion->id }})"
                             {{ $pregunta->requerido ? 'required' : null }} value="{{ $opcion->id }}"
@@ -33,19 +33,18 @@
             @empty
             @endforelse
         @endif
-
-        <div class="px-3 pt-3 pb-3 {{ $habilitar_comentario ? '' : 'd-none' }}">
-            @if ($habilitar_comentario == true)
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <textarea id="comentario-{{ $loop }}" name="comentario-{{ $loop }}"
-                                placeholder="{{ $pregunta->preguntaComentario->comentario }}"
-                                class="form-control form-control-sm form-control-border"></textarea>
-                        </div>
+    </div>
+    <div class="{{ $habilitar_comentario ? '' : 'd-none' }}">
+        @if ($habilitar_comentario == true)
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <textarea id="comentario-{{ $loop }}" name="comentario-{{ $loop }}" wire:model='comentario'
+                            {{ $pregunta->requerido ? 'required' : null }} placeholder="{{ $pregunta->preguntaComentario->comentario }}"
+                            class="form-control form-control-sm form-control-border"></textarea>
                     </div>
                 </div>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 </div>

@@ -124,6 +124,21 @@ class FormCuestionario extends Component
                     endif;
 
                     break;
+
+                case '4':
+                    if ($existingRespuesta['pregunta_id'] == $respuesta['pregunta_id']) :
+                        // Si ya existe, actualiza el valor de opcion_id y required
+                        $existingRespuesta['opcion_id']  = $respuesta['opcion_id'];
+                        $existingRespuesta['required']   = $respuesta['required'];
+
+                        if (isset($respuesta['comentario'])) :
+                            $existingRespuesta['comentario'] = $respuesta['comentario'];
+                        endif;
+
+                        $found = true;
+                        break;
+                    endif;
+                    break;
                 default:
 
                     break;
@@ -134,8 +149,6 @@ class FormCuestionario extends Component
         // Si no se encontró la pregunta_id, agregar la nueva respuesta
         if (!$found) :
             $this->repuestas[] = $respuesta;
-
-            $repuesta = [];
         endif;
     }
 
@@ -147,65 +160,120 @@ class FormCuestionario extends Component
     public function store()
     {
         if ($this->repuestas) {
+            $preguntas_requeridas = $this->obtenerPreguntasRequeridas($this->instrumento->id);
+            $respuestas_ids = $this->obtenerIdsRespuestas($this->repuestas);
+            $faltantes = $this->obtenerPreguntasFaltantes($preguntas_requeridas, $respuestas_ids);
 
-            $preguntas_requeridas = InsInstrumentosPregunta::where('cuestionario_id', $this->instrumento->id)
-                ->select('id')
-                ->get()
-                ->pluck('id')
-                ->toArray();
+            // buscar comentarios pendientes
+            $comentario_pendiente = false;
+            $pregunta_id = '';
 
-            // Obtener todos los pregunta_id de las respuestas
-            $respuestas_ids = array_column($this->repuestas, 'pregunta_id');
+            foreach ($this->repuestas as $respuesta) {
+                if ($respuesta['tipo_pregunta'] == 4 && $respuesta['comentario'] == '') :
+                    $comentario_pendiente = true;
+                    $pregunta_id = $respuesta['pregunta_id'];
+                    break;
+                endif;
+            }
 
-            // Encontrar las preguntas requeridas que no están en las respuestas
-            $faltantes = array_diff($preguntas_requeridas, $respuestas_ids);
+            if ($comentario_pendiente == true) :
+                $this->manejarRespuestasFaltantes($pregunta_id);
+                return;
+            endif;
 
             if (empty($faltantes)) {
-                // Todas las preguntas requeridas tienen respuesta
-                foreach ($this->repuestas as $repuesta) {
-
-                    if (array_key_exists('opcion', $repuesta)) :
-
-                        foreach ($repuesta['opcion'] as $opcion) :
-                            EvaEvaluacionesRespuesta::create([
-                                'usuario_encuestado' => Auth::id(),
-                                'evaluacion_id'      => $this->evaluacion_id,
-                                'seccion_id'         => $this->seccion_id,
-                                'pregunta_id'        => $opcion['pregunta_id'],
-                                'opcion_id'          => $opcion['opcion_id'],
-                                'comentario'         => null
-                            ]);
-                        endforeach;
-                    endif;
-
-                    if (array_key_exists('opcion_id', $repuesta)) :
-                        EvaEvaluacionesRespuesta::create([
-                            'usuario_encuestado' => Auth::id(),
-                            'evaluacion_id'      => $this->evaluacion_id,
-                            'seccion_id'         => $this->seccion_id,
-                            'pregunta_id'        => $repuesta['pregunta_id'],
-                            'opcion_id'          => $repuesta['opcion_id'],
-                            'comentario'         => isset($repuesta['comentario']) ? $repuesta['comentario'] : null
-                        ]);
-                    endif;
-                }
-
-                // enviar alerta de registro exitoso
-                $this->flash('success', 'Respuestas guardadas exitosamente.', [], route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $this->evaluacion_id]));
+                $this->guardarRespuestas($this->repuestas);
+                $this->mostrarMensajeExito();
             } else {
-                // Hay preguntas requeridas sin respuesta
-                $primer_faltante = reset($faltantes);
-                // $this->focus_pregunta = $primer_faltante;
-
-                $this->dispatchBrowserEvent('focusPregunta', [
-                    'preguntaId' => $primer_faltante,
-                    'seccionId' => $this->seccion_id
-                ]);
-
-                // $this->alert('warning', "Falta respuesta para la pregunta con ID: $primer_faltante");
+                $this->manejarRespuestasFaltantes($faltantes);
             }
-        } else {
-            $this->alert('warning', 'Debes completar los campos requeridos');
         }
+    }
+
+    private function obtenerPreguntasRequeridas($cuestionario_id)
+    {
+        return InsInstrumentosPregunta::where('cuestionario_id', $cuestionario_id)
+            ->select('id')
+            ->get()
+            ->pluck('id')
+            ->toArray();
+    }
+
+    private function obtenerIdsRespuestas($respuestas)
+    {
+        return array_column($respuestas, 'pregunta_id');
+    }
+
+    private function obtenerPreguntasFaltantes($requeridas, $respondidas)
+    {
+        return array_diff($requeridas, $respondidas);
+    }
+
+    private function verificarComentariosRequeridos($faltantes)
+    {
+        $faltantes_con_comentario = [];
+        foreach ($this->repuestas as $respuesta) {
+            $pregunta = InsInstrumentosPregunta::find($respuesta['pregunta_id']);
+            if ($pregunta && $pregunta->tipo_pregunta_id == 4 && array_key_exists('opcion_id', $respuesta) && empty($respuesta['comentario'])) {
+                $faltantes_con_comentario[] = $respuesta['pregunta_id'];
+            }
+        }
+        return $faltantes_con_comentario;
+    }
+
+    private function guardarRespuestas($respuestas)
+    {
+
+        foreach ($respuestas as $respuesta) {
+
+            if (array_key_exists('opcion', $respuesta)) {
+                foreach ($respuesta['opcion'] as $opcion) {
+                    $this->crearRespuesta($opcion['pregunta_id'], $opcion['opcion_id'], null);
+                }
+            }
+
+            if (array_key_exists('opcion_id', $respuesta)) {
+                $comentario = $respuesta['comentario'] ?? null;
+                $this->crearRespuesta($respuesta['pregunta_id'], $respuesta['opcion_id'], $comentario);
+            }
+        }
+    }
+
+    private function crearRespuesta($pregunta_id, $opcion_id, $comentario)
+    {
+
+        EvaEvaluacionesRespuesta::create([
+            'usuario_encuestado' => Auth::id(),
+            'evaluacion_id'      => $this->evaluacion_id,
+            'seccion_id'         => $this->seccion_id,
+            'pregunta_id'        => $pregunta_id,
+            'opcion_id'          => $opcion_id,
+            'comentario'         => $comentario
+        ]);
+    }
+
+    private function mostrarMensajeExito()
+    {
+        $this->flash('success', 'Respuestas guardadas exitosamente.', [], route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $this->evaluacion_id]));
+    }
+
+    private function manejarRespuestasFaltantes($pregunta_faltante)
+    {
+
+        $regisro_pregunta = InsInstrumentosPregunta::find($pregunta_faltante)[0];
+
+
+        $this->dispatchBrowserEvent('focusPregunta', [
+            'preguntaId' => $regisro_pregunta->id,
+            'subNumeral' => $regisro_pregunta->sub_numeral,
+            'seccionId' => $this->seccion['literal'],
+        ]);
+
+        $regisro_pregunta = [];
+    }
+
+    private function alertaEvaluacionIncompleta()
+    {
+        $this->alert('warning', 'Debes completar la evaluación al 100%');
     }
 }

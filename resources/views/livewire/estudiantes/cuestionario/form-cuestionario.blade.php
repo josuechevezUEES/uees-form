@@ -69,6 +69,7 @@
 
             var preguntaId = event.detail.preguntaId;
             var seccionId = event.detail.seccionId;
+            var subNumeral = event.detail.subNumeral;
 
             console.log(event.detail);
 
@@ -76,7 +77,7 @@
             var elementoContenedor = document.getElementById(contenedor);
 
             // Mostrar confirmación nativa
-            var confirmed = confirm("La pregunta " + seccionId + "." + preguntaId + " esta pendiente");
+            var confirmed = confirm("La pregunta " + seccionId + "." + subNumeral + " esta pendiente");
 
             if (confirmed && elementoContenedor) {
                 // Realizar el scrollIntoView si elementoContenedor está definido

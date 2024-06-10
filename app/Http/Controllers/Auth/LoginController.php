@@ -73,7 +73,7 @@ class LoginController extends Controller
                         $this->class_estudiante_loginUsingId($usuario->first());
 
                         return redirect()
-                            ->route('estudiantes.evaluaciones.index');
+                            ->route('home');
                     else :
                         // Crear usuario
                         $usuario = User::create([

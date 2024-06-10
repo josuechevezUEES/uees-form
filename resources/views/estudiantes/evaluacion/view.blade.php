@@ -8,7 +8,7 @@
 
 
 <section class="d-flex justify-content-center">
-    <div class="card w-75">
+    <div class="card w-100">
         <div class="card-header px-3 bg-warning">
             <div class="row">
                 <div class="col-sm-2 pt-3">

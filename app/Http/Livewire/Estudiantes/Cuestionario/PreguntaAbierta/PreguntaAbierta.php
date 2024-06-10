@@ -25,8 +25,8 @@ class PreguntaAbierta extends Component
         if ($nuevo_valor) :
             $this->opcion_seleccionada = [
                 'pregunta_id' => $this->pregunta->id,
-                'opcion_id' => $this->pregunta->opciones->first()->id,
-                'required'  => $this->pregunta->requerido,
+                'opcion_id'  => $this->pregunta->opciones->first()->id,
+                'required'   => $this->pregunta->requerido,
                 'comentario' => $nuevo_valor,
                 'tipo_pregunta' => 2
             ];

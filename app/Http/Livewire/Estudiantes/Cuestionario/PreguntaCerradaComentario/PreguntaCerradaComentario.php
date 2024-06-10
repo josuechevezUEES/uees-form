@@ -17,6 +17,7 @@ class PreguntaCerradaComentario extends Component
     public InsInstrumentosSeccione $seccion;
     public $opcion_seleccionada = [];
     public string $comentario = '';
+    public $opcion = '';
     public $habilitar_comentario = false;
 
     /**
@@ -28,9 +29,13 @@ class PreguntaCerradaComentario extends Component
     public function seleccionarOpcion($opcion_seleccionada)
     {
         if ($opcion_seleccionada) :
+
+            $this->comentario = '';
+            $this->opcion = $opcion_seleccionada;
+
             $this->opcion_seleccionada = [
                 'pregunta_id'   => $this->pregunta->id,
-                'opcion_id'     => $opcion_seleccionada,
+                'opcion_id'     => $this->opcion,
                 'required'      => $this->pregunta->requerido,
                 'comentario'    => $this->comentario,
                 'tipo_pregunta' => 4
@@ -42,7 +47,22 @@ class PreguntaCerradaComentario extends Component
         else :
             $this->opcion_seleccionada = [];
             $this->habilitar_comentario = false;
+            $this->comentario = '';
+            $this->opcion = '';
         endif;
+    }
+
+    public function updatedComentario($comentario)
+    {
+        $this->opcion_seleccionada = [
+            'pregunta_id'   => $this->pregunta->id,
+            'opcion_id'     => $this->opcion,
+            'required'      => $this->pregunta->requerido,
+            'comentario'    => $comentario,
+            'tipo_pregunta' => 4
+        ];
+
+        $this->emitUp('obtenerRespuesta', $this->opcion_seleccionada);
     }
 
     public function render()
