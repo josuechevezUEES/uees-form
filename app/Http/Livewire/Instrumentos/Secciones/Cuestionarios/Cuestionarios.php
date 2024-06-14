@@ -18,11 +18,12 @@ class Cuestionarios extends Component
 
     protected $listeners = [
         'agregar_opcion' => 'agregar_opcion',
-        'mount' => 'mount'
+        'mount' => 'mount',
+        'refresh' => 'refresh'
     ];
 
     public $instrumento_id, $seccion_id;
-    public $seccion;
+    public $seccion, $actualizar_formulario = false;
     public $selected_id, $keyWord, $cuestionario_id;
     public $sub_numeral, $requerido, $nombre;
     public $tipo_pregunta_id;
@@ -134,6 +135,26 @@ class Cuestionarios extends Component
         $this->preguntas_instrumento = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
             ->orderBy('sub_numeral', 'ASC')
             ->get();
+    }
+
+    public function boot()
+    {
+    }
+
+    public function refresh($instrumento_id = null, $seccion_id = null)
+    {
+        try {
+            if ($this->actualizar_formulario == true) :
+                $this->obtener_lista_tipos_preguntas();
+                $this->instrumento_id = $instrumento_id;
+                $this->seccion_id     = $seccion_id;
+                $this->seccion        = InsInstrumentosSeccione::find($seccion_id);
+                $this->verificar_existencia_cuestionario();
+                $this->actualizar_formulario = false;
+            endif;
+        } catch (\Throwable $th) {
+            abort(404, 'Cuestionario y seccion no encontrados ' . $th->getMessage());
+        }
     }
 
     public function mount(Request $request)
@@ -272,6 +293,9 @@ class Cuestionarios extends Component
         $this->dispatchBrowserEvent('closeModal');
         $this->alert('success', 'Pregunta Creada');
         $this->resetInput();
+
+        $this->actualizar_formulario = true;
+        $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
     }
 
     public function edit($id)

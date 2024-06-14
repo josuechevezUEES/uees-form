@@ -25,9 +25,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row p-4 gap-5" wire:ignore>
+                    <div class="row p-4 gap-5">
                         @forelse ($preguntas_instrumento as $pregunta)
-                            <div class="col-sm-12">
+                            <div class="col-sm-12"  wire:ignore>
                                 <div class="px-3 w-100">
                                     @if ($pregunta->tipo_pregunta_id == 1)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada
