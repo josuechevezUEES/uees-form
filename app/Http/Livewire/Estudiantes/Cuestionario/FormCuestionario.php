@@ -243,7 +243,7 @@ class FormCuestionario extends Component
     {
 
         EvaEvaluacionesRespuesta::create([
-            'usuario_encuestado' => Auth::id(),
+            'usuario_encuestado' => Auth::user()->name,
             'evaluacion_id'      => $this->evaluacion_id,
             'seccion_id'         => $this->seccion_id,
             'pregunta_id'        => $pregunta_id,

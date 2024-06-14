@@ -203,7 +203,7 @@
                         </div>
                     @endforelse
                     <div class="col-sm-12 px-4">
-                        <button type="submit" class="btn btn-sm bg-navy">
+                        <button type="submit" class="btn btn-sm bg-dark-blue text-light">
                             Enviar Respuestas
                         </button>
                     </div>

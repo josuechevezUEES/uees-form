@@ -6,7 +6,7 @@
 
 <section class="d-flex justify-content-center">
     <div class="card w-75">
-        <div class="card-header px-3 bg-warning">
+        <div class="card-header px-3 bg-dark-yellow">
             <div class="row">
                 <div class="col-sm-2 text-center p-3">
                     <img src="{{ asset('img/logo-uees.png') }}" class="img-fluid w-75" alt="Logo-UEES">

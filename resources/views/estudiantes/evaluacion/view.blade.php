@@ -9,7 +9,7 @@
 
 <section class="d-flex justify-content-center">
     <div class="card w-100">
-        <div class="card-header px-3 bg-warning">
+        <div class="card-header px-3 bg-dark-yellow">
             <div class="row">
                 <div class="col-sm-2 text-center p-3">
                     <img src="{{ asset('img/logo-uees.png') }}" class="img-fluid w-50" alt="Logo-UEES">
@@ -49,7 +49,7 @@
                                         la evaluacion esta incompleta porfavor.
                                         <br> <br>
 
-                                        @if ($seccion->verificar_seccion_completada_por_usuario(Auth::user()->id, $seccion->id) == true)
+                                        @if ($seccion->verificar_seccion_completada_por_usuario(Auth::user()->name, $seccion->id) == true)
                                             <a href="#" class="disable">
                                                 Completada
                                             </a>

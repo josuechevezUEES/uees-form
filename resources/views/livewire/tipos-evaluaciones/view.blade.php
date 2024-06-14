@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-navy">
+                <div class="card-header bg-dark-blue text-light">
                     <div class="row">
                         <div class="col-sm-10">
                             <input wire:model='keyWord' type="text" class="form-control" name="search" id="search"
@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                            <div class="btn btn-block btn-warning" data-bs-toggle="modal"
+                            <div class="btn btn-block bg-dark-yellow" data-bs-toggle="modal"
                                 data-bs-target="#createDataModal">
                                 <i class="fa fa-plus"></i>
                                 Agregar
@@ -50,7 +50,7 @@
                                         <td width="200">
                                             <div class="btn-group" role="group">
                                                 <div class="dropdown">
-                                                    <a class="btn btn-sm btn-warning dropdown-toggle" href="#"
+                                                    <a class="btn btn-sm bg-dark-yellow dropdown-toggle" href="#"
                                                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Acciones
                                                     </a>
@@ -73,7 +73,7 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <a class="btn btn-sm bg-navy"
+                                                <a class="btn btn-sm bg-dark-blue text-light"
                                                     href="{{ route('evaluaciones.tipos.configuraciones', ['tipo_evaluacion_id' => $row->id]) }}">
                                                     <i class="fa fa-wrench"></i>
                                                     Configurar

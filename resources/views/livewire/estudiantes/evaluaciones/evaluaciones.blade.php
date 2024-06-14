@@ -3,7 +3,7 @@
         <div
             class="col-sm-{{ $evaluaciones->count() > 1 ? 12 : 12 }} col-lg-12 col-md-{{ $evaluaciones->count() > 1 ? 6 : 6 }}">
             <div class="card">
-                <div class="card-header bg-navy">
+                <div class="card-header bg-dark-blue text-light">
                     <strong>
                         {{ $evaluacion->tiposEvaluacione->nombre }}
                     </strong>

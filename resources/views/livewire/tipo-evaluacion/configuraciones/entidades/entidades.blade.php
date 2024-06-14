@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card mb-3">
-            <div class="card-header bg-navy">
+            <div class="card-header bg-dark-blue text-light">
                 <h3 class="card-title">
                     Las entidades de la evaluacion
                 </h3>
@@ -76,7 +76,7 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-12">
-                        <button wire:click="guardar_configuracion()" type="button" class="btn btn-sm btn-warning"
+                        <button wire:click="guardar_configuracion()" type="button" class="btn btn-sm bg-dark-yellow"
                             wire:target="modalidades_seleccionadas,evaluado_id,evaluador_id"
                             wire:loading.attr="disabled">
                             Guardar Cambios

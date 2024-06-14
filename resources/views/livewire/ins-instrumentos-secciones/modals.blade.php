@@ -3,7 +3,7 @@
     aria-labelledby="createDataModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-dark-blue text-light">
                 <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Seccion</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -26,7 +26,7 @@
                     Cerrar
                 </button>
                 <button type="button" wire:click.prevent="store()" wire:target="store,literal,nombre,estado,fondo"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>
@@ -39,7 +39,7 @@
     aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-dark-blue text-light">
                 <h5 class="modal-title" id="updateModalLabel">Actualizar Seccion</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -63,7 +63,7 @@
                     Cerrar
                 </button>
                 <button type="button" wire:click.prevent="update()" wire:target="edit,update,literal,nombre,estado,fondo"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>

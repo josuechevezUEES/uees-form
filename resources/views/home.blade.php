@@ -11,7 +11,7 @@
             @foreach ($evaluaciones as $evaluacion)
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header bg-warning p-3">
+                        <div class="card-header bg-dark-yellow p-3">
                             <div class="row">
                                 <div class="col-sm-2 text-center p-3">
                                     <img src="{{ asset('img/logo-uees.png') }}" class="img-fluid w-50" alt="Logo-UEES">
@@ -81,7 +81,7 @@
 
                                         <hr>
                                         <a href="{{ route('estudiantes.evaluaciones.secciones', ['evaluacion_id' => $evaluacion->id]) }}"
-                                            class="btn btn-warning">
+                                            class="btn bg-dark-yellow">
                                             Iniciar Evaluación
                                         </a>
                                 </div>

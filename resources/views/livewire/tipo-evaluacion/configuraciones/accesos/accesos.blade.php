@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header bg-navy">
+    <div class="card-header bg-dark-blue text-light">
         <h3 class="card-title">Accesos </h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">

@@ -266,19 +266,19 @@ class Cuestionarios extends Component
         );
 
         $nueva_pregunta = InsInstrumentosPregunta::create([
-            'nombre' => $this->nombre,
-            'cuestionario_id' => $this->cuestionario_id,
+            'nombre'           => $this->nombre,
+            'cuestionario_id'  => $this->cuestionario_id,
             'tipo_pregunta_id' => $this->tipo_pregunta_id,
-            'sub_numeral' => $this->sub_numeral,
-            'requerido' => $this->requerido,
-            'comentario' => $this->comentario
+            'sub_numeral'      => $this->sub_numeral,
+            'requerido'        => $this->requerido,
+            'comentario'       => $this->comentario
         ]);
 
         foreach ($this->opciones_creadas as $opciones) :
             InsInstrumentosOpcione::create([
                 'pregunta_id' => $nueva_pregunta->id,
-                'nombre'  => $opciones['nombre'],
-                'entrada' => $opciones['entrada'],
+                'nombre'      => $opciones['nombre'],
+                'entrada'     => $opciones['entrada'],
             ]);
         endforeach;
 
@@ -313,11 +313,11 @@ class Cuestionarios extends Component
     {
         $this->validate(
             [
-                'nombre' => 'required',
-                'cuestionario_id' => 'required',
+                'nombre'           => 'required',
+                'cuestionario_id'  => 'required',
                 'tipo_pregunta_id' => 'required',
-                'sub_numeral' => 'required',
-                'requerido' => 'required',
+                'sub_numeral'      => 'required',
+                'requerido'        => 'required',
             ],
             [
                 'cuestionario_id.required' => 'El campo codigo cuestionario es obligatorio',
