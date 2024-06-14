@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\VerificarPreguntasRequeridasEstudiante;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -212,6 +213,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'verificarRolEvaluador' => \App\Http\Middleware\VerificarRolUsuarioEvaluacion::class,
+        'verificarPreguntasRequeridasEstudiante' => VerificarPreguntasRequeridasEstudiante::class
     ])->toArray(),
 
 ];

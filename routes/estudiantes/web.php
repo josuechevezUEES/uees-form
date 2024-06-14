@@ -19,11 +19,16 @@ Route::middleware(['auth'])
         //     ->name('estudiantes.evaluaciones.cuestionarios');
 
         Route::get('evaluaciones/{evaluacion_id}/secciones', [EstudianteEvalucionController::class, 'index'])
-            ->name('estudiantes.evaluaciones.secciones');
+            ->name('estudiantes.evaluaciones.secciones')
+            ->middleware(['verificarRolEvaluador', 'auth']);
 
         Route::get('evaluaciones/{evaluacion_id}/secciones/{seccion_id}/cuestionario', [EstudianteEvalucionSeccionController::class, 'index'])
-            ->name('estudiantes.evaluaciones.seccion');
+            ->name('estudiantes.evaluaciones.seccion')
+            ->middleware(['verificarRolEvaluador', 'verificarPreguntasRequeridasEstudiante', 'auth']);
 
         Route::post('evaluaciones/{evaluacion_id}/secciones/{seccion_id}/cuestionario/almacenar-respuestas', [EstudianteEvalucionSeccionController::class, 'almacenar_respuestas'])
-            ->name('estudiantes.evaluaciones.seccion.almacenar_respuestas');
+            ->name('estudiantes.evaluaciones.seccion.almacenar_respuestas')
+            ->middleware([
+                'auth'
+            ]);
     });
