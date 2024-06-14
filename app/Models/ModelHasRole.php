@@ -16,7 +16,7 @@ class ModelHasRole extends Model
      */
     protected $connection = 'sqlsrv';
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $table = 'model_has_roles';
 

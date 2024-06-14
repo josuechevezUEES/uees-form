@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\EvaEvaluacione;
+use App\Models\ModelHasRole;
 use App\Models\PleStudioClass;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -89,7 +91,20 @@ class LoginController extends Controller
                         ]);
 
                         if ($usuario) :
-                            $usuario->assignRole('estudiante');
+
+                            $rol_estudiante = Role::where('name', 'estudiante')
+                                ->get();
+
+                            if ($rol_estudiante->count() > 0) :
+                                $rol = $rol_estudiante->first();
+
+                                ModelHasRole::create([
+                                    'role_id'    => $rol->id,
+                                    'model_type' => 'App\Models\User',
+                                    'model_id'   => $usuario->id,
+                                ]);
+                            endif;
+
                             $this->class_estudiante_loginUsingId($usuario);
 
                             return redirect()
@@ -100,7 +115,7 @@ class LoginController extends Controller
                         endif;
                     endif;
 
-                else:
+                else :
                     return redirect()->route('login');
                 endif;
 
