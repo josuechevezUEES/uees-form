@@ -22,6 +22,7 @@ class EstudianteEvalucionController extends Controller
         $this->evaluacion = EvaEvaluacione::find($request->evaluacion_id);
 
         $this->secciones = InsInstrumentosSeccione::where('instrumento_id', $this->evaluacion->instrumento_id)
+            ->where('estado', 1)
             ->get();
     }
 
