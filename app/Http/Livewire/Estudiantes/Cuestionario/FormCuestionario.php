@@ -23,7 +23,7 @@ class FormCuestionario extends Component
     public string $evaluacion_id;
     public string $seccion_id;
     public $usuario, $instrumento;
-    public $evaluacion;
+    public $evaluacion, $contador_preguntas_pendiente = 0;
     public $seccion = [], $preguntas = [];
 
     public $focus_pregunta;
@@ -159,8 +159,8 @@ class FormCuestionario extends Component
      */
     public function store()
     {
-        if ($this->repuestas) {
-            $preguntas_requeridas = $this->obtenerPreguntasRequeridas($this->instrumento->id);
+        if ($this->repuestas) :
+            $preguntas_requeridas = $this->obtenerPreguntas($this->instrumento->id);
             $respuestas_ids = $this->obtenerIdsRespuestas($this->repuestas);
             $faltantes = $this->obtenerPreguntasFaltantes($preguntas_requeridas, $respuestas_ids);
 
@@ -187,10 +187,12 @@ class FormCuestionario extends Component
             } else {
                 $this->manejarRespuestasFaltantes($faltantes);
             }
-        }
+        else:
+            $this->alert('info', 'Completa todas las preguntas');
+        endif;
     }
 
-    private function obtenerPreguntasRequeridas($cuestionario_id)
+    private function obtenerPreguntas($cuestionario_id)
     {
         return InsInstrumentosPregunta::where('cuestionario_id', $cuestionario_id)
             ->select('id')
@@ -206,7 +208,8 @@ class FormCuestionario extends Component
 
     private function obtenerPreguntasFaltantes($requeridas, $respondidas)
     {
-        return array_diff($requeridas, $respondidas);
+        $this->contador_preguntas_pendiente = array_diff($requeridas, $respondidas);
+        return $this->contador_preguntas_pendiente;
     }
 
     private function verificarComentariosRequeridos($faltantes)
@@ -260,8 +263,12 @@ class FormCuestionario extends Component
     private function manejarRespuestasFaltantes($pregunta_faltante)
     {
 
-        $regisro_pregunta = InsInstrumentosPregunta::find($pregunta_faltante)[0];
+        $buscar_regisro_pregunta = InsInstrumentosPregunta::where('id', $pregunta_faltante)
+            ->get();
 
+        $regisro_pregunta = $buscar_regisro_pregunta->first();
+
+        //dd($regisro_pregunta);
 
         $this->dispatchBrowserEvent('focusPregunta', [
             'preguntaId' => $regisro_pregunta->id,
