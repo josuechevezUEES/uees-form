@@ -183,12 +183,47 @@ class FormCuestionario extends Component
 
             if (empty($faltantes)) {
                 $this->guardarRespuestas($this->repuestas);
-                $this->mostrarMensajeExito();
+
+                // redireccionar a la siguente seccion
+                $this->redireccionarSiguienteSeccion();
             } else {
                 $this->manejarRespuestasFaltantes($faltantes);
             }
-        else:
+        else :
             $this->alert('info', 'Completa todas las preguntas');
+        endif;
+    }
+
+    private function redireccionarSiguienteSeccion()
+    {
+
+        $evaluacion = EvaEvaluacione::find($this->evaluacion_id);
+
+        $secciones = InsInstrumentosSeccione::where('instrumento_id', $evaluacion->instrumento_id)
+            ->where('estado', 1)
+            ->get();
+
+        $siguiente_seccion_id = 0;
+
+        if ($secciones->count() > 0) :
+            foreach ($secciones as $seccion) :
+                if ($seccion->id > $this->seccion_id) :
+                    $siguiente_seccion_id = $seccion->id;
+                endif;
+            endforeach;
+        else :
+            return $this->mostrarMensajeExito();
+        endif;
+
+
+        if ($siguiente_seccion_id > 0) :
+            return redirect()
+                ->route('estudiantes.evaluaciones.seccion', [
+                    'evaluacion_id' => $evaluacion->id,
+                    'seccion_id' => $seccion->id
+                ]);
+        else :
+            return $this->mostrarMensajeExito();
         endif;
     }
 
