@@ -19,7 +19,7 @@
                         {{ $evaluacion->tiposEvaluacione->nombre }}
                     </h1>
                     <h5 class="text-dark">
-                        La evaluacion se encuentra {{ $evaluacion->estado ? 'Activa' : 'Desactivado' }}
+                        La evaluación se encuentra {{ $evaluacion->estado ? 'Activa' : 'Desactivado' }}
                     </h5>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                                             {{ $seccion->nombre }}
                                         </strong>
                                         {{-- {{ $seccion }} --}}
-                                        Descripcion de la evaluacion,
+                                        Descripción de la evaluación,
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed laboriosam error
                                         ipsa
                                         earum nemo vel asperiores veritatis eius animi cupiditate. Vel eos dolor illum

@@ -1,18 +1,26 @@
 <div>
-    <div class="row p-3">
-        <div class="col-md-6 col-sm-6">
-            <strong>Carrera</strong>
-            <p class="text-capitalize">{{ $usuario->carrera_nombre }}</p>
-        </div>
-        <div class="col-md-6 col-sm-6">
-            <strong>Facultad</strong>
-            <p class="text-capitalize">{{ $usuario->facultad_nombre }}</p>
-        </div>
-        <div class="col-md-12 col-sm-12">
-            <strong>Nombre</strong>
-            <p class="text-capitalize">
-                {{ $usuario->nombre_estudiante($usuario->cif)->CLINAM }}
-            </p>
+    <div class="row p-4">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <strong>Facultad</strong>
+                            <p class="text-capitalize">{{ $usuario->facultad_nombre }}</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <strong>Carrera</strong>
+                            <p class="text-capitalize">{{ $usuario->carrera_nombre }}</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12 d-none">
+                            <strong>Nombre</strong>
+                            <p class="text-capitalize">
+                                {{ $usuario->nombre_estudiante($usuario->cif)->CLINAM }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -37,15 +45,13 @@
 
                         @if ($pregunta->tipo_pregunta_id == 3)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple
-                                    :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
                             </div>
                         @endif
 
                         @if ($pregunta->tipo_pregunta_id == 4)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario
-                                    :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
                             </div>
                         @endif
                     </div>
@@ -60,15 +66,12 @@
         <div class="col-12 text-right">
             <button type="submit" class="btn btn-primary" wire:click.prevent="store()"
                 wire:target="store,render,obtenerRespuesta,focusPregunta, repuestas, contador_preguntas_pendiente"
-                wire:loading.attr="disabled" >
-                <span wire:target="store"
-                    wire:loading.class="d-none">
+                wire:loading.attr="disabled">
+                <span wire:target="store" wire:loading.class="d-none">
                     Enviar
                 </span>
 
-                <span wire:loading.delay
-                    wire:target="store"
-                    wire:loading.class.remove="d-none" class="d-none">
+                <span wire:loading.delay wire:target="store" wire:loading.class.remove="d-none" class="d-none">
                     Enviando...
                 </span>
             </button>
