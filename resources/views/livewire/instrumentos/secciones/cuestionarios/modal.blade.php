@@ -3,7 +3,7 @@
     aria-labelledby="createDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-dark-blue text-light">
                 <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Pregunta</h5>
                 <div class="card-tools">
                     <button wire:click.prevent="cancel()" type="button" class="btn-close text-warning"
@@ -47,7 +47,7 @@
                 </button>
                 <button type="button" wire:click.prevent="store()"
                     wire:target="store,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario,eliminar_opcion_vista_preva"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>
@@ -77,7 +77,7 @@
                     data-bs-dismiss="modal">Close</button>
                 <button type="button" wire:click.prevent="update()"
                     wire:target="update,cuestionario_id,sub_numeral,requerido,nombre,estado,tipo_pregunta_id,nombre_opcion,comentario"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>

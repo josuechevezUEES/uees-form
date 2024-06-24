@@ -3,15 +3,15 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-navy">
+                <div class="card-header bg-dark-blue text-light">
                     <div class="row">
                         <div class="col-sm-10">
                             <input wire:model='keyWord' type="text" class="form-control" name="search"
                                 id="search" placeholder="Buscar registro">
                         </div>
                         <div class="col-sm-2">
-                            <button class="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#createDataModal">
-                                <i class="fa fa-plus"></i> 
+                            <button class="btn bg-dark-yellow btn-block" data-bs-toggle="modal" data-bs-target="#createDataModal">
+                                <i class="fa fa-plus"></i>
                                 Agregar
                             </button>
                         </div>
@@ -44,7 +44,7 @@
                                         <td>{{ $row->estado ? 'Activo' : 'Desactivado' }}</td>
                                         <td width="90">
                                             <div class="dropdown">
-                                                <a class="btn btn-sm btn-warning dropdown-toggle" href="#"
+                                                <a class="btn btn-sm bg-dark-yellow dropdown-toggle" href="#"
                                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Acciones
                                                 </a>

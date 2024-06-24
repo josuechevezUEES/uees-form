@@ -1,5 +1,5 @@
 <div class="card" wire:ignore.self>
-    <div class="card-header bg-navy">
+    <div class="card-header bg-dark-blue text-light">
         <h3 class="card-title">
             Facultades,
             (De {{ $contador_facultades }} Facultades / {{ count($facultades_seleccionadas) }}

@@ -1,0 +1,32 @@
+/* Azul para el texto "UES" y los detalles de la cruz */
+.text-ues {
+    color: #004B91;
+}
+
+/* Amarillo para el fondo */
+.bg-yellow {
+    background-color: #FFD700;
+}
+
+/* Azul oscuro para el fondo */
+.bg-dark-blue {
+    background-color: #1b4092  !important;
+    color: white;
+}
+
+/* Blanco para el contorno de la cruz */
+.contour-white {
+    color: #FFFFFF;
+}
+
+/* Azul oscuro para el texto en la parte inferior */
+.text-dark-blue {
+    color: #1b4092 ;
+}
+
+
+/* yellow para el fondo */
+.bg-dark-yellow {
+    background-color: #FFDD00  !important;
+    color: rgb(0, 0, 0);
+}

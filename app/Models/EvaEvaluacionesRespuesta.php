@@ -9,16 +9,22 @@ class EvaEvaluacionesRespuesta extends Model
 {
     use HasFactory;
 
+    /* The connection name for the model.
+    *
+    * @var string
+    */
+    protected $connection = 'sqlsrv';
+
     public $timestamps = true;
 
     protected $table = 'eva_evaluaciones_respuestas';
 
     protected $fillable = [
-        'usuario_id', 
-        'evaluacion_id', 
-        'seccion_id', 
-        'pregunta_id', 
-        'opcion_id', 
+        'usuario_encuestado',
+        'evaluacion_id',
+        'seccion_id',
+        'pregunta_id',
+        'opcion_id',
         'comentario'
     ];
 
@@ -59,6 +65,6 @@ class EvaEvaluacionesRespuesta extends Model
      */
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'usuario_id');
+        return $this->hasOne('App\Models\User', 'id', 'usuario_encuestado');
     }
 }

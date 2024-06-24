@@ -18,11 +18,12 @@ class Cuestionarios extends Component
 
     protected $listeners = [
         'agregar_opcion' => 'agregar_opcion',
-        'mount' => 'mount'
+        'mount' => 'mount',
+        'refresh' => 'refresh'
     ];
 
     public $instrumento_id, $seccion_id;
-    public $seccion;
+    public $seccion, $actualizar_formulario = false;
     public $selected_id, $keyWord, $cuestionario_id;
     public $sub_numeral, $requerido, $nombre;
     public $tipo_pregunta_id;
@@ -136,6 +137,26 @@ class Cuestionarios extends Component
             ->get();
     }
 
+    public function boot()
+    {
+    }
+
+    public function refresh($instrumento_id = null, $seccion_id = null)
+    {
+        try {
+            if ($this->actualizar_formulario == true) :
+                $this->obtener_lista_tipos_preguntas();
+                $this->instrumento_id = $instrumento_id;
+                $this->seccion_id     = $seccion_id;
+                $this->seccion        = InsInstrumentosSeccione::find($seccion_id);
+                $this->verificar_existencia_cuestionario();
+                $this->actualizar_formulario = false;
+            endif;
+        } catch (\Throwable $th) {
+            abort(404, 'Cuestionario y seccion no encontrados ' . $th->getMessage());
+        }
+    }
+
     public function mount(Request $request)
     {
         try {
@@ -245,19 +266,19 @@ class Cuestionarios extends Component
         );
 
         $nueva_pregunta = InsInstrumentosPregunta::create([
-            'nombre' => $this->nombre,
-            'cuestionario_id' => $this->cuestionario_id,
+            'nombre'           => $this->nombre,
+            'cuestionario_id'  => $this->cuestionario_id,
             'tipo_pregunta_id' => $this->tipo_pregunta_id,
-            'sub_numeral' => $this->sub_numeral,
-            'requerido' => $this->requerido,
-            'comentario' => $this->comentario
+            'sub_numeral'      => $this->sub_numeral,
+            'requerido'        => $this->requerido,
+            'comentario'       => $this->comentario
         ]);
 
         foreach ($this->opciones_creadas as $opciones) :
             InsInstrumentosOpcione::create([
                 'pregunta_id' => $nueva_pregunta->id,
-                'nombre'  => $opciones['nombre'],
-                'entrada' => $opciones['entrada'],
+                'nombre'      => $opciones['nombre'],
+                'entrada'     => $opciones['entrada'],
             ]);
         endforeach;
 
@@ -272,6 +293,9 @@ class Cuestionarios extends Component
         $this->dispatchBrowserEvent('closeModal');
         $this->alert('success', 'Pregunta Creada');
         $this->resetInput();
+
+        $this->actualizar_formulario = true;
+        $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
     }
 
     public function edit($id)
@@ -289,11 +313,11 @@ class Cuestionarios extends Component
     {
         $this->validate(
             [
-                'nombre' => 'required',
-                'cuestionario_id' => 'required',
+                'nombre'           => 'required',
+                'cuestionario_id'  => 'required',
                 'tipo_pregunta_id' => 'required',
-                'sub_numeral' => 'required',
-                'requerido' => 'required',
+                'sub_numeral'      => 'required',
+                'requerido'        => 'required',
             ],
             [
                 'cuestionario_id.required' => 'El campo codigo cuestionario es obligatorio',

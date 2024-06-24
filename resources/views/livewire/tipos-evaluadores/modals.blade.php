@@ -26,7 +26,7 @@
                     Cerrar
                 </button>
                 <button type="button" wire:click.prevent="store()" wire:target="store,descripcion,nombre,estado"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>
@@ -63,7 +63,7 @@
                     Cerrar
                 </button>
                 <button type="button" wire:click.prevent="update()" wire:target="update,descripcion,nombre,estado"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>

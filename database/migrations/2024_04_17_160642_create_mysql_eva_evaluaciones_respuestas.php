@@ -15,7 +15,7 @@ return new class extends Migration
             ->create('eva_evaluaciones_respuestas', function (Blueprint $table) {
                 $table->id();
 
-                $table->foreignId('usuario_id')
+                $table->foreignId('usuario_encuestado')
                     ->references('id')
                     ->on('users');
 

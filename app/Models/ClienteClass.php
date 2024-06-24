@@ -70,10 +70,12 @@ class ClienteClass extends Model
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'CLIENTES';
+
+    public $primaryKey = 'CLICUN';
 
     /**
      * @var array
@@ -82,7 +84,7 @@ class ClienteClass extends Model
 
     /**
      * The connection name for the model.
-     * 
+     *
      * @var string
      */
     protected $connection = 'sqlsrv_class';

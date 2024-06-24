@@ -3,7 +3,7 @@
     aria-labelledby="createDataModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-dark-blue text-light">
                 <h5 class="modal-title" id="createDataModalLabel">Crear Nueva Evaluacion</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -27,7 +27,7 @@
                 </button>
                 <button type="button" wire:click.prevent="store()"
                     wire:target="store,tipo_evaluacion_id,instrumento_id,fecha_inicio_evaluacion,estado,fecha_fin_evaluacion,estado"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>
@@ -40,7 +40,7 @@
     aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-dark-blue text-light">
                 <h5 class="modal-title" id="updateModalLabel">Actualizar Evaluacion</h5>
                 <button wire:click.prevent="cancel()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
@@ -65,7 +65,7 @@
                 </button>
                 <button type="button" wire:click.prevent="update()"
                     wire:target="edit,update,tipo_evaluacion_id,instrumento_id,fecha_inicio_evaluacion,estado,fecha_fin_evaluacion,estado"
-                    wire:loading.attr="disabled" class="btn bg-navy">
+                    wire:loading.attr="disabled" class="btn bg-dark-blue text-light">
                     Guardar
                 </button>
             </div>

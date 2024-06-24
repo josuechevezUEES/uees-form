@@ -22,6 +22,7 @@
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
 
+    <link rel="stylesheet" href="{{ asset('/css/colores-uees.css') }}">
 
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')

@@ -1,3 +1,9 @@
+@section('title', 'Secciones')
+
+@section('content_header')
+    {{ Breadcrumbs::render('estudiantes.evaluaciones.secciones', 1) }}
+@stop
+
 <div class="container">
     <div class="card">
         <div class="card-header bg-warning">
@@ -14,6 +20,7 @@
         </div>
         <div class="card-body">
             <form wire:submit.prevent="almacenar">
+                @csrf
                 <div class="row p-4 gap-5">
                     @forelse ($cuestionario->instrumentoPreguntas as $pregunta)
                         <div class="col-sm-12">
@@ -29,12 +36,11 @@
                                                 @forelse ($pregunta->opciones as $opcion)
                                                     @if ($loop->iteration == 1)
                                                         <div class="col-sm-auto">
-                                                            <input type="{{ $opcion['entrada'] }}" 
+                                                            <input type="{{ $opcion['entrada'] }}"
                                                                 name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
                                                                 id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}"
                                                                 {{ $pregunta->requerido ? 'required' : null }}
-                                                                wire:model="respuesta."
-                                                                class="form-radio-input">
+                                                                wire:model="respuesta." class="form-radio-input">
                                                             <label
                                                                 for="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop->iteration }}">
                                                                 {{ $opcion['nombre'] }}
@@ -197,7 +203,7 @@
                         </div>
                     @endforelse
                     <div class="col-sm-12 px-4">
-                        <button type="submit" class="btn btn-sm bg-navy">
+                        <button type="submit" class="btn btn-sm bg-dark-blue text-light">
                             Enviar Respuestas
                         </button>
                     </div>

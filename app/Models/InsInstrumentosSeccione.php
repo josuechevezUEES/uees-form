@@ -29,4 +29,21 @@ class InsInstrumentosSeccione extends Model
     {
         return $this->hasOne('App\Models\InsInstrumentosEvaluacione', 'id', 'instrumento_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function instrumentoCuestionario()
+    {
+        return $this->hasOne('App\Models\InstrumentoCuestionario', 'seccion_id', 'id');
+    }
+
+    public function verificar_seccion_completada_por_usuario($userId, $seccion_id)
+    {
+        $hasResponses = EvaEvaluacionesRespuesta::where('usuario_encuestado', $userId)
+            ->where('seccion_id', $seccion_id)
+            ->exists();
+
+        return $hasResponses;
+    }
 }

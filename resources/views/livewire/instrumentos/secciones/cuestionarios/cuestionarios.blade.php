@@ -7,9 +7,9 @@
 <div class="container-fluid">
     @include('livewire.instrumentos.secciones.cuestionarios.modal')
     <div class="row justify-content-center">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
             <div class="card">
-                <div class="card-header bg-navy">
+                <div class="card-header bg-dark-blue text-light">
                     <div class="row">
                         <div class="col-sm-10">
                             <h2>
@@ -17,7 +17,7 @@
                             </h2>
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" wire:click='crear()' class="btn bg-warning btn-block"
+                            <button type="button" wire:click='crear()' class="btn bg-dark-yellow btn-block"
                                 data-bs-toggle="modal" data-bs-target="#createDataModal">
                                 Nueva
                             </button>
@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="row p-4 gap-5">
                         @forelse ($preguntas_instrumento as $pregunta)
-                            <div class="col-sm-12">
+                            <div class="col-sm-12"  wire:ignore>
                                 <div class="px-3 w-100">
                                     @if ($pregunta->tipo_pregunta_id == 1)
                                         <livewire:instrumentos.secciones.cuestionarios.preguntas.pregunta-cerrada
