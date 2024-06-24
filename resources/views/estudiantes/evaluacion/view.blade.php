@@ -37,7 +37,7 @@
                                 <div class="col-sm-9">
                                     <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray text-break">
                                         <strong class="d-block text-gray-dark">
-                                            {{ $evaluacion->id }}.{{ $seccion->literal }}
+                                            {{ $seccion->literal }})
                                             {{ $seccion->nombre }}
                                         </strong>
                                         {{-- {{ $seccion }} --}}
