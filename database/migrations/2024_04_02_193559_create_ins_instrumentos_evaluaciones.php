@@ -24,21 +24,6 @@ return new class extends Migration
 
             $table->timestamps(3);
         });
-
-
-        Schema::connection('sqlsrv')->create('ins_instrumentos_evaluaciones', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('nombre');
-
-            $table->longText('descripcion')
-                ->nullable()
-                ->default(null);
-
-            $table->boolean('estado');
-
-            $table->timestamps(3);
-        });
     }
 
     /**
@@ -47,6 +32,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::connection('mysql')->dropIfExists('ins_instrumentos_evaluaciones');
-        Schema::connection('sqlsrv')->dropIfExists('ins_instrumentos_evaluaciones');
     }
 };

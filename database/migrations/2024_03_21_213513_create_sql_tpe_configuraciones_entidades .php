@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')->create('tpe_configuraciones_facultades', function (Blueprint $table) {
+        Schema::connection('sqlsrv')->create('tpe_configuraciones_entidades', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('tpe_configuracion_id')
                 ->references('id')
                 ->on('tpe_configuracion');
 
-            $table->string('codigo_facultad')
-                ->comment('CARDCOD en CLASS');
+            $table->foreignId('evaluador_id')
+                ->references('id')
+                ->on('tipos_evaluadores');
+
+            $table->foreignId('evaluados_id')
+                ->references('id')
+                ->on('tipos_evaluados');
 
             $table->timestamps(3);
         });
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('tpe_configuraciones_facultades');
+        Schema::connection('sqlsrv')->dropIfExists('tpe_configuraciones_entidades');
     }
 };

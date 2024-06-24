@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')
+
+        Schema::connection('sqlsrv')
             ->create('users', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
@@ -19,8 +20,8 @@ return new class extends Migration
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password')
                 ->nullable()
-                ->default(null);
-                $table->rememberToken();
+                ->default();
+                $table->rememberToken(null);
                 $table->timestamps(3);
             });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('users');
+        Schema::connection('sqlsrv')->dropIfExists('users');
     }
 };

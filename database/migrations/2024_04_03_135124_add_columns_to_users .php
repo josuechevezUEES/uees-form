@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')
+
+        Schema::connection('sqlsrv')
             ->table('users', function (Blueprint $table) {
                 $table->string('facultad_id')
                     ->nullable()
@@ -59,9 +60,6 @@ return new class extends Migration
                     ->nullable()
                     ->default(null);
             });
-
-
-
     }
 
     /**
@@ -69,7 +67,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->dropColumns('users', ['facultad_id', 'facultad_nombre', 'carrera_id', 'carrera_nombre', 'dui', 'cif', 'usuario_class', 'estado', 'modalidad']);
     }
 };

@@ -39,8 +39,11 @@ class User extends Authenticatable
         'cif',
         'dui',
         'estado',
-        'modalidad'
+        'modalidad',
+        'created_at', // Asegúrate de incluir estos campos
+        'updated_at', // Asegúrate de incluir estos campos
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

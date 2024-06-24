@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->create('ins_instrumentos_preguntas', function (Blueprint $table) {
                 $table->id();
 
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('ins_instrumentos_preguntas');
+        Schema::connection('sqlsrv')->dropIfExists('ins_instrumentos_preguntas');
     }
 };
