@@ -23,25 +23,29 @@
                     <div class="card-body">
                         @if ($pregunta->tipo_pregunta_id == 1)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta.pregunta :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta.pregunta :pregunta="$pregunta" :seccion="$seccion"
+                                    wire:key="$pregunta->id" />
                             </div>
                         @endif
 
                         @if ($pregunta->tipo_pregunta_id == 2)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta-abierta.pregunta-abierta :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta-abierta.pregunta-abierta :pregunta="$pregunta"
+                                    :seccion="$seccion" wire:key="$pregunta->id" />
                             </div>
                         @endif
 
                         @if ($pregunta->tipo_pregunta_id == 3)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta-opcion-multiple.pregunta-opcion-multiple
+                                    :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
                             </div>
                         @endif
 
                         @if ($pregunta->tipo_pregunta_id == 4)
                             <div id="contenedor-pregunta-{{ $pregunta->id }}">
-                                <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
+                                <livewire:estudiantes.cuestionario.pregunta-cerrada-comentario.pregunta-cerrada-comentario
+                                    :pregunta="$pregunta" :seccion="$seccion" wire:key="$pregunta->id" />
                             </div>
                         @endif
                     </div>
@@ -54,8 +58,19 @@
         @endforelse
 
         <div class="col-12 text-right">
-            <button type="submit" class="btn btn-primary" wire:click.prevent="store()">
-                Enviar
+            <button type="submit" class="btn btn-primary" wire:click.prevent="store()"
+                wire:target="store,render,obtenerRespuesta,focusPregunta, repuestas, contador_preguntas_pendiente"
+                wire:loading.attr="disabled" >
+                <span wire:target="store"
+                    wire:loading.class="d-none">
+                    Enviar
+                </span>
+
+                <span wire:loading.delay
+                    wire:target="store"
+                    wire:loading.class.remove="d-none" class="d-none">
+                    Enviando...
+                </span>
             </button>
         </div>
     </div>

@@ -249,11 +249,12 @@ class LoginController extends Controller
             'CLINAM AS NOMBRE',
             'CLITE1 AS TELEFONO',
             'CLIEM1 AS CORREO',
-            'NIVDSC AS CARRERA_ID',
-            'CARDSC AS FACULTAD',
+            'CARDSC AS CARRERA',
+            'CARCOD AS CARRERA_ID',
             'PLETAB AS COD_PLAN_ESTUDIO',
             'PLECAR AS CARRERA',
-            'CARCOD AS FACULTAD_ID',
+            'NIVDSC AS FACULTAD',
+            'NIVCOD AS FACULTAD_ID',
             'PLEMOF AS MODALIDAD'
         )
             ->join('CARRERA', 'PLECAR', '=', 'CARCOD')
