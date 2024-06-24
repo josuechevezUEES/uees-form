@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             TiposEvaluadoresSeeder::class,
             TiposEvaluadosSeeder::class,
             TiposEvaluacionSeeder::class,
+            TipoPreguntaSeed::class,
             RolesSeeder::class,
             UserSeeder::class,
         ]);

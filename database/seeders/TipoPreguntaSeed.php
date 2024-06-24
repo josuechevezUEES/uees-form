@@ -31,7 +31,7 @@ class TipoPreguntaSeed extends Seeder
                 'estado' => 1
             ],
             [
-                'nombre' => 'Pregunta Seleccion Multiple',
+                'nombre' => 'Pregunta Selección Multiple',
                 'entrada' => 'checkbox',
                 'comentario' => '',
                 'created_at' => date('Y-m-d h:i'),
@@ -49,7 +49,7 @@ class TipoPreguntaSeed extends Seeder
         ];
 
         DB::connection('sqlsrv')
-            ->table('tipos_evaluaciones')
+            ->table('tip_tipos_preguntas')
             ->insert($tipos);
     }
 }
