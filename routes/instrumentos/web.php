@@ -15,4 +15,7 @@ Route::middleware(['auth'])
             ->name('instrumentos_evaluaciones.secciones.cuestionarios');
 
         Route::view('ins_instrumentos_preguntas', 'livewire.ins-instrumentos-preguntas.index')->name('instrumentos_preguntas.index');
+
+        Route::view('/{instrumento_id}/secciones/{seccion_id}/cuestionarios-avanzado', 'livewire.instrumentos.secciones.cuestionarios.preguntas-avanzada-cerrada.index')
+            ->name('instrumentos_evaluaciones.secciones.cuestionarios_avanzado');
     });
