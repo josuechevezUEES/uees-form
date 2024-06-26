@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')->create('tpe_configuraciones_facultades', function (Blueprint $table) {
+
+        Schema::connection('sqlsrv')->create('tpe_configuraciones_facultades', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('tpe_configuracion_id')
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('tpe_configuraciones_facultades');
+        Schema::connection('sqlsrv')->dropIfExists('tpe_configuraciones_facultades');
     }
 };

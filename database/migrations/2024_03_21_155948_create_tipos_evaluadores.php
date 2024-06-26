@@ -11,14 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('sqlsrv')
-            ->create('tipos_evaluadores', function (Blueprint $table) {
-                $table->id();
-                $table->string('nombre');
-                $table->string('descripcion');
-                $table->boolean('estado');
-                $table->timestamps(3);
-            });
 
         Schema::connection('mysql')
             ->create('tipos_evaluadores', function (Blueprint $table) {
@@ -36,6 +28,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::connection('mysql')->dropIfExists('tipos_evaluadores');
-        Schema::connection('sqlsrv')->dropIfExists('tipos_evaluadores');
     }
 };

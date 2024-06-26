@@ -24,7 +24,10 @@ return new class extends Migration
             throw new \Exception('Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-        Schema::connection('mysql')
+
+        // SQL SERVER
+
+        Schema::connection('sqlsrv')
             ->create($tableNames['permissions'], function (Blueprint $table) {
                 $table->bigIncrements('id'); // permission id
                 $table->string('name');       // For MySQL 8.0 use string('name', 125);
@@ -34,7 +37,7 @@ return new class extends Migration
                 $table->unique(['name', 'guard_name']);
             });
 
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
                 $table->bigIncrements('id'); // role id
                 if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
@@ -51,7 +54,7 @@ return new class extends Migration
                 }
             });
 
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
                 $table->unsignedBigInteger($pivotPermission);
 
@@ -79,7 +82,7 @@ return new class extends Migration
                 }
             });
 
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
                 $table->unsignedBigInteger($pivotRole);
 
@@ -107,7 +110,7 @@ return new class extends Migration
                 }
             });
 
-        Schema::connection('mysql')
+        Schema::connection('sqlsrv')
             ->create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
                 $table->unsignedBigInteger($pivotPermission);
                 $table->unsignedBigInteger($pivotRole);
@@ -125,7 +128,9 @@ return new class extends Migration
                 $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
             });
 
-            app('cache')
+
+
+        app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
     }
@@ -141,10 +146,12 @@ return new class extends Migration
             throw new \Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
         }
 
-        Schema::connection('mysql')->drop($tableNames['role_has_permissions']);
-        Schema::connection('mysql')->drop($tableNames['model_has_roles']);
-        Schema::connection('mysql')->drop($tableNames['model_has_permissions']);
-        Schema::connection('mysql')->drop($tableNames['roles']);
-        Schema::connection('mysql')->drop($tableNames['permissions']);
+        // SQL SERVER
+
+        Schema::connection('sqlsrv')->drop($tableNames['role_has_permissions']);
+        Schema::connection('sqlsrv')->drop($tableNames['model_has_roles']);
+        Schema::connection('sqlsrv')->drop($tableNames['model_has_permissions']);
+        Schema::connection('sqlsrv')->drop($tableNames['roles']);
+        Schema::connection('sqlsrv')->drop($tableNames['permissions']);
     }
 };
