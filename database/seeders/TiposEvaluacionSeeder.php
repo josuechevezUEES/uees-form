@@ -15,22 +15,8 @@ class TiposEvaluacionSeeder extends Seeder
     {
         $tipos = [
             [
-                'nombre' => 'Evaluacion Docente Estudiante Posgrado',
-                'descripcion' => 'Evaluacion del estudianta a sus docentes',
-                'created_at' => date('Y-m-d h:i'),
-                'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
-            ],
-            [
-                'nombre' => 'Evaluacion Coordinador Docente Posgrado',
-                'descripcion' => 'Evaluacion del cooordinador a sus docentes',
-                'created_at' => date('Y-m-d h:i'),
-                'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
-            ],
-            [
-                'nombre' => 'Evaluacion de Satisfaccion',
-                'descripcion' => 'Evaluacion de servicios de UEES para el estudiatne',
+                'nombre' => 'Evaluación de Satisfacción',
+                'descripcion' => 'Evaluación de servicios de UEES para el estudiantes',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),
                 'estado' => 1

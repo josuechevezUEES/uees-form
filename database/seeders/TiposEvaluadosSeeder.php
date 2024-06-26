@@ -20,14 +20,14 @@ class TiposEvaluadosSeeder extends Seeder
                 'descripcion' => 'Como Evaluado',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
+                'estado' => 0
             ],
             [
                 'nombre' => 'Coordinadores',
                 'descripcion' => 'Como Evaluado',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
+                'estado' => 0
             ],
             [
                 'nombre' => '	Servicios UEES',

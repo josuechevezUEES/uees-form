@@ -11,19 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql')
-            ->create('ins_instrumentos_opciones', function (Blueprint $table) {
+        Schema::connection('sqlsrv')
+            ->create('tipos_evaluaciones', function (Blueprint $table) {
                 $table->id();
-
-                $table->foreignId('pregunta_id')
-                    ->references('id')
-                    ->on('ins_instrumentos_preguntas')
-                    ->onDelete('CASCADE');
-
                 $table->string('nombre');
-
-                $table->string('entrada');
-
+                $table->string('descripcion');
+                $table->boolean('estado');
                 $table->timestamps(3);
             });
     }
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('mysql')->dropIfExists('ins_instrumentos_opciones');
+        Schema::connection('sqlsrv')->dropIfExists('tipos_evaluaciones');
     }
 };

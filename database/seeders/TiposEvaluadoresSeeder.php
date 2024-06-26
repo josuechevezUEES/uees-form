@@ -20,14 +20,14 @@ class TiposEvaluadoresSeeder extends Seeder
                 'descripcion' => 'Como Evaluador',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
+                'estado' => 0
             ],
             [
                 'nombre' => 'Coordinadores',
                 'descripcion' => 'Como Evaluador',
                 'created_at' => date('Y-m-d h:i'),
                 'updated_at' => date('Y-m-d h:i'),
-                'estado' => 1
+                'estado' => 0
             ],
             [
                 'nombre' => 'Estudiante',

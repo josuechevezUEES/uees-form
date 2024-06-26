@@ -28,24 +28,6 @@ return new class extends Migration
 
             $table->timestamps(3);
         });
-
-        Schema::connection('sqlsrv')->create('tpe_configuraciones_entidades', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('tpe_configuracion_id')
-                ->references('id')
-                ->on('tpe_configuracion');
-
-            $table->foreignId('evaluador_id')
-                ->references('id')
-                ->on('tipos_evaluadores');
-
-            $table->foreignId('evaluados_id')
-                ->references('id')
-                ->on('tipos_evaluados');
-
-            $table->timestamps(3);
-        });
     }
 
     /**
@@ -53,7 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('sqlsrv')->dropIfExists('tpe_configuraciones_entidades');
         Schema::connection('mysql')->dropIfExists('tpe_configuraciones_entidades');
     }
 };
