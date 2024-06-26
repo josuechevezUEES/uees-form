@@ -31,6 +31,10 @@ return new class extends Migration
 
                 $table->boolean('requerido');
 
+                $table->boolean('vincular_opcion')
+                    ->nullable()
+                    ->default(null);
+
                 $table->timestamps(3);
             });
     }
