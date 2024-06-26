@@ -19,7 +19,8 @@ class Cuestionarios extends Component
     protected $listeners = [
         'agregar_opcion' => 'agregar_opcion',
         'mount' => 'mount',
-        'refresh' => 'refresh'
+        'refresh' => 'refresh',
+        'crearVinculacionOpcionPreguntas' => 'crearVinculacionOpcionPreguntas'
     ];
 
     public $instrumento_id, $seccion_id;
@@ -340,6 +341,18 @@ class Cuestionarios extends Component
             $this->dispatchBrowserEvent('closeModal');
             $this->alert('success', 'Pregunta actualizada');
         }
+    }
+
+    /**
+     * Mostrar form para vincular preguntas que estarán disponibles
+     * al activar o seleccionar una opcion
+     *
+     * @param string $opcionId
+     * @return void
+     */
+    public function crearVinculacionOpcionPreguntas($opcionId): void
+    {
+        $this->alert('success', 'Enviar mensaje '.$opcionId);
     }
 
     public function eliminar_opcion_vista_preva($index_opcion)

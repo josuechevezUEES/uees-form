@@ -16,7 +16,7 @@
         </div>
     </div>
 @else
-    <div class="border border-dark px-3 pt-3 rounded">
+    <div class=" border-dark-blue px-3 pt-3 rounded">
         <input type="{{ $opcion['entrada'] }}" name="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}"
             id="{{ $seccion->literal }}.{{ $pregunta->sub_numeral }}.{{ $loop }}"
             {{ $pregunta->requerido ? 'required' : null }} class="form-radio-input">
@@ -26,6 +26,14 @@
             <button type="button" class="btn btn-sm" wire:click='activar_edicion'>
                 <i class="fas fa-pencil-alt"></i>
                 <div wire:loading.delay wire:target='activar_edicion'>
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </button>
+            <button type="button" class="btn btn-sm" wire:click="vincularOpcionPreguntas('{{ $opcion['id'] }}')">
+                <i class="fas fa-project-diagram"></i>
+                <div wire:loading.delay wire:target='vincularOpcionPreguntas' class="px-1">
                     <div class="spinner-border spinner-border-sm" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>

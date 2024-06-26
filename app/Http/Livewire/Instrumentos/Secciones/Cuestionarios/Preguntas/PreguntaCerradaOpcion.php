@@ -45,6 +45,11 @@ class PreguntaCerradaOpcion extends Component
     {
         $this->opcion->delete();
         $this->emitUp('render');
-        $this->alert('success','Opcion Eliminada');
+        $this->alert('success', 'Opcion Eliminada');
+    }
+
+    public function vincularOpcionPreguntas($opcioneId): void
+    {
+        $this->emitUp('crearVinculacionOpcionPreguntas', $opcioneId);
     }
 }
