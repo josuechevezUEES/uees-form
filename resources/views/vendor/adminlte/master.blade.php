@@ -15,6 +15,8 @@
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 
+    <link rel="stylesheet" href="{{ asset('css/animaciones.css') }}">
+
     {{-- Title --}}
     <title>
         @yield('title_prefix', config('adminlte.title_prefix', ''))

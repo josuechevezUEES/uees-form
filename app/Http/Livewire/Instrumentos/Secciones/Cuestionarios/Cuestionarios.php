@@ -8,6 +8,7 @@ use App\Models\InsInstrumentosPregunta;
 use App\Models\InsInstrumentosSeccione;
 use App\Models\InstrumentoCuestionario;
 use App\Models\TipTiposPregunta;
+use App\Models\InsInstrumentosVinculacionOpcionesPregunta as VincularOpcionPregunta;
 use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -20,7 +21,9 @@ class Cuestionarios extends Component
         'agregar_opcion' => 'agregar_opcion',
         'mount' => 'mount',
         'refresh' => 'refresh',
-        'crearVinculacionOpcionPreguntas' => 'crearVinculacionOpcionPreguntas'
+        'crearVinculacionOpcionPreguntas' => 'crearVinculacionOpcionPreguntas',
+        'agregarPreguntaPorVincular' => 'agregarPreguntaPorVincular',
+        'eliminarPreguntaPorId' => 'eliminarPreguntaPorId'
     ];
 
     public $instrumento_id, $seccion_id;
@@ -32,6 +35,19 @@ class Cuestionarios extends Component
     public $opciones_creadas = [];
     public $preguntas_instrumento = [];
     public $nombre_opcion, $comentario;
+
+    public $activarFormularioVincularPreguntas = false;
+    public $preguntasPorVincular = [];
+    public string $opcionIdVincular = '';
+    public array $preguntasSeleccionadas = [];
+    public $listaPreguntas = [];
+
+    public function updatedActivarFormularioVincularPreguntas($value)
+    {
+        if ($value == true) {
+            $this->dispatchBrowserEvent('activarSortable');
+        }
+    }
 
     public function actualizar_componentes_hijos($request)
     {
@@ -352,7 +368,16 @@ class Cuestionarios extends Component
      */
     public function crearVinculacionOpcionPreguntas($opcionId): void
     {
-        $this->alert('success', 'Enviar mensaje '.$opcionId);
+        $this->activarFormularioVincularPreguntas = true;
+        $this->opcionIdVincular = $opcionId;
+
+        $this->listaPreguntas = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
+            ->whereDoesntHave('opciones', function ($query) use ($opcionId) {
+                $query->where('id', $opcionId);
+            })
+            ->get();
+
+        $this->dispatchBrowserEvent('activarSortable');
     }
 
     public function eliminar_opcion_vista_preva($index_opcion)
@@ -367,5 +392,71 @@ class Cuestionarios extends Component
             InsInstrumentosPregunta::where('id', $id)->delete();
             $this->alert('success', 'Pregunta eliminada');
         }
+    }
+
+    # VINCULACION PREGUNTAS
+
+    /**
+     * Agregar los id's de preguntas por vincular
+     * a la opcion seleccionada
+     *
+     * @param string $preguntaId
+     * @return void
+     */
+    public function agregarPreguntaPorVincular($preguntaId)
+    {
+        $vincular = new VincularOpcionPregunta();
+        $vincular->opcion_id = $this->opcionIdVincular;
+        $vincular->pregunta_id = $preguntaId;
+        $vincular->save();
+
+        // Obtener la pregunta vinculada
+        $pregunta = InsInstrumentosPregunta::find($preguntaId);
+        if ($pregunta) {
+            $pregunta->vincular_opcion = true;
+            $pregunta->save();
+        }
+
+        $this->alert('success', 'Vinculación completada con éxito');
+        $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
+        $this->emit('render');
+    }
+
+
+    /**
+     * Eliminar la vinculación de la pregunta por su ID
+     *
+     * @param string $preguntaId
+     * @return void
+     */
+    public function eliminarPreguntaPorId($preguntaId)
+    {
+        // Buscar la vinculación por el ID de la pregunta
+        $vinculacion = VincularOpcionPregunta::where('pregunta_id', $preguntaId)->first();
+
+        if ($vinculacion) {
+            // Obtener la pregunta vinculada
+            $pregunta = InsInstrumentosPregunta::find($preguntaId);
+
+            if ($pregunta) {
+                // Actualizar el campo vincular_opcion a false antes de eliminar la vinculación
+                $pregunta->vincular_opcion = false;
+                $pregunta->save();
+            }
+
+            // Eliminar la vinculación
+            $vinculacion->delete();
+
+            $this->alert('success', 'Desvinculación completada con éxito');
+            $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
+        }
+    }
+
+    public function cerrarFormularioVincular()
+    {
+        $this->activarFormularioVincularPreguntas = false;
+        $this->listaPreguntas = [];
+        $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
+
     }
 }

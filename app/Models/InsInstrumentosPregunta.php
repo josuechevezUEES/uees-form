@@ -52,4 +52,9 @@ class InsInstrumentosPregunta extends Model
     {
         return $this->hasOne(InsInstrumentosComentario::class, 'pregunta_id', 'id');
     }
+
+    public function registroVinculado()
+    {
+        return $this->hasOne(InsInstrumentosVinculacionOpcionesPregunta::class, 'pregunta_id', 'id');
+    }
 }

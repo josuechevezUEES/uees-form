@@ -39,6 +39,18 @@
                             </div>
                         </div>
                     </button>
+
+                    @if ($pregunta->vincular_opcion && isset($pregunta->registroVinculado))
+                        <small>
+                            <span class="badge badge-success">
+                                Vinculada
+                                con la opcion
+                                {{ $pregunta->registroVinculado->insInstrumentosOpcione->nombre }},
+                                pertenece al pregunta
+                                {{ $seccion->literal }}.{{ $pregunta->registroVinculado->insInstrumentosPregunta->sub_numeral }}
+                            </span>
+                        </small>
+                    @endif
                 </h3>
             @endif
         </div>

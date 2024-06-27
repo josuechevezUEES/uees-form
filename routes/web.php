@@ -7,6 +7,7 @@ Route::get('/', function () {
 });
 
 //Route Hooks - Do not delete//
+	Route::view('ins_instrumentos_vinculacion_opciones_preguntas', 'livewire.ins_instrumentos_vinculacion_opciones_preguntas.index')->middleware('auth');
 	Route::view('eva_evaluaciones_respuestas', 'livewire.eva_evaluaciones_respuestas.index')->middleware('auth');
 
 Auth::routes();

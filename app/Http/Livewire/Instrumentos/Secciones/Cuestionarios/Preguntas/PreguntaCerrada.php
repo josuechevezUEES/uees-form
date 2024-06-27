@@ -11,7 +11,9 @@ class PreguntaCerrada extends Component
 {
     use LivewireAlert;
 
-    protected $listeners = ['render' => 'render'];
+    protected $listeners = [
+        'render' => 'render',
+    ];
 
     public InsInstrumentosPregunta $pregunta;
     public $seccion;
