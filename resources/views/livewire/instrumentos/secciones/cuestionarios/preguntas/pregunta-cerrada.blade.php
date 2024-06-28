@@ -47,7 +47,8 @@
                                 con la opcion
                                 {{ $pregunta->registroVinculado->insInstrumentosOpcione->nombre }},
                                 pertenece al pregunta
-                                {{ $seccion->literal }}.{{ $pregunta->registroVinculado->insInstrumentosPregunta->sub_numeral }}
+                                {{ $seccion->literal }}.
+                                {{ $pregunta->registroVinculado->insInstrumentosOpcione->insInstrumentosPregunta->sub_numeral }}
                             </span>
                         </small>
                     @endif
