@@ -58,110 +58,106 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            if (is_numeric($request->email) && ctype_digit($request->email)) :
-                // buscar usuario class
-                $buscar_estudiante_class = $this->buscar_estudiante_class($request);
+        if (is_numeric($request->email) && ctype_digit($request->email)) :
+            // buscar usuario class
+            $buscar_estudiante_class = $this->buscar_estudiante_class($request);
 
-                if ($buscar_estudiante_class) :
+            if ($buscar_estudiante_class) :
 
-                    $estudiante = $buscar_estudiante_class;
+                $estudiante = $buscar_estudiante_class;
 
-                    // name es equivalente a cif
-                    $usuario = User::where('cif', $estudiante->CIF)
-                        ->get();
+                // name es equivalente a cif
+                $usuario = User::where('cif', $estudiante->CIF)
+                    ->get();
 
-                    if ($usuario->count() > 0) :
-                        $this->class_estudiante_loginUsingId($usuario->first());
+                if ($usuario->count() > 0) :
+                    $this->class_estudiante_loginUsingId($usuario->first());
+
+
+                    return redirect()
+                        ->route('home');
+                else :
+                    // Crear usuario
+                    $usuario = User::create([
+                        'name'            => $estudiante->CIF,
+                        'email'           => $estudiante->CORREO,
+                        'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD_ID),
+                        'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
+                        'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
+                        'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA_ID),
+                        'modalidad'       => $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0,
+                        'cif'             => $estudiante->CIF,
+                        'estado'          => 1,
+                    ]);
+
+                    if ($usuario) :
+
+                        $rol_estudiante = Role::where('name', 'estudiante')
+                            ->get();
+
+                        if ($rol_estudiante->count() > 0) :
+                            $rol = $rol_estudiante->first();
+
+                            ModelHasRole::create([
+                                'role_id'    => $rol->id,
+                                'model_type' => 'App\Models\User',
+                                'model_id'   => $usuario->id,
+                            ]);
+                        endif;
+
+                        $this->class_estudiante_loginUsingId($usuario);
 
                         return redirect()
                             ->route('home');
                     else :
-                        // Crear usuario
-                        $usuario = User::create([
-                            'name'            => $estudiante->CIF,
-                            'email'           => $estudiante->CORREO,
-                            'facultad_id'     => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD_ID),
-                            'facultad_nombre' => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->FACULTAD),
-                            'carrera_nombre'  => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA_ID),
-                            'carrera_id'      => preg_replace('/[^\p{L}\p{N}]+/u', '', $estudiante->CARRERA),
-                            'modalidad'       => $estudiante->MODALIDAD ? $estudiante->MODALIDAD : 0,
-                            'cif'             => $estudiante->CIF,
-                            'estado'          => 1,
-                        ]);
-
-                        if ($usuario) :
-
-                            $rol_estudiante = Role::where('name', 'estudiante')
-                                ->get();
-
-                            if ($rol_estudiante->count() > 0) :
-                                $rol = $rol_estudiante->first();
-
-                                ModelHasRole::create([
-                                    'role_id'    => $rol->id,
-                                    'model_type' => 'App\Models\User',
-                                    'model_id'   => $usuario->id,
-                                ]);
-                            endif;
-
-                            $this->class_estudiante_loginUsingId($usuario);
-
-                            return redirect()
-                                ->route('home');
-                        else :
-                            return redirect()
-                                ->route('login');
-                        endif;
+                        return redirect()
+                            ->route('login');
                     endif;
-
-                else :
-                    return redirect()->route('login');
                 endif;
 
             else :
-                // buscar usuario class
-                $buscar_usuario_class = $this->buscar_usuario_empleado($request);
-
-                if ($buscar_usuario_class) :
-
-                    $usuario = User::where('name', $request->email)
-                        ->get();
-
-                    if ($usuario->count() > 0) :
-
-                        $this->class_loginUsingId($usuario->first());
-
-                        return redirect()
-                            ->route('home');
-                    else :
-
-                        // Crear usuario
-                        $usuario = User::create([
-                            'name'            => $buscar_usuario_class->name,
-                            'email'           => $buscar_usuario_class->email,
-                            'departamento'    => $buscar_usuario_class->departamento,
-                            'departamento_nombre' => $buscar_usuario_class->departamento_nombre,
-                            'dui'             => $buscar_usuario_class->dui ? $buscar_usuario_class->dui : '000000000',
-                            'usuario_class'   => $buscar_usuario_class->name,
-                            'estado'          => 1,
-                            'password' => null,
-                        ]);
-
-                        $this->class_loginUsingId($usuario);
-
-                        return redirect()
-                            ->route('home');
-                    endif;
-                else :
-                    return redirect()
-                        ->route('login');
-                endif;
+                return redirect()->route('login');
             endif;
-        } catch (\Throwable $th) {
-            // return redirect()->route('login');
-            return $th;
-        }
+
+        else :
+            // buscar usuario class
+            $buscar_usuario_class = $this->buscar_usuario_empleado($request);
+
+            if ($buscar_usuario_class) :
+
+                $usuario = User::where('name', $request->email)
+                    ->get();
+
+                if ($usuario->count() > 0) :
+
+                    $this->class_loginUsingId($usuario->first());
+
+                    return redirect()
+                        ->route('home');
+                else :
+
+                    // Crear usuario
+                    $usuario = User::create([
+                        'name'            => $buscar_usuario_class->name,
+                        'email'           => $buscar_usuario_class->email,
+                        'departamento'    => $buscar_usuario_class->departamento,
+                        'departamento_nombre' => $buscar_usuario_class->departamento_nombre,
+                        'dui'             => $buscar_usuario_class->dui ? $buscar_usuario_class->dui : '000000000',
+                        'usuario_class'   => $buscar_usuario_class->name,
+                        'estado'          => 1,
+                        'password' => null,
+                    ]);
+
+                    $this->class_loginUsingId($usuario);
+
+                    return redirect()
+                        ->route('home');
+                endif;
+            else :
+                return redirect()
+                    ->route('login');
+            endif;
+        endif;
     }
 
     /**
@@ -249,12 +245,12 @@ class LoginController extends Controller
             'CLINAM AS NOMBRE',
             'CLITE1 AS TELEFONO',
             'CLIEM1 AS CORREO',
-            'CARDSC AS CARRERA',
-            'CARCOD AS CARRERA_ID',
+            'CARDSC AS FACULTAD',
+            'CARCOD AS FACULTAD_ID',
             'PLETAB AS COD_PLAN_ESTUDIO',
-            'PLECAR AS CARRERA',
-            'NIVDSC AS FACULTAD',
-            'NIVCOD AS FACULTAD_ID',
+            'PLECAR AS FACULTAD_ID',
+            'NIVDSC AS CARRERA',
+            'NIVCOD AS CARRERA_ID',
             'PLEMOF AS MODALIDAD'
         )
             ->join('CARRERA', 'PLECAR', '=', 'CARCOD')
@@ -276,16 +272,6 @@ class LoginController extends Controller
              */
             if ($estudiante->MODALIDAD == "") :
                 $estudiante->MODALIDAD = 0;
-            endif;
-
-            $buscar_evaluacion = $this->buscar_evaluaciones_activas_estudiante($estudiante);
-
-            // agregar propiedad con el numero de evaluacion
-            $estudiante->evaluacions = $buscar_evaluacion->count() ? $buscar_evaluacion->count() : 0;
-
-            if ($estudiante->evaluacions == 0) :
-                Auth::logout();
-                return  abort(401, 'NO ENCONTRAMOS EVALUACION ACTIVAS');
             endif;
 
             return $estudiante;
@@ -311,8 +297,6 @@ class LoginController extends Controller
             })
             ->where('estado', 1)
             ->get();
-
-        // dd($buscar_evaluaciones_activa);
 
         return $buscar_evaluaciones_activa;
     }

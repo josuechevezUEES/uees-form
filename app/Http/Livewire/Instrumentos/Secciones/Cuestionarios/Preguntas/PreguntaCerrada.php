@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Instrumentos\Secciones\Cuestionarios\Preguntas;
 
 use App\Models\InsInstrumentosOpcione;
 use App\Models\InsInstrumentosPregunta;
+use App\Models\InsInstrumentosVinculacionOpcionesPregunta;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -74,5 +75,28 @@ class PreguntaCerrada extends Component
     {
         $this->nuevo_nombre_opcion = '';
         $this->mostrar_formulario = false;
+    }
+
+    public function desvincularPregunta(string $preguntaId): void
+    {
+        // Buscar la vinculación por el ID de la pregunta
+        $vinculacion = InsInstrumentosVinculacionOpcionesPregunta::where('pregunta_id', $preguntaId)->first();
+
+        if ($vinculacion) {
+            // Obtener la pregunta vinculada
+            $pregunta = InsInstrumentosPregunta::find($preguntaId);
+
+            if ($pregunta) {
+                // Actualizar el campo vincular_opcion a false antes de eliminar la vinculación
+                $pregunta->vincular_opcion = false;
+                $pregunta->save();
+            }
+
+            // Eliminar la vinculación
+            $vinculacion->delete();
+
+            $this->alert('success', 'Desvinculación completada con éxito');
+            $this->emitSelf('render');
+        }
     }
 }

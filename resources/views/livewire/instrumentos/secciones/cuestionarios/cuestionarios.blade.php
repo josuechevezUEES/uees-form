@@ -7,7 +7,7 @@
 <div class="container-fluid">
     @include('livewire.instrumentos.secciones.cuestionarios.modal')
     <div class="row justify-content-center">
-        <div class="{{ $activarFormularioVincularPreguntas == true ? 'col-sm-6 fadeIn' : 'col-sm-12 fadeInLeft' }}">
+        <div class="{{ $activarFormularioVincularPreguntas == true ? 'col-sm-8 fadeIn' : 'col-sm-12 fadeInLeft' }}">
             <div class="card">
                 <div class="card-header bg-dark-blue text-light">
                     <div class="row">
@@ -63,7 +63,7 @@
             </div>
         </div>
         @if ($activarFormularioVincularPreguntas)
-            <div class="col-sm-6 fadeIn">
+            <div class="col-sm-4 fadeIn">
                 <div class="card">
                     <div class="card-header  bg-dark-blue">
                         <h3 class="card-title">
@@ -97,6 +97,13 @@
                                     <li class="list-group-item disabled" aria-disabled="true">
                                         Preguntas Agregadas
                                     </li>
+                                    @forelse ($listaPreguntasVinculadasOpcion as $vincular)
+                                        <li class="ui-state-highlight list-group-item" wire:key="{{ $vincular->insInstrumentosPregunta->id }}"
+                                            value="{{ $vincular->insInstrumentosPregunta->id }}">
+                                            {{ $vincular->insInstrumentosPregunta->nombre }}
+                                        </li>
+                                    @empty
+                                    @endforelse
                                 </ul>
                             </div>
                         </div>

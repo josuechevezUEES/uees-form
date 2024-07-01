@@ -9,7 +9,9 @@ use App\Models\InsInstrumentosSeccione;
 use App\Models\InstrumentoCuestionario;
 use App\Models\TipTiposPregunta;
 use App\Models\InsInstrumentosVinculacionOpcionesPregunta as VincularOpcionPregunta;
+use App\Models\InsInstrumentosVinculacionOpcionesPregunta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -41,13 +43,7 @@ class Cuestionarios extends Component
     public string $opcionIdVincular = '';
     public array $preguntasSeleccionadas = [];
     public $listaPreguntas = [];
-
-    public function updatedActivarFormularioVincularPreguntas($value)
-    {
-        if ($value == true) {
-            $this->dispatchBrowserEvent('activarSortable');
-        }
-    }
+    public Collection $listaPreguntasVinculadasOpcion;
 
     public function actualizar_componentes_hijos($request)
     {
@@ -182,6 +178,8 @@ class Cuestionarios extends Component
             $this->seccion_id = $request->seccion_id;
             $this->seccion = InsInstrumentosSeccione::find($request->seccion_id);
             $this->verificar_existencia_cuestionario();
+
+            $this->listaPreguntasVinculadasOpcion = collect([]);
         } catch (\Throwable $th) {
             abort(404, 'Cuestionario y seccion no encontrados ' . $th->getMessage());
         }
@@ -366,18 +364,36 @@ class Cuestionarios extends Component
      * @param string $opcionId
      * @return void
      */
-    public function crearVinculacionOpcionPreguntas($opcionId): void
+    public function crearVinculacionOpcionPreguntas($opcionId)
     {
-        $this->activarFormularioVincularPreguntas = true;
-        $this->opcionIdVincular = $opcionId;
+        if($this->activarFormularioVincularPreguntas == true):
+            $this->cerrarFormularioVincular();
+            $this->activarFormularioVincularPreguntas = false;
+            return $this->alert('info', 'Debe cerrar el formulario de vinculación antes');
+        endif;
+
+        $registroOpcion = InsInstrumentosOpcione::find($opcionId);
 
         $this->listaPreguntas = InsInstrumentosPregunta::where('cuestionario_id', $this->cuestionario_id)
-            ->whereDoesntHave('opciones', function ($query) use ($opcionId) {
+            ->whereDoesntHave('opciones', function ($query) use ($opcionId, $registroOpcion) {
                 $query->where('id', $opcionId);
             })
+            ->whereDoesntHave('registroVinculado', function ($query) use ($opcionId, $registroOpcion) {
+                $query->where('opcion_id', $opcionId);
+            })
+            ->where('id', '>', $registroOpcion->pregunta_id)
             ->get();
 
-        $this->dispatchBrowserEvent('activarSortable');
+        $this->listaPreguntasVinculadasOpcion = InsInstrumentosVinculacionOpcionesPregunta::where('opcion_id', $opcionId)
+            ->get();
+
+        if ($this->listaPreguntas->count() > 0) :
+            $this->activarFormularioVincularPreguntas = true;
+            $this->opcionIdVincular = $opcionId;
+            $this->dispatchBrowserEvent('activarSortable');
+        else :
+            $this->alert('warning', 'Lo sentimos, esta pregunta se puede hacer esta vinculación');
+        endif;
     }
 
     public function eliminar_opcion_vista_preva($index_opcion)
@@ -405,6 +421,7 @@ class Cuestionarios extends Component
      */
     public function agregarPreguntaPorVincular($preguntaId)
     {
+
         $vincular = new VincularOpcionPregunta();
         $vincular->opcion_id = $this->opcionIdVincular;
         $vincular->pregunta_id = $preguntaId;
@@ -421,7 +438,6 @@ class Cuestionarios extends Component
         $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
         $this->emit('render');
     }
-
 
     /**
      * Eliminar la vinculación de la pregunta por su ID
@@ -452,11 +468,18 @@ class Cuestionarios extends Component
         }
     }
 
+    public function updatedActivarFormularioVincularPreguntas($value)
+    {
+        if ($value == true) {
+            $this->dispatchBrowserEvent('activarSortable');
+        }
+    }
+
     public function cerrarFormularioVincular()
     {
         $this->activarFormularioVincularPreguntas = false;
         $this->listaPreguntas = [];
+        $this->listaPreguntasVinculadasOpcion = collect([]);
         $this->emitSelf('refresh', $this->instrumento_id, $this->seccion_id);
-
     }
 }

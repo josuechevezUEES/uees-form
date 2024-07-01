@@ -50,6 +50,9 @@
                                 {{ $seccion->literal }}.
                                 {{ $pregunta->registroVinculado->insInstrumentosOpcione->insInstrumentosPregunta->sub_numeral }}
                             </span>
+                            <button wire:click="desvincularPregunta({{ $pregunta->id }})" class="btn btn-sm btn-primary" type="button">
+                                Desvincular
+                            </button>
                         </small>
                     @endif
                 </h3>

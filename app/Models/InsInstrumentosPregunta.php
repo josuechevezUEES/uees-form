@@ -38,11 +38,6 @@ class InsInstrumentosPregunta extends Model
         return $this->hasOne('App\Models\TipTiposPregunta', 'id', 'tipo_pregunta_id');
     }
 
-    public function opciones()
-    {
-        return $this->hasMany(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
-    }
-
     public function opcionPreguntaAbierta()
     {
         return $this->hasOne(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
@@ -56,5 +51,10 @@ class InsInstrumentosPregunta extends Model
     public function registroVinculado()
     {
         return $this->hasOne(InsInstrumentosVinculacionOpcionesPregunta::class, 'pregunta_id', 'id');
+    }
+
+    public function opciones()
+    {
+        return $this->hasMany(InsInstrumentosOpcione::class, 'pregunta_id', 'id');
     }
 }
